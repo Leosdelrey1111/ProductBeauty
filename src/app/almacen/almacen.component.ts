@@ -27,7 +27,9 @@ export class AlmacenComponent implements OnInit {
     stockExhibeMin: '',
     stockAlmacen: '',
     stockAlmacenMin: '',
-    imagen: ''
+    imagen: '',
+    cantidadCajasLote: '', // Added field for Lote quantity
+    fechaCaducidadLote: '' // Added field for Lote expiration date
   };
   editMode = false;
   selectedProducto: any = null;
@@ -93,7 +95,9 @@ export class AlmacenComponent implements OnInit {
       stockExhibeMin: '',
       stockAlmacen: '',
       stockAlmacenMin: '',
-      imagen: ''
+      imagen: '',
+      cantidadCajasLote: '',
+      fechaCaducidadLote: ''
     };
   }
 
@@ -122,6 +126,13 @@ export class AlmacenComponent implements OnInit {
         }
       );
     } else {
+      // Check if all necessary fields are filled
+      if (!this.nuevoProducto.cantidadCajasLote || !this.nuevoProducto.fechaCaducidadLote || !this.nuevoProducto.codigoBarras || !this.nuevoProducto.nombreProducto) {
+        console.error('Faltan campos requeridos');
+        alert("Por favor complete todos los campos requeridos.");
+        return;
+      }
+
       this.productosService.registrarProducto(this.nuevoProducto).subscribe(
         (data) => {
           this.obtenerProductos();
@@ -162,7 +173,9 @@ export class AlmacenComponent implements OnInit {
       stockExhibeMin: '',
       stockAlmacen: '',
       stockAlmacenMin: '',
-      imagen: ''
+      imagen: '',
+      cantidadCajasLote: '',
+      fechaCaducidadLote: ''
     };
     this.editMode = false;
     this.selectedProducto = null;

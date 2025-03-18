@@ -124,6 +124,16 @@
                 <label for="imagen">Imagen URL:</label>
                 <input type="text" id="imagen" [(ngModel)]="nuevoProducto.imagen" name="imagen">
 
+                
+                <!-- Cantidad de Cajas en Lote -->
+                <label for="cantidadCajasLote">Cantidad de Cajas en Lote:</label>
+                <input type="number" id="cantidadCajasLote" [(ngModel)]="nuevoProducto.cantidadCajasLote" name="cantidadCajasLote" required>
+
+                <!-- Fecha de Caducidad del Lote -->
+                <label for="fechaCaducidadLote">Fecha de Caducidad del Lote:</label>
+                <input type="date" id="fechaCaducidadLote" [(ngModel)]="nuevoProducto.fechaCaducidadLote" name="fechaCaducidadLote" required>
+
+
                 <!-- Botón para agregar o actualizar -->
                 <button type="submit">{{ editMode ? 'Actualizar Producto' : 'Agregar Producto' }}</button>
             </form>
