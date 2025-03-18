@@ -18,9 +18,25 @@
             <p><strong>Stock Almacén:</strong> {{ producto.stockAlmacen }}</p>
             <p><strong>Proveedor:</strong> {{ producto.nombreProveedor }}</p>
 
+            
+
+          
             <div class="actions">
                 <button (click)="editarProducto(producto)">Editar</button>
-                <button (click)="eliminarProducto(producto._id)">Eliminar</button>
+                <button (click)="abrirModalBaja(producto)">Baja</button>
+                <button *ngIf="!producto.activo" (click)="reactivarProducto(producto._id)">Reactivar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de baja (física o temporal) -->
+    <div *ngIf="modalBajaAbierto" class="modal">
+        <div class="modal-content">
+            <span (click)="cerrarModalBaja()" class="close">&times;</span>
+            <h2>Selecciona el tipo de baja</h2>
+            <div class="baja-options">
+                <button (click)="eliminarProducto(productoSeleccionado._id, 'física')">Eliminar Física</button>
+                <button (click)="eliminarProducto(productoSeleccionado._id, 'temporal')">Baja Temporal</button>
             </div>
         </div>
     </div>
@@ -124,7 +140,6 @@
                 <label for="imagen">Imagen URL:</label>
                 <input type="text" id="imagen" [(ngModel)]="nuevoProducto.imagen" name="imagen">
 
-                
                 <!-- Cantidad de Cajas en Lote -->
                 <label for="cantidadCajasLote">Cantidad de Cajas en Lote:</label>
                 <input type="number" id="cantidadCajasLote" [(ngModel)]="nuevoProducto.cantidadCajasLote" name="cantidadCajasLote" required>
@@ -132,7 +147,6 @@
                 <!-- Fecha de Caducidad del Lote -->
                 <label for="fechaCaducidadLote">Fecha de Caducidad del Lote:</label>
                 <input type="date" id="fechaCaducidadLote" [(ngModel)]="nuevoProducto.fechaCaducidadLote" name="fechaCaducidadLote" required>
-
 
                 <!-- Botón para agregar o actualizar -->
                 <button type="submit">{{ editMode ? 'Actualizar Producto' : 'Agregar Producto' }}</button>

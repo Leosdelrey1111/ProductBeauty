@@ -1,0 +1,173 @@
+/* General container styling */
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #fef3f9; /* Soft pink background */
+    border-radius: 10px;
+    min-height: 100vh; /* Ensures the background takes up the full screen */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Title of the providers list */
+h2 {
+    text-align: center;
+    color: #d36489;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+/* Proveedor Card */
+.proveedor-card {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+/* Hover effect for proveedor card */
+.proveedor-card:hover {
+    transform: translateY(-10px);
+}
+
+/* Proveedor Details */
+.proveedor-card p {
+    color: #666;
+    font-size: 1rem;
+    margin: 10px 0;
+}
+
+.proveedor-card p strong {
+    color: #d36489;
+}
+
+/* Proveedor Action Buttons */
+.proveedor-card button {
+    background-color: #d36489;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+    margin-right: 10px;
+}
+
+.proveedor-card button:hover {
+    background-color: #c2557a;
+    transform: translateY(-2px); /* Hover effect */
+}
+
+/* No proveedores message */
+.no-proveedores {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #d36489;
+}
+
+/* Modal for adding/editing provider */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    padding: 20px;
+}
+
+/* Modal content */
+.modal-content {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    width: 60%;
+    max-width: 700px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    max-height: 80%;
+    overflow-y: auto;
+    animation: slideIn 0.5s ease-out;
+}
+
+/* Modal header */
+.modal h2 {
+    color: #d36489;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+/* Modal close button */
+.modal .close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 35px;
+    color: #d36489;
+    cursor: pointer;
+}
+
+/* Hover effect for close button */
+.modal .close:hover {
+    color: #c2557a;
+}
+
+/* Form inputs inside the modal */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+select {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 8px;
+    border: 1px solid #f1b5cc;
+    font-size: 1rem;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+select:focus {
+    border-color: #d36489;
+    outline: none;
+}
+
+/* Submit button in the modal */
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #d36489;
+    color: white;
+    border: none;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+/* Hover effect for submit button */
+button[type="submit"]:hover {
+    background-color: #c2557a;
+    transform: translateY(-2px);
+}
+
+/* Scroll animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

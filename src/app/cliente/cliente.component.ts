@@ -26,7 +26,7 @@ export class ClienteComponent implements OnInit {
       .subscribe(
         (response) => {
           this.productos = response.productos;
-          this.filteredProducts = this.productos; // Inicialmente se muestran todos los productos
+          this.filteredProducts = this.productos.filter(product => product.activo); // Filtrar solo los productos activos
         },
         (error) => {
           this.error = 'Error al obtener los productos';
@@ -43,7 +43,7 @@ export class ClienteComponent implements OnInit {
 
   // Buscar productos basados en la categoría y el texto de búsqueda
   searchProducts() {
-    let filtered = this.productos;
+    let filtered = this.productos.filter(product => product.activo);  // Asegurarse de filtrar solo productos activos
 
     // Filtrar productos por categoría
     if (this.categoryFilter !== 'todos') {

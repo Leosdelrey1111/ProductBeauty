@@ -36,6 +36,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { EmpleadoComponent } from './empleado/empleado.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProveedoresComponent } from './proveedores/proveedores.component';
+import { InventariosComponent } from './inventarios/inventarios.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     EmpleadoComponent,
     ClienteComponent,
+    ProveedoresComponent,
+    InventariosComponent,
 
   ],
   imports: [

@@ -29,12 +29,15 @@ export class AlmacenComponent implements OnInit {
     stockAlmacenMin: '',
     imagen: '',
     cantidadCajasLote: '', // Added field for Lote quantity
-    fechaCaducidadLote: '' // Added field for Lote expiration date
+    fechaCaducidadLote: '', // Added field for Lote expiration date
+    activo: true // Added field to track if product is active
   };
   editMode = false;
   selectedProducto: any = null;
   modalAbierto = false;
   viewMode = false; // Nuevo estado para ver detalles
+  modalBajaAbierto = false; // Nuevo estado para abrir el modal de baja
+  productoSeleccionado: any = null; // Guardar el producto seleccionado para la baja
 
   constructor(
     private productosService: ProductosService,
@@ -97,7 +100,8 @@ export class AlmacenComponent implements OnInit {
       stockAlmacenMin: '',
       imagen: '',
       cantidadCajasLote: '',
-      fechaCaducidadLote: ''
+      fechaCaducidadLote: '',
+      activo: true
     };
   }
 
@@ -145,17 +149,52 @@ export class AlmacenComponent implements OnInit {
     }
   }
 
-  eliminarProducto(id: string): void {
-    this.productosService.eliminarProducto(id).subscribe(
+  // Función para manejar la baja de productos
+  abrirModalBaja(producto: any): void {
+    this.productoSeleccionado = producto; // Guardar el producto seleccionado
+    this.modalBajaAbierto = true; // Abrir el modal de baja
+  }
+
+  cerrarModalBaja(): void {
+    this.modalBajaAbierto = false; // Cerrar el modal de baja
+    this.productoSeleccionado = null; // Resetear el producto seleccionado
+  }
+
+  eliminarProducto(id: string, bajaTipo: string): void {
+    if (bajaTipo === 'física') {
+      this.productosService.eliminarProducto(id).subscribe(
+        (data) => {
+          this.obtenerProductos();
+          this.cerrarModalBaja();
+        },
+        (error) => {
+          console.error('Error al eliminar producto', error);
+        }
+      );
+    } else if (bajaTipo === 'temporal') {
+      // Set the product as inactive
+      this.productosService.bajaTemporalProducto(id).subscribe(
+        (data) => {
+          this.obtenerProductos();
+          this.cerrarModalBaja();
+        },
+        (error) => {
+          console.error('Error al dar baja temporal al producto', error);
+        }
+      );
+    }
+  }
+    // Reactivar producto
+  reactivarProducto(id: string): void {
+    this.productosService.reactivarProducto(id).subscribe(
       (data) => {
-        this.obtenerProductos();
+        this.obtenerProductos(); 
       },
       (error) => {
-        console.error('Error al eliminar producto', error);
+        console.error('Error al reactivar producto', error);
       }
     );
   }
-
   resetFormulario(): void {
     this.nuevoProducto = {
       codigoBarras: '',
@@ -175,7 +214,8 @@ export class AlmacenComponent implements OnInit {
       stockAlmacenMin: '',
       imagen: '',
       cantidadCajasLote: '',
-      fechaCaducidadLote: ''
+      fechaCaducidadLote: '',
+      activo: true
     };
     this.editMode = false;
     this.selectedProducto = null;

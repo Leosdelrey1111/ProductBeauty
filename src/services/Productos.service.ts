@@ -1,39 +1,45 @@
-// src/services/productos.service.ts
+// productos.service.ts
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../environments/environment';  // Importar la configuración de entorno
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ProductosService {
-  private apiUrl = environment.apiUrl;  // Usar la URL definida en el archivo de entorno
+  private apiUrl = 'http://localhost:3000/api/productos';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  
-  // Obtener un producto por ID
-  getProductoById(id: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/productos/${id}`);
-  }
-  // Obtener todos los productos
+    // Obtener un producto por ID
+    getProductoById(id: string): Observable<any> {
+      return this.http.get(`${this.apiUrl}/productos/${id}`);
+    }
+
   getProductos(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/productos`);
+    return this.http.get<any>(this.apiUrl);
   }
 
-  // Registrar un nuevo producto
-  registrarProducto(productData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/productos`, productData);
+  registrarProducto(producto: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, producto);
   }
 
-  // Actualizar un producto por ID
-  actualizarProducto(id: string, productData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/productos/${id}`, productData);
+  actualizarProducto(id: string, producto: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, producto);
   }
 
-  // Eliminar un producto por ID
   eliminarProducto(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/productos/${id}`);
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
+
+  bajaTemporalProducto(id: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/baja-temporal/${id}`, { activo: false });
+  }
+  
+    // Reactivar un producto
+    reactivarProducto(id: string): Observable<any> {
+      return this.http.patch(`${this.apiUrl}/reactivar/${id}`, { activo: true });
+    }
+    
 }

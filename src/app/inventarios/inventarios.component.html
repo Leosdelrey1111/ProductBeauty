@@ -1,0 +1,50 @@
+<div class="container">
+    <h2>Inventarios</h2>
+
+    <!-- Formulario para Agregar/Actualizar Inventario -->
+    <div>
+      <h3>{{ editMode ? 'Editar Inventario' : 'Agregar Inventario' }}</h3>
+      <form (ngSubmit)="guardarInventario()">
+        <input [(ngModel)]="nuevoInventario.loteCaja" name="loteCaja" placeholder="Lote Caja" required />
+        <input [(ngModel)]="nuevoInventario.nombreProveedor" name="nombreProveedor" placeholder="Nombre Proveedor" required />
+        <input [(ngModel)]="nuevoInventario.nombreProducto" name="nombreProducto" placeholder="Nombre Producto" required />
+        <input [(ngModel)]="nuevoInventario.cantidadCajasLote" name="cantidadCajasLote" type="number" placeholder="Cantidad Cajas Lote" required />
+        <input [(ngModel)]="nuevoInventario.stockExhibe" name="stockExhibe" type="number" placeholder="Stock Exhibición" required />
+        <input [(ngModel)]="nuevoInventario.stockExhibeMin" name="stockExhibeMin" type="number" placeholder="Stock Exhibición Mínimo" required />
+        <input [(ngModel)]="nuevoInventario.stockAlmacen" name="stockAlmacen" type="number" placeholder="Stock Almacén" required />
+        <input [(ngModel)]="nuevoInventario.stockAlmacenMin" name="stockAlmacenMin" type="number" placeholder="Stock Almacén Mínimo" required />
+        <input [(ngModel)]="nuevoInventario.fechaCaducidadLote" name="fechaCaducidadLote" type="date" placeholder="Fecha Caducidad Lote" required />
+        <button type="submit">{{ editMode ? 'Actualizar' : 'Crear' }}</button>
+      </form>
+    </div>
+
+    <h3>Lista de Inventarios</h3>
+    <ul>
+      <li *ngFor="let inventario of inventarios">
+        <div class="inventario-card">
+          <p><strong>Producto:</strong> {{ inventario.nombreProducto }}</p>
+          <p><strong>Proveedor:</strong> {{ inventario.nombreProveedor }}</p>
+          <p><strong>Cantidad Cajas Lote:</strong> {{ inventario.cantidadCajasLote }}</p>
+          <p><strong>Stock Exhibición:</strong> {{ inventario.stockExhibe }}</p>
+          <p><strong>Stock Almacén:</strong> {{ inventario.stockAlmacen }}</p>
+          <p><strong>Fecha de Caducidad:</strong> {{ inventario.fechaCaducidadLote | date }}</p>
+
+          <button (click)="editarInventario(inventario)">Editar</button>
+          <button (click)="confirmarEliminacion(inventario)">Eliminar</button>
+          <button (click)="actualizarStockExhibe(inventario._id, inventario.stockExhibe)">
+            Actualizar Stock Exhibición
+          </button>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Modal de confirmación de eliminación -->
+    <div *ngIf="modalConfirmacion" class="modal">
+      <div class="modal-content">
+        <span (click)="cerrarModalConfirmacion()" class="close">&times;</span>
+        <h2>¿Estás seguro de que deseas eliminar este inventario?</h2>
+        <button (click)="eliminarInventario(inventarioSeleccionado._id)">Sí, Eliminar</button>
+        <button (click)="cerrarModalConfirmacion()">Cancelar</button>
+      </div>
+    </div>
+</div>
