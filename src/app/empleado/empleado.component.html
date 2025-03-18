@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reabastecimiento de Productos</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Reabastecimiento de Productos</h1>
+            <p>Administra y actualiza las cantidades de los productos en exhibición.</p>
+        </header>
+
+        <section class="product-list">
+            <h2>Productos en Inventario</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad Actual</th>
+                        <th>Actualizar Cantidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="product-table-body">
+                    <!-- Los productos se cargarán aquí dinámicamente -->
+                </tbody>
+            </table>
+        </section>
+
+        <div id="notification" class="notification hidden">
+            <p id="notification-message"></p>
+        </div>
+    </div>
+
+</body>
+</html>

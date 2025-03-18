@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión</title>
+  <link rel="icon" href="https://i.pinimg.com/originals/9c/ab/b9/9c9abb9f45ee1b8f00a4a1ca82d6aaab2.jpg" type="image/jpeg">
+</head>
+<body>
+
+  <!-- Formulario de Login -->
+  <div class="login-container">
+    <h2>Inicia Sesión</h2>
+    <div class="login-form">
+      <input type="email" id="login-email" placeholder="Correo Electrónico" required>
+      <input type="password" id="login-password" placeholder="Contraseña" required>
+      <button onclick="login()">Entrar</button>
+    </div>
+    <div id="error-message" style="color: red; display: none;">Correo o contraseña incorrectos.</div>
+  </div>
+
+  <script>
+    function login() {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      // Definir los usuarios con sus roles
+      const users = {
+        "admin@tienda.com": { password: "admin123", role: "admin" },
+        "empleado@tienda.com": { password: "empleado123", role: "empleado" },
+        "cliente@tienda.com": { password: "cliente123", role: "cliente" }
+      };
+
+      // Verificar que el correo y la contraseña sean correctos
+      if (users[email] && users[email].password === password) {
+        const role = users[email].role;
+        alert(`¡Bienvenido, ${email.split('@')[0]}!`);
+
+        // Redirigir según el rol
+        if (role === "admin") {
+          window.location.href = 'admin.html';  // Redirigir al panel de admin
+        } else if (role === "empleado") {
+          window.location.href = 'empleado.html';  // Redirigir al panel de empleado
+        } else if (role === "cliente") {
+          window.location.href = 'cliente.html';  // Redirigir al panel de cliente
+        }
+      } else {
+        document.getElementById('error-message').style.display = 'block';  // Mostrar mensaje de error
+      }
+    }
+  </script>
+
+</body>
+</html>

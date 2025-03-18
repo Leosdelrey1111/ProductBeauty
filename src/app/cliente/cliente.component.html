@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda de Maquillaje</title>
+
+</head>
+<body>
+
+  <nav>
+    
+    <div class="dropdown">
+        
+      <button class="dropbtn">
+        <i class="fas fa-th-large"></i> Categorías <i class="fas fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <button onclick="filterProducts('maquillaje')">
+          <i class="fas fa-lipstick"></i> Maquillaje
+        </button>
+        <button onclick="filterProducts('skincare')">
+          <i class="fas fa-leaf"></i> Skincare
+        </button>
+        <button onclick="filterProducts('todos')">
+          <i class="fas fa-th"></i> Todos
+        </button>
+      </div>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Buscar productos..." id="search-input" oninput="searchProducts()">
+      <button onclick="searchProducts()"><i class="fas fa-search"></i> Buscar</button>
+      <button class="session-btn" onclick="window.location.href='/login'"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</button>
+      
+    </div>
+  </nav>
+
+  <div class="products" id="product-list">
+    <!-- Producto 1: Labial de Diferentes Colores -->
+    <div class="product-card" data-category="maquillaje">
+     <h3>Labial de Diferentes Colores</h3>
+      <p>$150 MXN</p>
+      <p>Descubre una gama de labiales mate con colores vibrantes y duraderos.</p>
+      <div class="color-selector">
+        <button onclick="chooseColor('Rojo')" class="color" style="background-color: #FF0000;"></button>
+        <button onclick="chooseColor('Rosa')" class="color" style="background-color: #FF66B2;"></button>
+        <button onclick="chooseColor('Nude')" class="color" style="background-color: #D0B7A8;"></button>
+      </div>
+    </div>
+
+    <!-- Producto 2: Labial Mate -->
+    <div class="product-card" data-category="maquillaje">
+      <img src="https://4.bp.blogspot.com/-zxVm9Dm6tOg/V0Y1lHRLvXI/AAAAAAAAEXg/FnQGlI0Jc18c29QQjONkoNN61RcyEQJugCLcB/s1600/ultra+matte+avon+labiales+2.JPG" alt="Labial Mate" onclick="openModal('https://4.bp.blogspot.com/-zxVm9Dm6tOg/V0Y1lHRLvXI/AAAAAAAAEXg/FnQGlI0Jc18c29QQjONkoNN61RcyEQJugCLcB/s1600/ultra+matte+avon+labiales+2.JPG')">
+      <h3>Labial Mate</h3>
+      <p>$150 MXN</p>
+      <p>Labial mate de alta calidad para un look sofisticado y duradero.</p>
+      <div class="color-selector">
+        <button onclick="chooseColor('Marrón')" class="color" style="background-color: #9C5B3E;"></button>
+        <button onclick="chooseColor('Vino')" class="color" style="background-color: #800000;"></button>
+      </div>
+    </div>
+
+    <!-- Producto 3: Crema Hidratante -->
+    <div class="product-card" data-category="skincare">
+      <img src="https://www.somosmamas.com.ar/wp-content/uploads/2020/07/cremas-hidratantes-para-la-cara-de-neutrogena-1024x1024.jpg" alt="Crema Hidratante" onclick="openModal('https://www.somosmamas.com.ar/wp-content/uploads/2020/07/cremas-hidratantes-para-la-cara-de-neutrogena-1024x1024.jpg')">
+      <h3>Crema Hidratante</h3>
+      <p>$200 MXN</p>
+      <p>Hidrata y cuida tu piel con esta crema ligera y refrescante.</p>
+    </div>
+
+    <!-- Producto 4: Paleta de Sombras -->
+    <div class="product-card" data-category="maquillaje">
+      <img src="https://images.tcdn.com.br/img/img_prod/929629/paleta_de_sombras_the_james_charles_morphe_689_5_a54b54e91c6b2df6ed4e993e998dbd90.jpg" alt="Paleta de Sombras" onclick="openModal('https://images.tcdn.com.br/img/img_prod/929629/paleta_de_sombras_the_james_charles_morphe_689_5_a54b54e91c6b2df6ed4e993e998dbd90.jpg')">
+      <h3>Paleta de Sombras</h3>
+      <p>$250 MXN</p>
+      <p>Paleta de sombras en tonos cálidos y neutros para un maquillaje diario.</p>
+      <div class="color-selector">
+        <button onclick="chooseColor('Marrón Claro')" class="color" style="background-color: #D6A29D;"></button>
+        <button onclick="chooseColor('Dorado')" class="color" style="background-color: #C2A35B;"></button>
+        <button onclick="chooseColor('Vino Claro')" class="color" style="background-color: #9C5D5F;"></button>
+      </div>
+    </div>
+
+    <!-- Producto 5: Tónico Facial -->
+    <div class="product-card" data-category="skincare">
+      <img src="https://eldiariony.com/wp-content/uploads/sites/2/2020/06/81W9TJLH35L._SL1500_-e1591555342583.jpg?quality=80&strip=all" alt="Tónico Facial" onclick="openModal('https://eldiariony.com/wp-content/uploads/sites/2/2020/06/81W9TJLH35L._SL1500_-e1591555342583.jpg?quality=80&strip=all')">
+      <h3>Tónico Facial</h3>
+      <p>$180 MXN</p>
+      <p>Revitaliza tu piel con este tónico refrescante ideal para todo tipo de piel.</p>
+    </div>
+
+    <!-- Producto 6: Aceite Facial -->
+    <div class="product-card" data-category="skincare">
+      <img src="https://i.pinimg.com/originals/ea/eb/23/eaeb233ee933320fa6feea778da351d1.jpg" alt="Aceite Facial" onclick="openModal('https://i.pinimg.com/originals/ea/eb/23/eaeb233ee933320fa6feea778da351d1.jpg')">
+      <h3>Aceite Facial</h3>
+      <p>$220 MXN</p>
+      <p>Este aceite facial te ayudará a mantener tu piel suave y radiante.</p>
+    </div>
+
+  </div>
+
+  <!-- Modal para mostrar la imagen ampliada -->
+  <div id="product-modal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img id="modal-img" class="modal-content" />
+    <div id="modal-description"></div>
+  </div>
+
+  <script>
+    function filterProducts(category) {
+      const products = document.querySelectorAll('.product-card');
+      products.forEach(product => {
+        if (category === 'todos' || product.getAttribute('data-category') === category) {
+          product.style.display = 'block';
+        } else {
+          product.style.display = 'none';
+        }
+      });
+    }
+
+    function searchProducts() {
+      const query = document.getElementById("search-input").value.toLowerCase();
+      const products = document.querySelectorAll('.product-card');
+      products.forEach(product => {
+        const title = product.querySelector('h3').innerText.toLowerCase();
+        if (title.includes(query)) {
+          product.style.display = 'block';
+        } else {
+          product.style.display = 'none';
+        }
+      });
+    }
+
+    function openModal(imageSrc) {
+      const modal = document.getElementById("product-modal");
+      const modalImg = document.getElementById("modal-img");
+      modal.style.display = "block";
+      modalImg.src = imageSrc;
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("product-modal");
+      modal.style.display = "none";
+    }
+
+    function chooseColor(color) {
+      alert("Has seleccionado el color: " + color);
+    }
+  </script>
+
+</body>
+</html>

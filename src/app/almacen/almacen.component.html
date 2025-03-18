@@ -1,0 +1,115 @@
+<div class="container">
+    <h1>Almacén</h1>
+  
+    <!-- Botones para abrir el modal de agregar/editar -->
+    <button (click)="abrirModal()">Agregar Producto</button>
+  
+    <!-- Listado de productos -->
+    <div>
+      <h2>Listado de Productos</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Stock Exhibición</th>
+            <th>Stock Almacén</th>
+            <th>Proveedor</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of productos">
+            <td>{{ producto.nombreProducto }}</td>
+            <td>{{ producto.categoriaMaquillaje }}</td>
+            <td>{{ producto.stockExhibe }}</td>
+            <td>{{ producto.stockAlmacen }}</td>
+            <td>{{ producto.proveedor?.nombre }}</td>
+            <td>
+              <button (click)="editarProducto(producto)">Editar</button>
+              <button (click)="eliminarProducto(producto._id)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Modal de agregar/editar producto -->
+    <div *ngIf="modalAbierto" class="modal">
+      <div class="modal-content">
+        <span (click)="cerrarModal()" class="close">&times;</span>
+        <h2>{{ editMode ? 'Editar Producto' : 'Agregar Producto' }}</h2>
+        <form (ngSubmit)="agregarProducto()">
+          <!-- Código de Barras -->
+          <label for="codigoBarras">Código de Barras:</label>
+          <input type="text" id="codigoBarras" [(ngModel)]="nuevoProducto.codigoBarras" name="codigoBarras" required>
+  
+          <!-- Nombre del Producto -->
+          <label for="nombreProducto">Nombre Producto:</label>
+          <input type="text" id="nombreProducto" [(ngModel)]="nuevoProducto.nombreProducto" name="nombreProducto" required>
+  
+          <!-- Tamaño -->
+          <label for="tamaño">Tamaño:</label>
+          <input type="text" id="tamaño" [(ngModel)]="nuevoProducto.tamaño" name="tamaño" required>
+  
+          <!-- Categoría de Maquillaje -->
+          <label for="categoriaMaquillaje">Categoría Maquillaje:</label>
+          <input type="text" id="categoriaMaquillaje" [(ngModel)]="nuevoProducto.categoriaMaquillaje" name="categoriaMaquillaje">
+  
+          <!-- Subcategoría -->
+          <label for="subcategoria">Subcategoría:</label>
+          <input type="text" id="subcategoria" [(ngModel)]="nuevoProducto.subcategoria" name="subcategoria">
+  
+          <!-- Marca -->
+          <label for="marca">Marca:</label>
+          <input type="text" id="marca" [(ngModel)]="nuevoProducto.marca" name="marca">
+  
+          <!-- Nombre del Proveedor -->
+          <label for="nombreProveedor">Proveedor:</label>
+          <select id="nombreProveedor" [(ngModel)]="nuevoProducto.nombreProveedor" name="nombreProveedor" required>
+            <option *ngFor="let proveedor of proveedores" [value]="proveedor._id">{{ proveedor.nombre }}</option>
+          </select>
+  
+          <!-- Precio Caja -->
+          <label for="precioCaja">Precio Caja:</label>
+          <input type="number" id="precioCaja" [(ngModel)]="nuevoProducto.precioCaja" name="precioCaja" required>
+  
+          <!-- Precio por Pieza -->
+          <label for="precioPieza">Precio por Pieza:</label>
+          <input type="number" id="precioPieza" [(ngModel)]="nuevoProducto.precioPieza" name="precioPieza" required>
+  
+          <!-- Cantidad por Caja -->
+          <label for="cantidadPorCaja">Cantidad por Caja:</label>
+          <input type="number" id="cantidadPorCaja" [(ngModel)]="nuevoProducto.cantidadPorCaja" name="cantidadPorCaja" required>
+  
+          <!-- Cantidad de Piezas -->
+          <label for="cantidadPiezas">Cantidad de Piezas:</label>
+          <input type="number" id="cantidadPiezas" [(ngModel)]="nuevoProducto.cantidadPiezas" name="cantidadPiezas" required>
+  
+          <!-- Stock Exhibición -->
+          <label for="stockExhibe">Stock Exhibición:</label>
+          <input type="number" id="stockExhibe" [(ngModel)]="nuevoProducto.stockExhibe" name="stockExhibe" required>
+  
+          <!-- Stock Exhibición Mínimo -->
+          <label for="stockExhibeMin">Stock Exhibición Mínimo:</label>
+          <input type="number" id="stockExhibeMin" [(ngModel)]="nuevoProducto.stockExhibeMin" name="stockExhibeMin" required>
+  
+          <!-- Stock Almacén -->
+          <label for="stockAlmacen">Stock Almacén:</label>
+          <input type="number" id="stockAlmacen" [(ngModel)]="nuevoProducto.stockAlmacen" name="stockAlmacen" required>
+  
+          <!-- Stock Almacén Mínimo -->
+          <label for="stockAlmacenMin">Stock Almacén Mínimo:</label>
+          <input type="number" id="stockAlmacenMin" [(ngModel)]="nuevoProducto.stockAlmacenMin" name="stockAlmacenMin" required>
+  
+          <!-- Imagen -->
+          <label for="imagen">Imagen URL:</label>
+          <input type="text" id="imagen" [(ngModel)]="nuevoProducto.imagen" name="imagen">
+  
+          <!-- Botón para agregar o actualizar -->
+          <button type="submit">{{ editMode ? 'Actualizar Producto' : 'Agregar Producto' }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
