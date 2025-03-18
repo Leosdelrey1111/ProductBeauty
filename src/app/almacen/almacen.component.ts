@@ -14,7 +14,7 @@ export class AlmacenComponent implements OnInit {
   nuevoProducto = {
     codigoBarras: '',
     nombreProducto: '',
-    tamaño: '',
+    tamano: '',
     categoriaMaquillaje: '',
     subcategoria: '',
     marca: '',
@@ -71,7 +71,7 @@ export class AlmacenComponent implements OnInit {
     this.nuevoProducto = {
       codigoBarras: '',
       nombreProducto: '',
-      tamaño: '',
+      tamano: '',
       categoriaMaquillaje: '',
       subcategoria: '',
       marca: '',
@@ -139,7 +139,7 @@ export class AlmacenComponent implements OnInit {
     this.nuevoProducto = {
       codigoBarras: '',
       nombreProducto: '',
-      tamaño: '',
+      tamano: '',
       categoriaMaquillaje: '',
       subcategoria: '',
       marca: '',

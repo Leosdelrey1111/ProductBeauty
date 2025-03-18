@@ -180,3 +180,51 @@ nav {
 .color:active {
     transform: scale(0.9);
 }
+
+/* Estilo para el mensaje de "No se encontraron productos" */
+.no-products-message {
+    background-color: #ff66b2; /* Fondo rosa suave */
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    animation: fadeIn 1s ease-out; /* Animación para que aparezca suavemente */
+}
+
+/* Animación para el mensaje */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Estilo para los mensajes "Agotado" y "Por Agotarse" */
+.out-of-stock {
+    background-color: #ff1a6e49; /* Rojo fuerte */
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Estilo para los mensajes de "Por Agotarse" */
+.low-stock {
+    background-color: #ff9900a0; /* Naranja fuerte */
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
