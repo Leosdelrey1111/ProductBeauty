@@ -93,6 +93,24 @@ input[type="number"] {
   transform: scale(1.05);
 }
 
+/* Estilo del botón para redirigir a cliente */
+.view-client button {
+  background-color: #1e90ff; /* Azul brillante */
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-top: 20px;
+}
+
+.view-client button:hover {
+  background-color: #4682b4; /* Azul más oscuro */
+  transform: scale(1.05);
+}
+
 /* Notificaciones */
 .notification {
   margin-top: 20px;

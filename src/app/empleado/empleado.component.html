@@ -1,38 +1,41 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reabastecimiento de Productos</title>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Reabastecimiento de Productos</h1>
-            <p>Administra y actualiza las cantidades de los productos en exhibición.</p>
-        </header>
+<div class="container">
+    <header>
+        <h1>Reabastecimiento de Productos</h1>
+        <p>Administra y actualiza las cantidades de los productos en exhibición.</p>
+    </header>
 
-        <section class="product-list">
-            <h2>Productos en Inventario</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th>Cantidad Actual</th>
-                        <th>Actualizar Cantidad</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="product-table-body">
-                    <!-- Los productos se cargarán aquí dinámicamente -->
-                </tbody>
-            </table>
-        </section>
+    <section class="product-list">
+        <h2>Productos en Inventario</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad Actual</th>
+                    <th>Actualizar Cantidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let producto of inventario">
+                    <td>{{ producto.nombreProducto }}</td>
+                    <td>{{ producto.stockExhibe }}</td>
+                    <td>
+                        <input type="number" [(ngModel)]="producto.stockExhibe" />
+                    </td>
+                    <td>
+                        <button (click)="actualizarCantidad(producto)">Actualizar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
 
-        <div id="notification" class="notification hidden">
-            <p id="notification-message"></p>
-        </div>
+    <!-- Botón para redirigir al componente cliente -->
+    <div class="view-client">
+        <button routerLink="/cliente">Ver como Cliente</button>
     </div>
 
-</body>
-</html>
+    <div id="notification" class="notification" *ngIf="notificationMessage">
+        <p>{{ notificationMessage }}</p>
+    </div>
+</div>
