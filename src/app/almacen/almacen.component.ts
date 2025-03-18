@@ -14,7 +14,7 @@ export class AlmacenComponent implements OnInit {
   nuevoProducto = {
     codigoBarras: '',
     nombreProducto: '',
-    tamaño: '',
+    tamano: '',
     categoriaMaquillaje: '',
     subcategoria: '',
     marca: '',
@@ -32,6 +32,7 @@ export class AlmacenComponent implements OnInit {
   editMode = false;
   selectedProducto: any = null;
   modalAbierto = false;
+  viewMode = false; // Nuevo estado para ver detalles
 
   constructor(
     private productosService: ProductosService,
@@ -65,13 +66,21 @@ export class AlmacenComponent implements OnInit {
     );
   }
 
+  verDetallesProducto(producto: any): void {
+    this.viewMode = true;
+    this.selectedProducto = producto;
+    this.nuevoProducto = { ...producto }; // Copiar los datos del producto al formulario
+    this.modalAbierto = true; // Abrir el modal
+  }
+
   abrirModal(): void {
     this.modalAbierto = true;
     this.editMode = false;
+    this.viewMode = false; // Resetear viewMode cuando se abre el modal para agregar
     this.nuevoProducto = {
       codigoBarras: '',
       nombreProducto: '',
-      tamaño: '',
+      tamano: '',
       categoriaMaquillaje: '',
       subcategoria: '',
       marca: '',
@@ -96,6 +105,7 @@ export class AlmacenComponent implements OnInit {
   editarProducto(producto: any): void {
     this.modalAbierto = true;
     this.editMode = true;
+    this.viewMode = false;
     this.selectedProducto = producto;
     this.nuevoProducto = { ...producto };
   }
@@ -139,7 +149,7 @@ export class AlmacenComponent implements OnInit {
     this.nuevoProducto = {
       codigoBarras: '',
       nombreProducto: '',
-      tamaño: '',
+      tamano: '',
       categoriaMaquillaje: '',
       subcategoria: '',
       marca: '',
@@ -156,5 +166,12 @@ export class AlmacenComponent implements OnInit {
     };
     this.editMode = false;
     this.selectedProducto = null;
+  }
+
+  // Método para cerrar sesión
+  cerrarSesion(): void {
+    // Lógica para cerrar sesión
+    console.log("Cerrando sesión...");
+    // Aquí podrías implementar la lógica de cierre de sesión, como redirigir al usuario o eliminar tokens.
   }
 }
