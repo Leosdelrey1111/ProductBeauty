@@ -37,6 +37,12 @@ export class InventariosComponent implements OnInit {
     this.location.back();  // Regresar a la página anterior
   }
 
+  listaOculta: boolean = true; // Inicialmente, la lista está oculta
+
+  // Define el método toggleInventario
+  toggleInventario() {
+    this.listaOculta = !this.listaOculta; // Cambia el valor de listaVisible
+  }
   obtenerInventarios(): void {
     this.inventarioService.getInventario().subscribe(
       data => {
