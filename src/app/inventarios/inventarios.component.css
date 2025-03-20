@@ -1,93 +1,206 @@
 /* Estilo general del contenedor */
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 10px;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Estilo para el formulario */
-  form input {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-  }
-  
-  form button {
-    background-color: #d36489;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  form button:hover {
-    background-color: #b3596c;
-  }
-  
-  /* Estilo para la lista de inventarios */
-  .inventario-card {
-    background-color: white;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .inventario-card button {
-    margin-right: 5px;
-  }
-  
-  button {
-    background-color: #d36489;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #b3596c;
-  }
-  
-  /* Estilo para el modal */
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-  }
-  
-  .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px;
-  }
-  
-  .close {
-    font-size: 30px;
-    color: #d36489;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-  }
-  
-  .close:hover {
-    color: #b3596c;
-  }
-  
-  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #ffe6f2;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  font-family: 'Arial', sans-serif;
+}
+
+/* Estilo para los títulos */
+h1, h2, h3 {
+  color: #ff3385; /* Rosa fuerte para títulos */
+  font-weight: bold;
+  text-align: center; /* Centrado del título */
+  font-size: 2.5rem; /* Aumento de tamaño para mayor visibilidad */
+  position: relative; /* Necesario para el subrayado */
+  margin-bottom: 20px; /* Separación de la parte inferior */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave para resaltar el título */
+}
+
+h1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5px; /* Altura del subrayado */
+  background-color: #ff3385; /* Rosa brillante como subrayado */
+}
+
+/* Estilo para el formulario */
+form input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 2px solid #ff3385;
+  background-color: #fff;
+  font-size: 1.1rem;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+form input:focus {
+  border-color: #d36489; /* Color rosa más suave al enfocar */
+  background-color: #ffebf0; /* Fondo suave al enfocarse */
+  outline: none;
+}
+
+/* Botón de "Crear" con rosa destacado */
+form button {
+  background-color: #ff3385; /* Rosa brillante */
+  color: white;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 30px; 
+  width: 100%; 
+}
+
+form button:hover {
+  background-color: #ff1a6f; /* Rosa más brillante en hover */
+  transform: scale(1.1); /* Aumento de tamaño para destacarse */
+}
+
+.inventario-list {
+  margin: 20px 0;
+}
+
+.inventario-card {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.inventario-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+}
+
+.inventario-card button {
+  background-color: #ff3385;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 15px;
+  margin-top: 10px;
+}
+
+.inventario-card button:hover {
+  background-color: #ff1a6f;
+}
+
+/* Añadir la clase que hace desaparecer las tarjetas */
+.inventario-list.hidden {
+  display: none;
+}
+
+/* Botón para mostrar/ocultar la lista */
+.toggle-inventario-btn {
+  background-color: #ff3385;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin: 30px auto 20px auto; 
+}
+
+.toggle-inventario-btn:hover {
+  background-color: #ff1a6f;
+}
+
+/* Modal de confirmación de eliminación */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  width: 450px;
+  max-width: 100%;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  transform: translateY(-50px);
+  transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0); /* Animación al mostrar */
+}
+
+.close {
+  font-size: 30px;
+  color: #ff3385; /* Rosa fuerte para el icono de cerrar */
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close:hover {
+  color: #ff1a6f; /* Rosa brillante al pasar el ratón */
+}
+
+/* Estilo para los botones */
+button {
+  background-color: #ff3385; 
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 15px; /* Separación entre los botones */
+}
+
+button:hover {
+  background-color: #ff1a6f; /* Rosa más brillante en hover */
+  transform: scale(1.1); /* Aumento de tamaño para interacción */
+}
+
+/* Estilo general para contenedores de texto */
+.text-container {
+  padding: 20px;
+  background-color: #ffebf0; /* Fondo suave y armonioso */
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+}
+
+/* Mejorar la visibilidad y accesibilidad de los textos */
+h1, h2, h3 {
+  color: #ff3385; /* Rosa fuerte para títulos */
+  font-weight: bold;
+}
+
+p, span {
+  color: #333; /* Color oscuro para mejor legibilidad */
+}
