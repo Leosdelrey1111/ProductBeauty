@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';  // Importar Location para navegación
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,7 @@ export class RegisterComponent {
   errorMessage: string = '';
   successMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private location: Location) {}
 
   onRegister() {
     console.log("📤 Enviando datos de registro:", this.email, this.password, this.role);
@@ -32,4 +33,8 @@ export class RegisterComponent {
       }
     );
   }
+    // Función para regresar a la página anterior
+    regresar(): void {
+      this.location.back();  // Regresar a la página anterior en el historial
+    }
 }

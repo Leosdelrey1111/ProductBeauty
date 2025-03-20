@@ -1,62 +1,121 @@
-
+/* Estilos globales */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #fbe7ed;
-  }
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f7f7; /* Fondo más suave */
+}
+
+/* Contenedor principal del login */
+.login-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.95); /* Fondo con opacidad */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  width: 380px;
+  max-width: 90%;
+  text-align: center;
+  background-image: url('https://static.vecteezy.com/system/resources/previews/010/256/694/non_2x/vp-initial-wedding-monogram-logo-vector.jpg');
+  background-size: cover;
+  background-position: center;
+  background-blur: 10px; /* Desenfoque de fondo para mejor legibilidad */
+  color: #fff; /* Texto blanco para el contraste */
+}
+
+/* Título */
+.login-container h2 {
+  font-size: 28px;
+  color: #fff;
+  margin-bottom: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Formulario */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 5px;
+  display: block;
+  text-align: left;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px;
+  margin-top: 5px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Efecto focus en los campos de entrada */
+.form-group input:focus {
+  border-color: #D14D8D;
+  box-shadow: 0 0 10px rgba(209, 77, 141, 0.3);
+  outline: none;
+}
+
+/* Error message */
+.error-message {
+  color: #ff4d4d;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Botón de inicio de sesión */
+button {
+  width: 100%;
+  padding: 14px;
+  background-color: #D14D8D;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #B34275;
+  transform: translateY(-3px); /* Efecto hover con ligera elevación */
+}
+
+/* Animación de transiciones */
+button:active {
+  transform: translateY(0);
+}
+
+/* Estilos responsive */
+@media (max-width: 500px) {
   .login-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 40px;
-    background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    width: 400px;
-    text-align: center;
-    background-image: url('https://static.vecteezy.com/system/resources/previews/010/256/694/non_2x/vp-initial-wedding-monogram-logo-vector.jpg');
-    background-size: cover;
-    background-position: center;
+    width: 90%;
+    padding: 20px;
   }
-  .login-container img {
-    width: 150px;
-    height: auto;
-    margin-bottom: 20px;
-  }
+
   .login-container h2 {
-    font-size: 32px;
-    color: #333;
-    margin-bottom: 20px;
-    font-weight: bold;
-    text-transform: uppercase;
+    font-size: 24px;
   }
-  .login-form input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-sizing: border-box;
-    font-size: 16px;
-    transition: border 0.3s ease;
+
+  .form-group input {
+    font-size: 14px;
   }
-  .login-form input:focus {
-    border-color: #D14D8D;
+
+  button {
+    font-size: 14px;
   }
-  .login-form button {
-    width: 100%;
-    padding: 12px;
-    background-color: #D14D8D;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-  }
-  .login-form button:hover {
-    background-color: #B34275;
-  }
+}

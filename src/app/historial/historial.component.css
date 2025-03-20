@@ -1,80 +1,141 @@
-/* src/app/components/historial/historial.component.css */
-
-.historial-container {
-    margin: 20px auto;
-    padding: 20px;
-    max-width: 90%;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .historial-container h2 {
-    text-align: center;
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  
-  th, td {
-    padding: 12px;
-    text-align: left;
-    font-size: 16px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  th {
-    background-color: #007BFF;
-    color: white;
-    font-weight: bold;
-  }
-  
-  td {
-    background-color: #fff;
-    color: #555;
-  }
-  
-  tr:nth-child(even) td {
-    background-color: #f2f2f2;
-  }
-  
-  tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  table td, table th {
-    text-align: center;
-  }
-  
-  /* Opcional: Agregar un borde redondeado a las celdas */
-  table td, table th {
-    border-radius: 4px;
-  }
-  
-  /* Estilos para los valores de moneda y fechas */
-  .currency, .date {
-    font-weight: 500;
-  }
-  .btn-back {
-    padding: 12px 25px;
-    background-color: #13639c;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
+/* Reseteo de márgenes y paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-  
+/* Estilos generales */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fce4ec; /* Fondo suave rosa */
+  color: #333;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Barra superior */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ff66b2;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.navbar h1 {
+  color: white;
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.navbar button {
+  background-color: white;
+  color: #ff3385;
+  border: none;
+  padding: 8px 18px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+  margin-left: 15px;
+}
+
+.navbar button:hover {
+  background-color: #f1b5cc;
+  transform: translateY(-2px);
+}
+
+/* Historial */
+.historial-container {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 90%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.historial-container h2 {
+  text-align: center;
+  color: #ff3385;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  font-size: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #ff66b2;
+  color: white;
+  font-weight: bold;
+}
+
+td {
+  background-color: #fff;
+  color: #555;
+}
+
+tr:nth-child(even) td {
+  background-color: #fce4ec;
+}
+
+tr:hover {
+  background-color: #f1b5cc;
+}
+
+/* Botón de regreso */
+.btn-back {
+  padding: 12px 25px;
+  background-color: #ff3385;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.btn-back:hover {
+  background-color: #ff1a6f;
+  transform: scale(1.05);
+}

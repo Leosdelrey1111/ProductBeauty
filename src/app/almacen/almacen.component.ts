@@ -89,6 +89,10 @@ export class AlmacenComponent implements OnInit {
     this.router.navigate(['/historial']);  // Navegar a la pantalla de inventario
   }
 
+  adduser(): void {
+    this.router.navigate(['/register']);  // Navegar a la pantalla de inventario
+  }
+
   // Funciones relacionadas con los productos (agregar, editar, eliminar, etc.)
   verDetallesProducto(producto: any): void {
     this.viewMode = true;

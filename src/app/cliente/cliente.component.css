@@ -32,20 +32,19 @@ nav {
     color: white;
     border: none;
     padding: 15px 25px;
-    cursor: pointer;
     border-radius: 50px;
     font-weight: bold;
-    transition: all 0.3s ease;
+    cursor: pointer;
     font-size: 1.1rem;
+    transition: all 0.3s ease;
 }
 
-/* Efecto hover sobre botones */
 .dropbtn:hover, .search-bar button:hover {
     background-color: #ff1a6f;
     transform: scale(1.05);
 }
 
-/* Estilo para la búsqueda */
+/* Estilo para la barra de búsqueda */
 .search-bar {
     display: flex;
     align-items: center;
@@ -73,7 +72,6 @@ nav {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Mostrar opciones al pasar el mouse */
 .dropdown:hover .dropdown-content {
     display: block;
 }
@@ -87,10 +85,9 @@ nav {
     text-align: left;
     border-radius: 10px;
     font-size: 1.1rem;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
-/* Hover sobre las opciones del dropdown */
 .dropdown-content button:hover {
     background-color: #ff1a6f;
     transform: scale(1.05);
@@ -105,30 +102,29 @@ nav {
 
 /* Estilo para las tarjetas de producto */
 .product-card {
-    background-color: #ffffff;
+    background-color: #fff;
     border: 2px solid #ff66b2;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     cursor: pointer;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
 }
 
-/* Efecto hover en las tarjetas */
 .product-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
     background-color: #ffe6f2;
 }
 
-/* Estilo de las imágenes */
+/* Estilo para las imágenes */
 .product-card img {
     width: 100%;
     border-radius: 10px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s;
 }
 
-/* Efecto hover en las imágenes */
 .product-card img:hover {
     transform: scale(1.1);
 }
@@ -170,7 +166,7 @@ nav {
     border-radius: 50%;
     border: 2px solid #ff3385;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s;
 }
 
 .color:hover {
@@ -183,7 +179,7 @@ nav {
 
 /* Estilo para el mensaje de "No se encontraron productos" */
 .no-products-message {
-    background-color: #ff66b2; /* Fondo rosa suave */
+    background-color: #ff66b2;
     color: white;
     font-size: 1.5rem;
     font-weight: bold;
@@ -192,7 +188,7 @@ nav {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin-top: 30px;
-    animation: fadeIn 1s ease-out; /* Animación para que aparezca suavemente */
+    animation: fadeIn 1s ease-out;
 }
 
 /* Animación para el mensaje */
@@ -206,8 +202,7 @@ nav {
 }
 
 /* Estilo para los mensajes "Agotado" y "Por Agotarse" */
-.out-of-stock {
-    background-color: #ff1a6e49; /* Rojo fuerte */
+.out-of-stock, .low-stock {
     color: white;
     font-size: 1rem;
     font-weight: bold;
@@ -217,14 +212,10 @@ nav {
     margin-top: 10px;
 }
 
-/* Estilo para los mensajes de "Por Agotarse" */
+.out-of-stock {
+    background-color: #ff1a6e49;
+}
+
 .low-stock {
-    background-color: #ff9900a0; /* Naranja fuerte */
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    text-align: center;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;
+    background-color: #ff9900a0;
 }

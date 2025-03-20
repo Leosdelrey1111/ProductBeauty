@@ -1,27 +1,135 @@
-.register-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+/* Estilos globales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7; /* Fondo neutro */
   }
   
+  /* Contenedor del formulario de registro */
+  .register-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    width: 380px;
+    max-width: 90%;
+    text-align: center;
+    background-image: linear-gradient(to right, #ff7eb3, #d14d8d); /* Fondo con gradiente */
+    color: #fff;
+  }
+  
+  /* Título del formulario */
+  .register-container h2 {
+    font-size: 28px;
+    color: #fff;
+    margin-bottom: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  
+  /* Estilo para los campos de entrada */
   .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
   }
   
-  .error-message {
-    color: red;
+  .form-group label {
     font-size: 14px;
+    color: #fff;
+    margin-bottom: 5px;
+    display: block;
+    text-align: left;
+  }
+  
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 14px;
+    margin-top: 5px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Efecto al enfocar un campo de entrada */
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: #ff7eb3;
+    box-shadow: 0 0 10px rgba(255, 126, 179, 0.3);
+    outline: none;
+  }
+  
+  /* Estilos para los mensajes de error y éxito */
+  .error-message {
+    color: #ff4d4d;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
   }
   
   .success-message {
-    color: green;
+    color: #4caf50;
     font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
   }
   
-  .btn {
-    width: 100%;
+  .btn-back:hover {
+    background-color: #ff1a6f;
+    transform: scale(1.05);
   }
+  
+  /* Estilo para el botón de registro */
+  button {
+    padding: 14px;
+    background-color: #ff7eb3;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background-color: #d14d8d;
+    transform: translateY(-3px); /* Efecto de elevación al hacer hover */
+  }
+  
+  /* Efecto al presionar el botón */
+  button:active {
+    transform: translateY(0);
+  }
+  
+  /* Estilo responsive para pantallas pequeñas */
+  @media (max-width: 500px) {
+    .register-container {
+      width: 90%;
+      padding: 20px;
+    }
+  
+    .register-container h2 {
+      font-size: 24px;
+    }
+  
+    .form-group input,
+    .form-group select {
+      font-size: 14px;
+    }
+  
+    button {
+      font-size: 14px;
+    }
+
+  }
+  
   

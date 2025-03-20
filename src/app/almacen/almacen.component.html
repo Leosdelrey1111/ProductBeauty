@@ -1,36 +1,43 @@
 <div class="container">
     <!-- Barra superior -->
     <div class="navbar">
-        <h1>Almacén</h1>
-        <div>
-            <button class="btn-navbar" (click)="abrirModal()">Agregar Producto</button>
-            <button class="btn-navbar" (click)="abrirProveedores()">Proveedores</button>
-            <button class="btn-navbar" (click)="abrirInventarios()">Inventario</button>
-            <button class="btn-navbar" (click)="abrirHistorial()">Historial</button>
-            <button class="btn-navbar" (click)="cerrarSesion()">Cerrar Sesión</button>
+      <h1>Almacén</h1>
+      <div>
+        <!-- Botón de opciones con dropdown -->
+        <div class="dropdown">
+          <button class="btn-navbar dropdown-btn">Opciones <i class="fas fa-caret-down"></i></button>
+          <div class="dropdown-content">
+            <button (click)="abrirModal()">Agregar Producto</button>
+            <button (click)="abrirProveedores()">Proveedores</button>
+            <button (click)="abrirInventarios()">Inventario</button>
+            <button (click)="abrirHistorial()">Historial</button>
+            <button (click)="adduser()">Agregar</button>
+          </div>
         </div>
+        
+        <!-- Botón de Cerrar Sesión -->
+        <button class="btn-navbar" (click)="cerrarSesion()">Cerrar Sesión</button>
+      </div>
     </div>
-
+  
     <!-- Listado de productos en un estilo de catálogo -->
     <div class="catalog-grid">
-        <div *ngFor="let producto of productos" class="catalog-card">
-            <img *ngIf="producto.imagen" [src]="producto.imagen" alt="Imagen del producto" (click)="verDetallesProducto(producto)" />
-            <h3>{{ producto.nombreProducto }}</h3>
-            <p><strong>Categoría:</strong> {{ producto.categoriaMaquillaje }}</p>
-            <p><strong>Stock Exhibición:</strong> {{ producto.stockExhibe }}</p>
-            <p><strong>Stock Almacén:</strong> {{ producto.stockAlmacen }}</p>
-            <p><strong>Proveedor:</strong> {{ producto.nombreProveedor }}</p>
-
-            
-
-          
-            <div class="actions">
-                <button (click)="editarProducto(producto)">Editar</button>
-                <button (click)="abrirModalBaja(producto)">Baja</button>
-                <button *ngIf="!producto.activo" (click)="reactivarProducto(producto._id)">Reactivar</button>
-            </div>
+      <div *ngFor="let producto of productos" class="catalog-card">
+        <img *ngIf="producto.imagen" [src]="producto.imagen" alt="Imagen del producto" (click)="verDetallesProducto(producto)" />
+        <h3>{{ producto.nombreProducto }}</h3>
+        <p><strong>Categoría:</strong> {{ producto.categoriaMaquillaje }}</p>
+        <p><strong>Stock Exhibición:</strong> {{ producto.stockExhibe }}</p>
+        <p><strong>Stock Almacén:</strong> {{ producto.stockAlmacen }}</p>
+        <p><strong>Proveedor:</strong> {{ producto.nombreProveedor }}</p>
+  
+        <div class="actions">
+          <button (click)="editarProducto(producto)">Editar</button>
+          <button (click)="abrirModalBaja(producto)">Baja</button>
+          <button *ngIf="!producto.activo" (click)="reactivarProducto(producto._id)">Reactivar</button>
         </div>
+      </div>
     </div>
+  
 
     <!-- Modal de baja (física o temporal) -->
     <div *ngIf="modalBajaAbierto" class="modal">
