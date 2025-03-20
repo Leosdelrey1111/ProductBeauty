@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductosService } from '../../services/Productos.service';
 import { ProveedorService } from '../../services/Proveedor.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-almacen',
@@ -28,20 +29,24 @@ export class AlmacenComponent implements OnInit {
     stockAlmacen: '',
     stockAlmacenMin: '',
     imagen: '',
-    cantidadCajasLote: '', // Added field for Lote quantity
-    fechaCaducidadLote: '', // Added field for Lote expiration date
-    activo: true // Added field to track if product is active
+    cantidadCajasLote: '', 
+    fechaCaducidadLote: '', 
+    activo: true
   };
   editMode = false;
   selectedProducto: any = null;
   modalAbierto = false;
-  viewMode = false; // Nuevo estado para ver detalles
-  modalBajaAbierto = false; // Nuevo estado para abrir el modal de baja
-  productoSeleccionado: any = null; // Guardar el producto seleccionado para la baja
+  viewMode = false;
+  modalBajaAbierto = false;
+  productoSeleccionado: any = null;
+
+  mostrarInventario = true;  // Control para mostrar inventarios
+  mostrarProveedores = false; // Control para mostrar proveedores
 
   constructor(
     private productosService: ProductosService,
-    private proveedorService: ProveedorService
+    private proveedorService: ProveedorService,
+    private router: Router  
   ) {}
 
   ngOnInit(): void {
@@ -71,17 +76,31 @@ export class AlmacenComponent implements OnInit {
     );
   }
 
+
+  abrirProveedores(): void {
+    this.router.navigate(['/proveedores']);  // Navegar a la pantalla de proveedores
+  }
+
+  abrirInventarios(): void {
+    this.router.navigate(['/inventarios']);  // Navegar a la pantalla de inventario
+  }
+
+  abrirHistorial(): void {
+    this.router.navigate(['/historial']);  // Navegar a la pantalla de inventario
+  }
+
+  // Funciones relacionadas con los productos (agregar, editar, eliminar, etc.)
   verDetallesProducto(producto: any): void {
     this.viewMode = true;
     this.selectedProducto = producto;
-    this.nuevoProducto = { ...producto }; // Copiar los datos del producto al formulario
-    this.modalAbierto = true; // Abrir el modal
+    this.nuevoProducto = { ...producto };
+    this.modalAbierto = true;
   }
 
   abrirModal(): void {
     this.modalAbierto = true;
     this.editMode = false;
-    this.viewMode = false; // Resetear viewMode cuando se abre el modal para agregar
+    this.viewMode = false;
     this.nuevoProducto = {
       codigoBarras: '',
       nombreProducto: '',
@@ -130,7 +149,6 @@ export class AlmacenComponent implements OnInit {
         }
       );
     } else {
-      // Check if all necessary fields are filled
       if (!this.nuevoProducto.cantidadCajasLote || !this.nuevoProducto.fechaCaducidadLote || !this.nuevoProducto.codigoBarras || !this.nuevoProducto.nombreProducto) {
         console.error('Faltan campos requeridos');
         alert("Por favor complete todos los campos requeridos.");
@@ -151,13 +169,13 @@ export class AlmacenComponent implements OnInit {
 
   // Función para manejar la baja de productos
   abrirModalBaja(producto: any): void {
-    this.productoSeleccionado = producto; // Guardar el producto seleccionado
-    this.modalBajaAbierto = true; // Abrir el modal de baja
+    this.productoSeleccionado = producto;
+    this.modalBajaAbierto = true;
   }
 
   cerrarModalBaja(): void {
-    this.modalBajaAbierto = false; // Cerrar el modal de baja
-    this.productoSeleccionado = null; // Resetear el producto seleccionado
+    this.modalBajaAbierto = false;
+    this.productoSeleccionado = null;
   }
 
   eliminarProducto(id: string, bajaTipo: string): void {
@@ -172,7 +190,6 @@ export class AlmacenComponent implements OnInit {
         }
       );
     } else if (bajaTipo === 'temporal') {
-      // Set the product as inactive
       this.productosService.bajaTemporalProducto(id).subscribe(
         (data) => {
           this.obtenerProductos();
@@ -184,7 +201,8 @@ export class AlmacenComponent implements OnInit {
       );
     }
   }
-    // Reactivar producto
+
+  // Reactivar producto
   reactivarProducto(id: string): void {
     this.productosService.reactivarProducto(id).subscribe(
       (data) => {
@@ -195,6 +213,7 @@ export class AlmacenComponent implements OnInit {
       }
     );
   }
+
   resetFormulario(): void {
     this.nuevoProducto = {
       codigoBarras: '',
@@ -223,8 +242,7 @@ export class AlmacenComponent implements OnInit {
 
   // Método para cerrar sesión
   cerrarSesion(): void {
-    // Lógica para cerrar sesión
     console.log("Cerrando sesión...");
-    // Aquí podrías implementar la lógica de cierre de sesión, como redirigir al usuario o eliminar tokens.
+      this.router.navigate(['/cliente']);  // Navegar a la pantalla de inventario
   }
 }

@@ -1,0 +1,80 @@
+/* src/app/components/historial/historial.component.css */
+
+.historial-container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 90%;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .historial-container h2 {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: left;
+    font-size: 16px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+  }
+  
+  td {
+    background-color: #fff;
+    color: #555;
+  }
+  
+  tr:nth-child(even) td {
+    background-color: #f2f2f2;
+  }
+  
+  tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  table td, table th {
+    text-align: center;
+  }
+  
+  /* Opcional: Agregar un borde redondeado a las celdas */
+  table td, table th {
+    border-radius: 4px;
+  }
+  
+  /* Estilos para los valores de moneda y fechas */
+  .currency, .date {
+    font-weight: 500;
+  }
+  .btn-back {
+    padding: 12px 25px;
+    background-color: #13639c;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+  

@@ -7,11 +7,15 @@ import { ClienteComponent } from './cliente/cliente.component';
 import { EmpleadoComponent } from './empleado/empleado.component';
 import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { InventariosComponent } from './inventarios/inventarios.component';
+import { HistorialComponent } from './historial/historial.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   { path: '', component: ClienteComponent },  // Cambia a 'cliente' para evitar conflicto
   { path: 'almacen', component: AlmacenComponent }, // Ruta correcta para el almacén
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'historial', component: HistorialComponent},
   { path: 'empleado', component: EmpleadoComponent },
   { path: 'cliente', component: ClienteComponent },
   { path: 'proveedores', component: ProveedoresComponent },

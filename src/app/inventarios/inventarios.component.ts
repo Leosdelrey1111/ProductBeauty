@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InventarioService } from '../../services/Inventario.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-inventarios',
@@ -26,10 +27,14 @@ export class InventariosComponent implements OnInit {
   modalAbierto = false;
   modalConfirmacion = false;
 
-  constructor(private inventarioService: InventarioService) { }
+  constructor(private inventarioService: InventarioService,private location: Location ) { }
 
   ngOnInit(): void {
     this.obtenerInventarios();
+  }
+  
+  regresar(): void {
+    this.location.back();  // Regresar a la página anterior
   }
 
   obtenerInventarios(): void {
@@ -154,11 +159,11 @@ export class InventariosComponent implements OnInit {
     this.modalConfirmacion = false;
   }
 
-  confirmarEliminacion(inventario: any): void {
-    this.inventarioSeleccionado = inventario;
-    this.modalConfirmacion = true;
-  }
-  
+ confirmarEliminacion(inventario: any): void {
+  this.inventarioSeleccionado = inventario;
+  this.modalConfirmacion = true;
+}
+
   // Cerrar modal de confirmación
   cerrarModalConfirmacion(): void {
     this.modalConfirmacion = false;

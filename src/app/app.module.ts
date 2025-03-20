@@ -38,6 +38,8 @@ import { EmpleadoComponent } from './empleado/empleado.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { InventariosComponent } from './inventarios/inventarios.component';
+import { HistorialComponent } from './historial/historial.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import { InventariosComponent } from './inventarios/inventarios.component';
     ClienteComponent,
     ProveedoresComponent,
     InventariosComponent,
-
+    HistorialComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule, 

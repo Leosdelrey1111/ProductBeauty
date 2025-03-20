@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProveedorService } from '../../services/Proveedor.service';
+import { Location } from '@angular/common';  // Importar Location para navegación
 
 @Component({
   selector: 'app-proveedores',
@@ -13,11 +14,15 @@ export class ProveedoresComponent implements OnInit {
   proveedorSeleccionado: any = null;
   editMode = false; // Para saber si estamos en modo edición o creación
 
-  constructor(private proveedorService: ProveedorService) {}
+  constructor(private proveedorService: ProveedorService, private location: Location ) {}
 
   ngOnInit(): void {
     this.obtenerProveedores(); // Cargar los proveedores al iniciar el componente
   }
+    // Función para regresar a la página anterior
+    regresar(): void {
+      this.location.back();  // Regresar a la página anterior en el historial
+    }
 
   obtenerProveedores(): void {
     this.proveedorService.getProveedores().subscribe(

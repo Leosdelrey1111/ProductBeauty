@@ -1,3 +1,9 @@
+/* Reseteo de márgenes y paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 /* General container styling */
 .container {
     width: 100%;
@@ -10,61 +16,77 @@
     overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fce4ec; /* Fondo suave rosa */
+    color: #333;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
 /* Barra superior */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #d36489;
+    background-color: #ff66b2;
     padding: 10px 20px;
     border-radius: 8px;
     margin-bottom: 20px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 1200px; /* Ensure the navbar is centered */
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* Título de la barra */
 .navbar h1 {
     color: white;
     font-size: 1.8rem;
     margin: 0;
 }
 
-/* Botones en la barra */
 .navbar button {
     background-color: white;
-    color: #d36489;
+    color: #ff3385;
     border: none;
     padding: 8px 18px;
     font-size: 1rem;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s;
-    margin-left: 15px; /* Separation between buttons */
+    margin-left: 15px;
 }
 
 .navbar button:hover {
     background-color: #f1b5cc;
-    transform: translateY(-2px); /* Hover effect */
+    transform: translateY(-2px);
 }
 
-/* Catalog grid */
+/* Catálogo */
 .catalog-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 25px;
     margin-top: 20px;
     padding-bottom: 20px;
-    justify-items: center; /* Center items horizontally */
+    justify-items: center;
     margin-left: auto;
-    margin-right: auto; /* Center grid horizontally */
-    max-width: 1200px; /* Set a max-width to ensure centering */
+    margin-right: auto;
+    max-width: 1200px;
 }
 
-/* Catalog card */
 .catalog-card {
     background-color: #fff;
     border-radius: 15px;
@@ -72,27 +94,22 @@
     overflow: hidden;
     text-align: center;
     padding: 20px;
-    height: auto;
     transition: transform 0.3s ease;
 }
 
-/* Hover effect for catalog card */
 .catalog-card:hover {
     transform: translateY(-10px);
 }
 
-/* Image styling */
 .catalog-card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
     border-bottom: 2px solid #f1b5cc;
-    cursor: pointer; /* Make image clickable */
 }
 
-/* Title and product details */
 .catalog-card h3 {
-    color: #d36489;
+    color: #ff3385;
     font-size: 1.4rem;
     margin: 15px 0;
 }
@@ -103,7 +120,6 @@
     margin: 5px 0;
 }
 
-/* Action buttons */
 .catalog-card .actions {
     margin-top: 15px;
     display: flex;
@@ -111,9 +127,8 @@
     align-items: center;
 }
 
-/* Edit and Delete buttons */
 .catalog-card button {
-    background-color: #d36489;
+    background-color: #ff3385;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -125,7 +140,81 @@
 
 .catalog-card button:hover {
     background-color: #c2557a;
-    transform: translateY(-2px); /* Hover effect */
+    transform: translateY(-2px);
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    padding: 20px;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    width: 60%;
+    max-width: 700px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    max-height: 80%;
+    overflow-y: auto;
+    animation: slideIn 0.5s ease-out;
+}
+
+.modal h2 {
+    color: #ff3385;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.modal .close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 35px;
+    color: #ff3385;
+    cursor: pointer;
+}
+
+.modal .close:hover {
+    color: #c2557a;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilo general para botones */
+button {
+    background-color: #ff3385;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #c2557a;
 }
 
 /* Modal Styling */
@@ -272,3 +361,5 @@ button {
 button:hover {
     background-color: #c2557a;
 }
+
+

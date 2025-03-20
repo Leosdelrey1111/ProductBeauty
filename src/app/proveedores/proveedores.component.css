@@ -83,6 +83,37 @@ h2 {
     z-index: 999;
     padding: 20px;
 }
+.btn-add {
+    padding: 12px 25px;
+    background-color: #d43771;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.btn-back {
+    padding: 12px 25px;
+    background-color: #d43771;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
 
 /* Modal content */
 .modal-content {

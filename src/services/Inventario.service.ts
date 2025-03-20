@@ -16,8 +16,8 @@ export class InventarioService {
     return this.http.get(`${this.apiUrl}/inventario`);
   }
 
-  registrarInventario(inventarioData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/inventario`, inventarioData);
+  registrarInventario(inventario: any): Observable<any> {
+    return this.http.post(this.apiUrl, inventario);
   }
 
   updateStockExhibe(id: string, stockExhibe: number): Observable<any> {
