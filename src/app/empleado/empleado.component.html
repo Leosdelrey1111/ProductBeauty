@@ -1,49 +1,49 @@
 <div class="container">
-    <header>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-      <div class="header-content">
-        <h1>Reabastecimiento de Productos</h1>
-        <p>Administra y actualiza las cantidades de los productos en exhibición.</p>
-      </div>
-    </header>
-  
-    <section class="product-list">
-      <h2>Productos en Inventario</h2>
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Producto</th>
-              <th>Cantidad Actual</th>
-              <th class="update-column">Actualizar Cantidad</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let producto of inventario">
-              <td>{{ producto.nombreProducto }}</td>
-              <td>{{ producto.stockExhibe }}</td>
-              <td>
-                <input type="number" [(ngModel)]="producto.stockExhibe" />
-              </td>
-              <td>
-                <button class="update-btn" (click)="actualizarCantidad(producto)">
-                  <i class="fas fa-sync-alt"></i> Actualizar
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  
-    <div class="view-client">
-      <button class="client-btn" routerLink="/cliente">
-        <i class="fas fa-user"></i> Ver como Cliente
-      </button>
+  <header>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <div class="header-content">
+      <h1>Reabastecimiento de Productos</h1>
+      <p>Administra y actualiza las cantidades de los productos en exhibición.</p>
     </div>
-  
-    <div id="notification" class="notification" *ngIf="notificationMessage">
-      <p>{{ notificationMessage }}</p>
+  </header>
+
+  <section class="product-list">
+    <h2>Productos en Inventario</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad Actual</th>
+            <th class="update-column">Actualizar Cantidad</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of inventario">
+            <td>{{ producto.nombreProducto }}</td>
+            <td>{{ producto.stockExhibe }}</td>
+            <td>
+              <input type="number" [(ngModel)]="producto.stockExhibe" min="0" />
+            </td>
+            <td>
+              <button class="update-btn" (click)="actualizarCantidad(producto)">
+                <i class="fas fa-sync-alt"></i> Actualizar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </section>
+
+  <div class="view-client">
+    <button class="client-btn" routerLink="/cliente-empleado">
+      <i class="fas fa-user"></i> Ver como Cliente
+    </button>
+  </div>
+
+  <div id="notification" class="notification" *ngIf="notificationMessage">
+    <p>{{ notificationMessage }}</p>
+  </div>
 </div>

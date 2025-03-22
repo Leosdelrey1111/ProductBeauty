@@ -23,13 +23,13 @@ body {
   background-size: cover;
   background-position: center;
   background-blur: 10px; /* Desenfoque de fondo para mejor legibilidad */
-  color: #fff; /* Texto blanco para el contraste */
+  color: #252323; /* Texto blanco para el contraste */
 }
 
 /* Título */
 .login-container h2 {
   font-size: 28px;
-  color: #fff;
+  color: #880adb;
   margin-bottom: 20px;
   font-weight: 600;
   text-transform: uppercase;
@@ -42,7 +42,7 @@ body {
 
 .form-group label {
   font-size: 14px;
-  color: #fff;
+  color: #161515;
   margin-bottom: 5px;
   display: block;
   text-align: left;

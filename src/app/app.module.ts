@@ -40,6 +40,7 @@ import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { InventariosComponent } from './inventarios/inventarios.component';
 import { HistorialComponent } from './historial/historial.component';
 import { RegisterComponent } from './register/register.component';
+import { ClienteEmpleadoComponent } from './cliente-empleado/cliente-empleado.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { RegisterComponent } from './register/register.component';
     ProveedoresComponent,
     InventariosComponent,
     HistorialComponent,
-    RegisterComponent
+    RegisterComponent,
+    ClienteEmpleadoComponent
   ],
   imports: [
     BrowserModule, 

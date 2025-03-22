@@ -9,6 +9,7 @@ import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { InventariosComponent } from './inventarios/inventarios.component';
 import { HistorialComponent } from './historial/historial.component';
 import { RegisterComponent } from './register/register.component';
+import { ClienteEmpleadoComponent } from './cliente-empleado/cliente-empleado.component';
 
 const routes: Routes = [
   { path: '', component: ClienteComponent },  // Cambia a 'cliente' para evitar conflicto
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'cliente', component: ClienteComponent },
   { path: 'proveedores', component: ProveedoresComponent },
   { path: 'inventarios', component: InventariosComponent },
+  { path: 'cliente-empleado', component: ClienteEmpleadoComponent},
   { path: '404', component: Error404pageComponent },
   { path: '**', redirectTo: '404' }  // Cualquier ruta no encontrada se redirige a '404'
 ];
