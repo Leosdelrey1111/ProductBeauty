@@ -1,221 +1,221 @@
-/* Reseteo de márgenes y paddings */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Estilos generales */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #fce4ec; /* Fondo suave rosa */
-    color: #333;
-    padding: 20px;
-    line-height: 1.6;
-}
-
-/* Estilo para la barra de navegación */
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #ff66b2;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px;
-}
-
-/* Estilo para los botones */
-.dropbtn, .search-bar button {
-    background-color: #ff3385;
-    color: white;
-    border: none;
-    padding: 15px 25px;
-    border-radius: 50px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-}
-
-.dropbtn:hover, .search-bar button:hover {
-    background-color: #ff1a6f;
-    transform: scale(1.05);
-}
-
-/* Estilo para la barra de búsqueda */
-.search-bar {
-    display: flex;
-    align-items: center;
-    width: 40%;
-}
-
-.search-bar input {
-    padding: 15px;
-    margin-right: 15px;
-    border-radius: 50px;
-    border: none;
-    width: 100%;
-    font-size: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilo para las opciones del dropdown */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #ff66b2;
-    min-width: 160px;
-    z-index: 1;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-content button {
-    padding: 15px;
-    background-color: #ff3385;
-    color: white;
-    border: none;
-    width: 100%;
-    text-align: left;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.dropdown-content button:hover {
-    background-color: #ff1a6f;
-    transform: scale(1.05);
-}
-
-/* Estilo para los productos */
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
-}
-
-/* Estilo para las tarjetas de producto */
-.product-card {
-    background-color: #fff;
-    border: 2px solid #ff66b2;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
-}
-
-.product-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-    background-color: #ffe6f2;
-}
-
-/* Estilo para las imágenes */
-.product-card img {
-    width: 100%;
-    border-radius: 10px;
-    transition: transform 0.3s;
-}
-
-.product-card img:hover {
-    transform: scale(1.1);
-}
-
-/* Estilo de los títulos y descripciones */
-.product-card h3 {
-    margin-top: 15px;
-    color: #ff3385;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-}
-
-.product-card p {
-    color: #666;
-    font-size: 0.95rem;
-    margin-top: 10px;
-}
-
-/* Estilo para los precios */
-.product-card p:last-child {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #ff3385;
-    margin-top: 15px;
-    text-align: center;
-}
-
-/* Estilo para los botones de colores */
-.color-selector {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.color {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 2px solid #ff3385;
-    cursor: pointer;
-    transition: transform 0.3s;
-}
-
-.color:hover {
-    transform: scale(1.1);
-}
-
-.color:active {
-    transform: scale(0.9);
-}
-
-/* Estilo para el mensaje de "No se encontraron productos" */
-.no-products-message {
-    background-color: #ff66b2;
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: center;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 30px;
-    animation: fadeIn 1s ease-out;
-}
-
-/* Animación para el mensaje */
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
+    /* Reseteo de márgenes y paddings */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
-    100% {
-        opacity: 1;
+
+    /* Estilos generales */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #fce4ec; /* Fondo suave rosa */
+        color: #333;
+        padding: 20px;
+        line-height: 1.6;
     }
-}
 
-/* Estilo para los mensajes "Agotado" y "Por Agotarse" */
-.out-of-stock, .low-stock {
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    text-align: center;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;
-}
+    /* Estilo para la barra de navegación */
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #ff66b2;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px;
+    }
 
-.out-of-stock {
-    background-color: #ff1a6e49;
-}
+    /* Estilo para los botones */
+    .dropbtn, .search-bar button {
+        background-color: #ff3385;
+        color: white;
+        border: none;
+        padding: 15px 25px;
+        border-radius: 50px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
 
-.low-stock {
-    background-color: #ff9900a0;
-}
+    .dropbtn:hover, .search-bar button:hover {
+        background-color: #ff1a6f;
+        transform: scale(1.05);
+    }
+
+    /* Estilo para la barra de búsqueda */
+    .search-bar {
+        display: flex;
+        align-items: center;
+        width: 40%;
+    }
+
+    .search-bar input {
+        padding: 15px;
+        margin-right: 15px;
+        border-radius: 50px;
+        border: none;
+        width: 100%;
+        font-size: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilo para las opciones del dropdown */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #ff66b2;
+        min-width: 160px;
+        z-index: 1;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content button {
+        padding: 15px;
+        background-color: #ff3385;
+        color: white;
+        border: none;
+        width: 100%;
+        text-align: left;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .dropdown-content button:hover {
+        background-color: #ff1a6f;
+        transform: scale(1.05);
+    }
+
+    /* Estilo para los productos */
+    .products {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+    }
+
+    /* Estilo para las tarjetas de producto */
+    .product-card {
+        background-color: #fff;
+        border: 2px solid #ff66b2;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    }
+
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        background-color: #ffe6f2;
+    }
+
+    /* Estilo para las imágenes */
+    .product-card img {
+        width: 100%;
+        border-radius: 10px;
+        transition: transform 0.3s;
+    }
+
+    .product-card img:hover {
+        transform: scale(1.1);
+    }
+
+    /* Estilo de los títulos y descripciones */
+    .product-card h3 {
+        margin-top: 15px;
+        color: #ff3385;
+        font-size: 1.3rem;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .product-card p {
+        color: #666;
+        font-size: 0.95rem;
+        margin-top: 10px;
+    }
+
+    /* Estilo para los precios */
+    .product-card p:last-child {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #ff3385;
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    /* Estilo para los botones de colores */
+    .color-selector {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .color {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 2px solid #ff3385;
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+
+    .color:hover {
+        transform: scale(1.1);
+    }
+
+    .color:active {
+        transform: scale(0.9);
+    }
+
+    /* Estilo para el mensaje de "No se encontraron productos" */
+    .no-products-message {
+        background-color: #ff66b2;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+        animation: fadeIn 1s ease-out;
+    }
+
+    /* Animación para el mensaje */
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    /* Estilo para los mensajes "Agotado" y "Por Agotarse" */
+    .out-of-stock, .low-stock {
+        color: white;
+        font-size: 1rem;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .out-of-stock {
+        background-color: #ff1a6e49;
+    }
+
+    .low-stock {
+        background-color: #ff9900a0;
+    }

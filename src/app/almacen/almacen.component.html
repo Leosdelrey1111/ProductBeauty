@@ -97,21 +97,33 @@
                 <label for="tamano">Tamaño:</label>
                 <input type="text" id="tamano" [(ngModel)]="nuevoProducto.tamano" name="tamano" required>
 
-                <!-- Categoría de Maquillaje -->
-                <label for="categoriaMaquillaje">Categoría Maquillaje:</label>
-                <input type="text" id="categoriaMaquillaje" [(ngModel)]="nuevoProducto.categoriaMaquillaje" name="categoriaMaquillaje">
 
-                <!-- Subcategoría -->
-                <label for="subcategoria">Subcategoría:</label>
-                <input type="text" id="subcategoria" [(ngModel)]="nuevoProducto.subcategoria" name="subcategoria">
+                <!-- Categoría Maquillaje -->
+              <label for="categoriaMaquillaje">Categoría Maquillaje:</label>
+              <select id="categoriaMaquillaje" [(ngModel)]="nuevoProducto.categoriaMaquillaje" name="categoriaMaquillaje" required>
+                <option value="Maquillaje">Maquillaje</option>
+                <option value="Skin Care">Skin Care</option>
+              </select>
 
-                <!-- Marca -->
+              <!-- Subcategoría -->
+              <label for="subcategoria">Subcategoría:</label>
+              <select id="subcategoria" [(ngModel)]="nuevoProducto.subcategoria" name="subcategoria" required>
+                <option value="Labiales">Labiales</option>
+                <option value="Bases">Bases</option>
+                <option value="Sombras">Sombras</option>
+                <option value="Máscara de Pestañas">Máscara de Pestañas</option>
+                <option value="Cremas">Cremas</option>
+                <option value="Serums">Serums</option>
+              </select>
+
+                              <!-- Marca -->
                 <label for="marca">Marca:</label>
                 <input type="text" id="marca" [(ngModel)]="nuevoProducto.marca" name="marca">
 
                 <!-- Nombre del Proveedor -->
+                <label for="marca">Proveedor:</label>
                 <select id="nombreProveedor" [(ngModel)]="nuevoProducto.nombreProveedor" name="nombreProveedor" required>
-                    <option *ngFor="let proveedor of proveedores" [value]="proveedor.nombre">{{ proveedor.nombre }}</option>
+                  <option *ngFor="let proveedor of proveedores" [value]="proveedor.nombre">{{ proveedor.nombre }}</option>
                 </select>
 
                 <!-- Precio Caja -->

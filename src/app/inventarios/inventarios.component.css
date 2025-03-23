@@ -204,3 +204,11 @@ h1, h2, h3 {
 p, span {
   color: #333; /* Color oscuro para mejor legibilidad */
 }
+
+/* Estilo para mostrar los mensajes de error */
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+

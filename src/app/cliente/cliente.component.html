@@ -26,6 +26,7 @@
 </nav>
 
 <div class="products" id="product-list">
+  <!-- Mostrar mensaje de error si ocurre algún problema -->
   <div *ngIf="error" class="error-message">
     <p>{{ error }}</p>
   </div>
@@ -35,6 +36,7 @@
     <p>No se encontraron productos que coincidan con tu búsqueda.</p>
   </div>
 
+  <!-- Mostrar productos filtrados -->
   <div class="product-card" *ngFor="let product of filteredProducts">
     <img [src]="product.imagen" alt="{{ product.nombreProducto }}" (click)="openModal(product)">
     <h3>{{ product.nombreProducto }}</h3>
@@ -49,6 +51,4 @@
       <p>¡Por Agotarse!</p>
     </div>
   </div>
-  
-
 </div>
