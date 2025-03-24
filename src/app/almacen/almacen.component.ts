@@ -80,6 +80,7 @@ export class AlmacenComponent implements OnInit {
   abrirInventarios(): void {
     this.router.navigate(['/inventarios']);
   }
+  
 
   abrirHistorial(): void {
     this.router.navigate(['/historial']);

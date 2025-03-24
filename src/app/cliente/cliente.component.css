@@ -224,26 +224,30 @@ nav {
     0% {
         opacity: 0;
     }
-    100% {
-        opacity: 1;
+
+    /* Estilos generales */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #fce4ec; /* Fondo suave rosa */
+        color: #333;
+        padding: 20px;
+        line-height: 1.6;
     }
-}
 
-/* Estilo para los mensajes "Agotado" y "Por Agotarse" */
-.out-of-stock, .low-stock {
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    text-align: center;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;
-}
+    /* Estilo para la barra de navegación */
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #ff66b2;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px;
+    }
 
-.out-of-stock {
-    background-color: #ff1a6e49;
-}
 
+}
 .low-stock {
     background-color: #ff9900a0;
 }
