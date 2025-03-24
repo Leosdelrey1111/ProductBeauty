@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./almacen.component.css']
 })
 export class AlmacenComponent implements OnInit {
-
   productos: any[] = [];
   proveedores: any[] = [];
   nuevoProducto = {
@@ -29,8 +28,8 @@ export class AlmacenComponent implements OnInit {
     stockAlmacen: '',
     stockAlmacenMin: '',
     imagen: '',
-    cantidadCajasLote: '', 
-    fechaCaducidadLote: '', 
+    cantidadCajasLote: '',
+    fechaCaducidadLote: '',
     activo: true
   };
   editMode = false;
@@ -39,14 +38,12 @@ export class AlmacenComponent implements OnInit {
   viewMode = false;
   modalBajaAbierto = false;
   productoSeleccionado: any = null;
-
-  mostrarInventario = true;  // Control para mostrar inventarios
-  mostrarProveedores = false; // Control para mostrar proveedores
+  notificationMessage: string = '';
 
   constructor(
     private productosService: ProductosService,
     private proveedorService: ProveedorService,
-    private router: Router  
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -60,7 +57,7 @@ export class AlmacenComponent implements OnInit {
         this.productos = data.productos || [];
       },
       (error) => {
-        console.error('Error al obtener productos', error);
+        this.mostrarNotificacion('Error al obtener productos');
       }
     );
   }
@@ -71,29 +68,28 @@ export class AlmacenComponent implements OnInit {
         this.proveedores = data || [];
       },
       (error) => {
-        console.error('Error al obtener proveedores', error);
+        this.mostrarNotificacion('Error al obtener proveedores');
       }
     );
   }
 
-
   abrirProveedores(): void {
-    this.router.navigate(['/proveedores']);  // Navegar a la pantalla de proveedores
+    this.router.navigate(['/proveedores']);
   }
 
   abrirInventarios(): void {
-    this.router.navigate(['/inventarios']);  // Navegar a la pantalla de inventario
+    this.router.navigate(['/inventarios']);
   }
+  
 
   abrirHistorial(): void {
-    this.router.navigate(['/historial']);  // Navegar a la pantalla de inventario
+    this.router.navigate(['/historial']);
   }
 
   adduser(): void {
-    this.router.navigate(['/register']);  // Navegar a la pantalla de inventario
+    this.router.navigate(['/register']);
   }
 
-  // Funciones relacionadas con los productos (agregar, editar, eliminar, etc.)
   verDetallesProducto(producto: any): void {
     this.viewMode = true;
     this.selectedProducto = producto;
@@ -147,31 +143,26 @@ export class AlmacenComponent implements OnInit {
         (data) => {
           this.obtenerProductos();
           this.cerrarModal();
+          this.mostrarNotificacion('Producto actualizado correctamente');
         },
         (error) => {
-          console.error('Error al actualizar producto', error);
+          this.mostrarNotificacion('Error al actualizar producto');
         }
       );
     } else {
-      if (!this.nuevoProducto.cantidadCajasLote || !this.nuevoProducto.fechaCaducidadLote || !this.nuevoProducto.codigoBarras || !this.nuevoProducto.nombreProducto) {
-        console.error('Faltan campos requeridos');
-        alert("Por favor complete todos los campos requeridos.");
-        return;
-      }
-
       this.productosService.registrarProducto(this.nuevoProducto).subscribe(
         (data) => {
           this.obtenerProductos();
           this.cerrarModal();
+          this.mostrarNotificacion('Producto agregado correctamente');
         },
         (error) => {
-          console.error('Error al agregar producto', error);
+          this.mostrarNotificacion('Error al agregar producto');
         }
       );
     }
   }
 
-  // Función para manejar la baja de productos
   abrirModalBaja(producto: any): void {
     this.productoSeleccionado = producto;
     this.modalBajaAbierto = true;
@@ -188,9 +179,10 @@ export class AlmacenComponent implements OnInit {
         (data) => {
           this.obtenerProductos();
           this.cerrarModalBaja();
+          this.mostrarNotificacion('Producto eliminado correctamente');
         },
         (error) => {
-          console.error('Error al eliminar producto', error);
+          this.mostrarNotificacion('Error al eliminar producto');
         }
       );
     } else if (bajaTipo === 'temporal') {
@@ -198,22 +190,23 @@ export class AlmacenComponent implements OnInit {
         (data) => {
           this.obtenerProductos();
           this.cerrarModalBaja();
+          this.mostrarNotificacion('Producto dado de baja temporalmente');
         },
         (error) => {
-          console.error('Error al dar baja temporal al producto', error);
+          this.mostrarNotificacion('Error al dar baja temporal al producto');
         }
       );
     }
   }
 
-  // Reactivar producto
   reactivarProducto(id: string): void {
     this.productosService.reactivarProducto(id).subscribe(
       (data) => {
-        this.obtenerProductos(); 
+        this.obtenerProductos();
+        this.mostrarNotificacion('Producto reactivado correctamente');
       },
       (error) => {
-        console.error('Error al reactivar producto', error);
+        this.mostrarNotificacion('Error al reactivar producto');
       }
     );
   }
@@ -244,9 +237,14 @@ export class AlmacenComponent implements OnInit {
     this.selectedProducto = null;
   }
 
-  // Método para cerrar sesión
   cerrarSesion(): void {
-    console.log("Cerrando sesión...");
-      this.router.navigate(['/cliente']);  // Navegar a la pantalla de inventario
+    this.router.navigate(['/cliente']);
+  }
+
+  mostrarNotificacion(mensaje: string): void {
+    this.notificationMessage = mensaje;
+    setTimeout(() => {
+      this.notificationMessage = '';
+    }, 3000);
   }
 }

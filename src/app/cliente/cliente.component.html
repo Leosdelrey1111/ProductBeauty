@@ -3,30 +3,29 @@
   <div class="logo-container">
     <img class="logo" src="https://i.pinimg.com/originals/9c/ab/b9/9cabb9f45ee1b8f00a4a1ca82d6aaab2.jpg" alt="Logo"> <!-- Usa el logo que prefieras -->
     <h1 class="title">ProductsBeauty</h1>
-  </div>
-
-  <!-- Categorías Dropdown -->
-  <div class="dropdown">
-    <button class="dropbtn">
-      <i class="fas fa-th-large"></i> Categorías <i class="fas fa-caret-down"></i>
-    </button>
-    <div class="dropdown-content">
-      <button (click)="filterProducts('Maquillaje')">
-        <i class="fas fa-lipstick"></i> Maquillaje
+    <div class="dropdown">
+      <button class="dropbtn">
+        <i class="fas fa-th-large"></i> Categorías <i class="fas fa-caret-down"></i>
       </button>
-      <button (click)="filterProducts('Skin Care')">
-        <i class="fas fa-leaf"></i> Skin Care
-      </button>
-      <button (click)="filterProducts('todos')">
-        <i class="fas fa-th"></i> Todos
-      </button>
+      <div class="dropdown-content">
+        <button (click)="filterProducts('Maquillaje')">
+          <i class="fas fa-lipstick"></i> Maquillaje
+        </button>
+        <button (click)="filterProducts('Skin Care')">
+          <i class="fas fa-leaf"></i> Skin Care
+        </button>
+        <button (click)="filterProducts('todos')">
+          <i class="fas fa-th"></i> Todos
+        </button>\
+        
+      </div>
     </div>
+
   </div>
 
   <!-- Barra de búsqueda y botones -->
   <div class="search-bar">
     <input type="text" placeholder="Buscar productos..." [(ngModel)]="searchQuery" (input)="searchProducts()">
-    <button (click)="searchProducts()"><i class="fas fa-search"></i> Buscar</button>
     <button class="session-btn" (click)="redirectToLogin()">
       <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
     </button>
@@ -35,6 +34,7 @@
 
 <!-- Productos -->
 <div class="products" id="product-list">
+  <!-- Mostrar mensaje de error si ocurre algún problema -->
   <div *ngIf="error" class="error-message">
     <p>{{ error }}</p>
   </div>
@@ -44,6 +44,7 @@
     <p>No se encontraron productos que coincidan con tu búsqueda.</p>
   </div>
 
+  <!-- Mostrar productos filtrados -->
   <div class="product-card" *ngFor="let product of filteredProducts">
     <img [src]="product.imagen" alt="{{ product.nombreProducto }}" (click)="openModal(product)">
     <h3>{{ product.nombreProducto }}</h3>

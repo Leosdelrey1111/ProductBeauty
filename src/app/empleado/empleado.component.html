@@ -1,49 +1,68 @@
 <div class="container">
-  <header>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <div class="header-content">
-      <h1>Reabastecimiento de Productos</h1>
-      <p>Administra y actualiza las cantidades de los productos en exhibición.</p>
+  <!-- Barra de navegación -->
+  <nav>
+    <div class="logo-container">
+      <img class="logo" src="https://i.pinimg.com/originals/9c/ab/b9/9cabb9f45ee1b8f00a4a1ca82d6aaab2.jpg" alt="Logo" />
+      <h1 class="title">Reabastecimiento de Productos</h1>
     </div>
-  </header>
+    <div class="session-buttons">
+      <div class="dropdown">
+        <button class="dropbtn">
+          <i class="fas fa-th-large"></i> Categorías <i class="fas fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <button (click)="filterProducts('Maquillaje')">
+            <i class="fas fa-lipstick"></i> Maquillaje
+          </button>
+          <button (click)="filterProducts('Skin Care')">
+            <i class="fas fa-leaf"></i> Skin Care
+          </button>
+          <button (click)="filterProducts('todos')">
+            <i class="fas fa-th"></i> Todos
+          </button>
+        </div>
+      </div>
+      <button class="session-btn logout-btn" (click)="cerrarSesion()">
+        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+      </button>
 
+    </div>
+  </nav>
+
+  <!-- Lista de productos -->
   <section class="product-list">
     <h2>Productos en Inventario</h2>
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Producto</th>
-            <th>Cantidad Actual</th>
-            <th class="update-column">Actualizar Cantidad</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let producto of inventario">
-            <td>{{ producto.nombreProducto }}</td>
-            <td>{{ producto.stockExhibe }}</td>
-            <td>
-              <input type="number" [(ngModel)]="producto.stockExhibe" min="0" />
-            </td>
-            <td>
-              <button class="update-btn" (click)="actualizarCantidad(producto)">
-                <i class="fas fa-sync-alt"></i> Actualizar
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div *ngIf="inventario.length === 0" class="no-products-message">
+      No se encontraron productos.
+    </div>
+
+    <div class="product-list-container">
+      <div *ngFor="let producto of filteredProducts" class="product-item">
+        <img [src]="producto.imagen" alt="{{ producto.nombreProducto }}" (click)="openModal(producto.imagen)" class="product-image" />
+        <div class="product-details">
+          <h3>{{ producto.nombreProducto }}</h3>
+          <p>Cantidad Actual: {{ producto.stockExhibe }}</p>
+          <div *ngIf="producto.stockExhibe === 0" class="out-of-stock">Agotado</div>
+          <div *ngIf="producto.stockExhibe > 0 && producto.stockExhibe <= 5" class="low-stock">Por Agotarse</div>
+        </div>
+        <div class="update-section">
+          <input type="number" [(ngModel)]="producto.stockExhibe" min="0" placeholder="Nueva cantidad" />
+          <button class="update-btn" (click)="actualizarCantidad(producto)">
+            <i class="fas fa-sync-alt"></i> Actualizar
+          </button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <div class="view-client">
-    <button class="client-btn" routerLink="/cliente-empleado">
-      <i class="fas fa-user"></i> Ver como Cliente
-    </button>
-  </div>
-
+  <!-- Notificación pequeña en la esquina inferior izquierda -->
   <div id="notification" class="notification" *ngIf="notificationMessage">
     <p>{{ notificationMessage }}</p>
+  </div>
+
+  <!-- Modal para la imagen ampliada -->
+  <div id="product-modal" class="modal">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <img id="modal-img" class="modal-content" />
   </div>
 </div>

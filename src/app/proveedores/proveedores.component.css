@@ -1,204 +1,293 @@
-/* General container styling */
+/* Reseteo de márgenes y paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos generales */
+body {
+  font-family: 'Poppins', sans-serif; /* Fuente moderna */
+  background-color: #f4f7f6; /* Fondo claro y neutral */
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Barra de navegación */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #ff6b6b, #ff4757); /* Gradiente moderno */
+  padding: 15px 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar h1 {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 600; /* Más delgado */
+  margin: 0;
+}
+
+.navbar-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.navbar button {
+  background-color: rgba(255, 255, 255, 0.2); /* Botones semi-transparentes */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 25px; /* Bordes más redondeados */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.navbar button:hover {
+  background-color: rgba(255, 255, 255, 0.3); /* Más visible al pasar el mouse */
+  transform: translateY(-2px);
+}
+
+/* Contenedor principal */
 .container {
-    width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: 'Arial', sans-serif;
-    background-color: #fef3f9; /* Soft pink background */
-    border-radius: 10px;
-    min-height: 100vh; /* Ensures the background takes up the full screen */
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Title of the providers list */
+/* Título de la lista de proveedores */
 h2 {
-    text-align: center;
-    color: #d36489;
-    font-size: 1.8rem;
-    margin-bottom: 20px;
+  text-align: center;
+  color: #ff6b6b; /* Color del gradiente */
+  font-size: 2rem;
+  margin-bottom: 20px;
+  position: relative;
 }
 
-/* Proveedor Card */
+h2::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background-color: #ff6b6b; /* Color del gradiente */
+  border-radius: 2px;
+}
+
+/* Tarjeta de proveedor */
 .proveedor-card {
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 15px;
-    transition: transform 0.3s ease;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Hover effect for proveedor card */
 .proveedor-card:hover {
-    transform: translateY(-10px);
+  transform: translateY(-10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
-/* Proveedor Details */
 .proveedor-card p {
-    color: #666;
-    font-size: 1rem;
-    margin: 10px 0;
+  color: #666;
+  font-size: 1rem;
+  margin: 10px 0;
 }
 
 .proveedor-card p strong {
-    color: #d36489;
+  color: #ff6b6b; /* Color del gradiente */
 }
 
-/* Proveedor Action Buttons */
+/* Botones de acción en la tarjeta */
 .proveedor-card button {
-    background-color: #d36489;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
-    margin-right: 10px;
+  background-color: #ff6b6b; /* Color del gradiente */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 25px; /* Bordes más redondeados */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-right: 10px;
 }
 
 .proveedor-card button:hover {
-    background-color: #c2557a;
-    transform: translateY(-2px); /* Hover effect */
+  background-color: #ff4757; /* Color más intenso */
+  transform: translateY(-2px);
 }
 
-/* No proveedores message */
+/* Mensaje cuando no hay proveedores */
 .no-proveedores {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #d36489;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #ff6b6b; /* Color del gradiente */
 }
 
-/* Modal for adding/editing provider */
+/* Modal */
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-    padding: 20px;
-}
-.btn-add {
-    padding: 12px 25px;
-    background-color: #d43771;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  backdrop-filter: blur(8px); /* Efecto de desenfoque */
 }
 
-.btn-back {
-    padding: 12px 25px;
-    background-color: #d43771;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-/* Modal content */
 .modal-content {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 15px;
-    width: 60%;
-    max-width: 700px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-    max-height: 80%;
-    overflow-y: auto;
-    animation: slideIn 0.5s ease-out;
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 15px;
+  width: 60%;
+  max-width: 700px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  max-height: 80%;
+  overflow-y: auto;
+  animation: slideIn 0.5s ease-out;
 }
 
-/* Modal header */
 .modal h2 {
-    color: #d36489;
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 30px;
+  color: #ff6b6b; /* Color del gradiente */
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
 }
 
-/* Modal close button */
 .modal .close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 35px;
-    color: #d36489;
-    cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 35px;
+  color: #ff6b6b; /* Color del gradiente */
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
-/* Hover effect for close button */
 .modal .close:hover {
-    color: #c2557a;
+  color: #ff4757; /* Color más intenso */
 }
 
-/* Form inputs inside the modal */
-input[type="text"],
-input[type="number"],
-input[type="email"],
-select {
-    width: 100%;
-    padding: 12px;
-    margin: 12px 0;
-    border-radius: 8px;
-    border: 1px solid #f1b5cc;
-    font-size: 1rem;
+/* Formulario dentro del modal */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-input[type="text"]:focus,
-input[type="number"]:focus,
-input[type="email"]:focus,
-select:focus {
-    border-color: #d36489;
-    outline: none;
+form label {
+  font-size: 1.1rem;
+  color: #333;
+  font-weight: bold;
 }
 
-/* Submit button in the modal */
-button[type="submit"] {
-    width: 100%;
-    padding: 12px;
-    background-color: #d36489;
-    color: white;
-    border: none;
-    font-size: 1.1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
+form input[type="text"],
+form input[type="number"],
+form input[type="email"],
+form select {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Hover effect for submit button */
-button[type="submit"]:hover {
-    background-color: #c2557a;
-    transform: translateY(-2px);
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form input[type="email"]:focus,
+form select:focus {
+  border-color: #ff6b6b; /* Color del gradiente */
+  box-shadow: 0 0 8px rgba(255, 107, 107, 0.2);
+  outline: none;
 }
 
-/* Scroll animation */
+form button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #ff6b6b; /* Color del gradiente */
+  color: white;
+  border: none;
+  font-size: 1.1rem;
+  border-radius: 25px; /* Bordes más redondeados */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form button[type="submit"]:hover {
+  background-color: #ff4757; /* Color más intenso */
+  transform: translateY(-2px);
+}
+
+/* Modal de confirmación de eliminación */
+.modal-confirmacion {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  backdrop-filter: blur(8px); /* Efecto de desenfoque */
+}
+
+.modal-confirmacion .modal-content {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 15px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.modal-confirmacion h2 {
+  color: #ff6b6b; /* Color del gradiente */
+  margin-bottom: 20px;
+}
+
+.modal-confirmacion button {
+  background-color: #ff6b6b; /* Color del gradiente */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px; /* Bordes más redondeados */
+  cursor: pointer;
+  margin: 0 10px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-confirmacion button:hover {
+  background-color: #ff4757; /* Color más intenso */
+}
+
+/* Animaciones */
 @keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+      opacity: 0;
+      transform: translateY(-50px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
 }

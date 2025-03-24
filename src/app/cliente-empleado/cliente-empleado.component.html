@@ -1,7 +1,7 @@
 <nav>
     <!-- Contenedor de los botones "Regresar" y "Categorías" -->
     <div class="navbar-content">
-      <button class="btn-back" (click)="regresar()">Regresar</button>
+     
   
       <div class="dropdown">
         <button class="dropbtn">
@@ -25,7 +25,7 @@
     <!-- Barra de búsqueda -->
     <div class="search-bar">
       <input type="text" placeholder="Buscar productos..." [(ngModel)]="searchQuery" (input)="searchProducts()">
-      <button (click)="searchProducts()"><i class="fas fa-search"></i> Buscar</button>
+      <button class="btn-back" (click)="regresar()">Regresar</button>
     </div>
   </nav>
   

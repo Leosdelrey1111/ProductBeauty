@@ -1,30 +1,6 @@
 <div class="container">
   <button class="btn-back" (click)="regresar()">Regresar</button>
-  <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  </head>
-
   <h2>Inventarios</h2>
-
-  <!-- Formulario para Agregar/Actualizar Inventario -->
-  <div>
-    <h3>{{ editMode ? 'Editar Inventario' : 'Agregar Inventario' }}</h3>
-    <form (ngSubmit)="guardarInventario()">
-      <input [(ngModel)]="nuevoInventario.loteCaja" name="loteCaja" placeholder="Lote Caja" required />
-      <input [(ngModel)]="nuevoInventario.nombreProveedor" name="nombreProveedor" placeholder="Nombre Proveedor" required />
-      <input [(ngModel)]="nuevoInventario.nombreProducto" name="nombreProducto" placeholder="Nombre Producto" required />
-      <input [(ngModel)]="nuevoInventario.cantidadCajasLote" name="cantidadCajasLote" type="number" placeholder="Cantidad Cajas Lote" required />
-      <input [(ngModel)]="nuevoInventario.stockExhibe" name="stockExhibe" type="number" placeholder="Stock Exhibición" required />
-      <input [(ngModel)]="nuevoInventario.stockExhibeMin" name="stockExhibeMin" type="number" placeholder="Stock Exhibición Mínimo" required />
-      <input [(ngModel)]="nuevoInventario.stockAlmacen" name="stockAlmacen" type="number" placeholder="Stock Almacén" required />
-      <input [(ngModel)]="nuevoInventario.stockAlmacenMin" name="stockAlmacenMin" type="number" placeholder="Stock Almacén Mínimo" required />
-      <input [(ngModel)]="nuevoInventario.fechaCaducidadLote" name="fechaCaducidadLote" type="date" placeholder="Fecha Caducidad Lote" required />
-      <button type="submit">{{ editMode ? 'Actualizar' : 'Crear' }}</button>
-    </form>
-  </div>
-
-  <!-- Botón para alternar la visibilidad de la lista de inventarios -->
-  <button class="toggle-inventario-btn" (click)="toggleInventario()">Mostrar/Ocultar Inventarios</button>
 
   <!-- Lista de Inventarios -->
   <div class="inventario-list" [ngClass]="{'hidden': listaOculta}">
@@ -41,18 +17,80 @@
 
           <button (click)="editarInventario(inventario)">Editar</button>
           <button (click)="confirmarEliminacion(inventario)">Eliminar</button>
-          <button (click)="actualizarStockExhibe(inventario._id, inventario.stockExhibe)">
-            Actualizar Stock Exhibición
-          </button>
         </div>
       </li>
     </ul>
   </div>
 
+  <!-- Modal de crear/editar inventario -->
+  <div *ngIf="modalAbierto" class="modal show" (click)="cerrarModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <span (click)="cerrarModal()" class="close">&times;</span>
+      <h3>{{ editMode ? 'Editar Inventario' : 'Crear Inventario' }}</h3>
+      <form class="modal-form" (ngSubmit)="guardarInventario()" #inventarioForm="ngForm">
+        <!-- Campo Lote Caja -->
+        <input [(ngModel)]="nuevoInventario.loteCaja" name="loteCaja" placeholder="Lote Caja" required minlength="3" />
+        <div *ngIf="inventarioForm.controls['loteCaja']?.invalid && inventarioForm.controls['loteCaja']?.touched" class="error-message">
+          El lote de caja es requerido y debe tener al menos 3 caracteres.
+        </div>
+
+        <!-- Campo Nombre Proveedor -->
+        <input [(ngModel)]="nuevoInventario.nombreProveedor" name="nombreProveedor" placeholder="Nombre Proveedor" required />
+        <div *ngIf="inventarioForm.controls['nombreProveedor']?.invalid && inventarioForm.controls['nombreProveedor']?.touched" class="error-message">
+          El nombre del proveedor es requerido.
+        </div>
+
+        <!-- Campo Nombre Producto -->
+        <input [(ngModel)]="nuevoInventario.nombreProducto" name="nombreProducto" placeholder="Nombre Producto" required />
+        <div *ngIf="inventarioForm.controls['nombreProducto']?.invalid && inventarioForm.controls['nombreProducto']?.touched" class="error-message">
+          El nombre del producto es requerido.
+        </div>
+
+        <!-- Campo Cantidad Cajas Lote -->
+        <input [(ngModel)]="nuevoInventario.cantidadCajasLote" name="cantidadCajasLote" type="number" placeholder="Cantidad Cajas Lote" required min="1" />
+        <div *ngIf="inventarioForm.controls['cantidadCajasLote']?.invalid && inventarioForm.controls['cantidadCajasLote']?.touched" class="error-message">
+          La cantidad de cajas por lote debe ser mayor a 0.
+        </div>
+
+        <!-- Campo Stock Exhibición -->
+        <input [(ngModel)]="nuevoInventario.stockExhibe" name="stockExhibe" type="number" placeholder="Stock Exhibición" required min="0" />
+        <div *ngIf="inventarioForm.controls['stockExhibe']?.invalid && inventarioForm.controls['stockExhibe']?.touched" class="error-message">
+          El stock de exhibición no puede ser negativo.
+        </div>
+
+        <!-- Campo Stock Exhibición Mínimo -->
+        <input [(ngModel)]="nuevoInventario.stockExhibeMin" name="stockExhibeMin" type="number" placeholder="Stock Exhibición Mínimo" required min="0" />
+        <div *ngIf="inventarioForm.controls['stockExhibeMin']?.invalid && inventarioForm.controls['stockExhibeMin']?.touched" class="error-message">
+          El stock mínimo de exhibición no puede ser negativo.
+        </div>
+
+        <!-- Campo Stock Almacén -->
+        <input [(ngModel)]="nuevoInventario.stockAlmacen" name="stockAlmacen" type="number" placeholder="Stock Almacén" required min="0" />
+        <div *ngIf="inventarioForm.controls['stockAlmacen']?.invalid && inventarioForm.controls['stockAlmacen']?.touched" class="error-message">
+          El stock de almacén no puede ser negativo.
+        </div>
+
+        <!-- Campo Stock Almacén Mínimo -->
+        <input [(ngModel)]="nuevoInventario.stockAlmacenMin" name="stockAlmacenMin" type="number" placeholder="Stock Almacén Mínimo" required min="0" />
+        <div *ngIf="inventarioForm.controls['stockAlmacenMin']?.invalid && inventarioForm.controls['stockAlmacenMin']?.touched" class="error-message">
+          El stock mínimo de almacén no puede ser negativo.
+        </div>
+
+        <!-- Campo Fecha de Caducidad -->
+        <input [(ngModel)]="nuevoInventario.fechaCaducidadLote" name="fechaCaducidadLote" type="date" placeholder="Fecha Caducidad Lote" required />
+        <div *ngIf="inventarioForm.controls['fechaCaducidadLote']?.invalid && inventarioForm.controls['fechaCaducidadLote']?.touched" class="error-message">
+          La fecha de caducidad es requerida.
+        </div>
+
+        <!-- Botón de enviar -->
+        <button type="submit" [disabled]="inventarioForm.invalid">{{ editMode ? 'Actualizar' : 'Crear' }}</button>
+      </form>
+    </div>
+  </div>
+
   <!-- Modal de confirmación de eliminación -->
-  <div *ngIf="modalConfirmacion" class="modal">
+  <div *ngIf="modalConfirmacion" class="modal-confirmacion">
     <div class="modal-content">
-      <span (click)="cerrarModalConfirmacion()" class="close">&times;</span>
       <h2>¿Estás seguro de que deseas eliminar este inventario?</h2>
       <button (click)="eliminarInventario(inventarioSeleccionado._id)">Sí, Eliminar</button>
       <button (click)="cerrarModalConfirmacion()">Cancelar</button>

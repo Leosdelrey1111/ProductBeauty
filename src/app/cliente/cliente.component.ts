@@ -65,11 +65,11 @@ export class ClienteComponent implements OnInit {
   }
 
   // Función para abrir el modal y mostrar la imagen ampliada
-  openModal(imageSrc: string) {
+  openModal(product: any) {
     const modal = document.getElementById("product-modal")!;
     const modalImg = document.getElementById("modal-img")! as HTMLImageElement;
     modal.style.display = "block";
-    modalImg.src = imageSrc;
+    modalImg.src = product.imagen;
   }
 
   // Función para cerrar el modal

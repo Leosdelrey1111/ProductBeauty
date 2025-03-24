@@ -1,135 +1,274 @@
 /* Estilos globales */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f7f7f7; /* Fondo neutro */
+  font-family: 'Roboto', sans-serif; /* Tipografía moderna */
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4; /* Fondo claro y neutro */
+  color: #333; /* Texto principal */
+}
+
+/* Contenedor del formulario de registro */
+.register-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 40px;
+  background-color: #ffffff; /* Fondo blanco */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+  animation: fadeIn 0.5s ease-out;
+  border: 1px solid #e0e0e0; /* Borde sutil */
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
   }
-  
-  /* Contenedor del formulario de registro */
-  .register-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
+  to {
+    opacity: 1;
     transform: translate(-50%, -50%);
-    padding: 40px;
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
-    width: 380px;
-    max-width: 90%;
-    text-align: center;
-    background-image: linear-gradient(to right, #ff7eb3, #d14d8d); /* Fondo con gradiente */
-    color: #fff;
   }
-  
-  /* Título del formulario */
+}
+
+/* Título del formulario */
+.register-container h2 {
+  font-size: 28px;
+  color: #2c3e50; /* Azul oscuro */
+  margin-bottom: 30px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px; /* Espaciado entre letras */
+}
+
+/* Estilo para los campos de entrada */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #555; /* Gris oscuro */
+  margin-bottom: 5px;
+  display: block;
+  text-align: left;
+  font-weight: 500; /* Texto semibold */
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border: 2px solid #e0e0e0; /* Borde gris claro */
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color: #f9f9f9; /* Fondo claro */
+  color: #333; /* Texto oscuro */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto al enfocar un campo de entrada */
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #3498db; /* Azul brillante */
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.2); /* Sombra azul */
+  outline: none;
+}
+
+/* Estilos para los mensajes de error y éxito */
+.error-message {
+  color: #e74c3c; /* Rojo */
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.success-message {
+  color: #2ecc71; /* Verde */
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Estilo para el botón de registro */
+button {
+  padding: 12px 24px;
+  background-color: #3498db; /* Azul brillante */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #2980b9; /* Azul más oscuro */
+  transform: translateY(-2px); /* Efecto de elevación */
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Estilo responsive para pantallas pequeñas */
+@media (max-width: 500px) {
+  .register-container {
+    width: 90%;
+    padding: 20px;
+  }
+
   .register-container h2 {
-    font-size: 28px;
-    color: #fff;
-    margin-bottom: 30px;
-    font-weight: 600;
-    text-transform: uppercase;
+    font-size: 24px;
   }
-  
-  /* Estilo para los campos de entrada */
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .form-group label {
-    font-size: 14px;
-    color: #fff;
-    margin-bottom: 5px;
-    display: block;
-    text-align: left;
-  }
-  
+
   .form-group input,
   .form-group select {
-    width: 100%;
-    padding: 14px;
-    margin-top: 5px;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    box-sizing: border-box;
-    font-size: 16px;
-    background-color: #f9f9f9;
-    color: #333;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  /* Efecto al enfocar un campo de entrada */
-  .form-group input:focus,
-  .form-group select:focus {
-    border-color: #ff7eb3;
-    box-shadow: 0 0 10px rgba(255, 126, 179, 0.3);
-    outline: none;
-  }
-  
-  /* Estilos para los mensajes de error y éxito */
-  .error-message {
-    color: #ff4d4d;
     font-size: 14px;
-    margin-top: 10px;
-    text-align: center;
   }
-  
-  .success-message {
-    color: #4caf50;
-    font-size: 14px;
-    margin-top: 10px;
-    text-align: center;
-  }
-  
-  .btn-back:hover {
-    background-color: #ff1a6f;
-    transform: scale(1.05);
-  }
-  
-  /* Estilo para el botón de registro */
+
   button {
-    padding: 14px;
-    background-color: #ff7eb3;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    margin-top: 10px;
+    font-size: 14px;
   }
-  
-  button:hover {
-    background-color: #d14d8d;
-    transform: translateY(-3px); /* Efecto de elevación al hacer hover */
+}
+
+/* Contenedor de la lista de usuarios */
+.user-list-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff; /* Fondo blanco */
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0; /* Borde sutil */
+}
+
+.user-list-container h2 {
+  text-align: center;
+  color: #2c3e50; /* Azul oscuro */
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Tabla de usuarios */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-table th,
+.user-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0; /* Borde gris claro */
+}
+
+.user-table th {
+  background-color: #3498db; /* Azul brillante */
+  color: white;
+  font-weight: 500;
+}
+
+.user-table tr:hover {
+  background-color: #f9f9f9; /* Fondo claro al pasar el mouse */
+}
+
+/* Botones de acción */
+.action-button {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.action-button.edit {
+  background-color: #2ecc71; /* Verde */
+  color: white;
+}
+
+.action-button.delete {
+  background-color: #e74c3c; /* Rojo */
+  color: white;
+}
+
+.action-button:hover {
+  transform: translateY(-2px); /* Efecto de elevación */
+}
+
+/* Estilos del modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px); /* Efecto de desenfoque */
+}
+
+.modal-content {
+  background-color: #ffffff; /* Fondo blanco */
+  padding: 40px;
+  border-radius: 15px;
+  width: 60%;
+  max-width: 800px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  max-height: 80%;
+  overflow-y: auto;
+  animation: slideIn 0.5s ease-out;
+  border: 1px solid #e0e0e0; /* Borde sutil */
+}
+
+.modal h2 {
+  color: #2c3e50; /* Azul oscuro */
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.modal .close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 35px;
+  color: #2c3e50; /* Azul oscuro */
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.modal .close:hover {
+  color: #3498db; /* Azul brillante */
+}
+
+/* Animación de entrada */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
   }
-  
-  /* Efecto al presionar el botón */
-  button:active {
+  to {
+    opacity: 1;
     transform: translateY(0);
   }
-  
-  /* Estilo responsive para pantallas pequeñas */
-  @media (max-width: 500px) {
-    .register-container {
-      width: 90%;
-      padding: 20px;
-    }
-  
-    .register-container h2 {
-      font-size: 24px;
-    }
-  
-    .form-group input,
-    .form-group select {
-      font-size: 14px;
-    }
-  
-    button {
-      font-size: 14px;
-    }
-
-  }
-  
-  
+}

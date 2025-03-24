@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InventarioService } from '../../services/Inventario.service';
 import { Location } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar'; // Importar Snackbar
 
 @Component({
   selector: 'app-inventarios',
@@ -27,12 +28,16 @@ export class InventariosComponent implements OnInit {
   modalAbierto = false;
   modalConfirmacion = false;
 
-  constructor(private inventarioService: InventarioService,private location: Location ) { }
+  constructor(
+    private inventarioService: InventarioService,
+    private location: Location,
+    private snackBar: MatSnackBar // Inyectar Snackbar
+  ) {}
 
   ngOnInit(): void {
     this.obtenerInventarios();
   }
-  
+
   regresar(): void {
     this.location.back();  // Regresar a la página anterior
   }
@@ -43,6 +48,7 @@ export class InventariosComponent implements OnInit {
   toggleInventario() {
     this.listaOculta = !this.listaOculta; // Cambia el valor de listaVisible
   }
+
   obtenerInventarios(): void {
     this.inventarioService.getInventario().subscribe(
       data => {
@@ -56,10 +62,11 @@ export class InventariosComponent implements OnInit {
       },
       error => {
         console.error('Error al obtener inventarios', error);
+        this.mostrarMensaje('Error al obtener inventarios', 'error');
       }
     );
   }
-  
+
   formatDate(date: string): string {
     const d = new Date(date);
     if (isNaN(d.getTime())) {
@@ -71,6 +78,14 @@ export class InventariosComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
+  // Mostrar mensaje de éxito o error
+  mostrarMensaje(mensaje: string, tipo: 'exito' | 'error'): void {
+    this.snackBar.open(mensaje, 'Cerrar', {
+      duration: 3000, // Duración de 3 segundos
+      panelClass: tipo === 'exito' ? 'snackbar-exito' : 'snackbar-error', // Estilos personalizados
+    });
+  }
+
   // Crear o actualizar inventario
   guardarInventario(): void {
     if (this.editMode) {
@@ -79,26 +94,27 @@ export class InventariosComponent implements OnInit {
           data => {
             this.obtenerInventarios(); // Refresh the inventory list
             this.cerrarModal(); // Close modal after successful update
-            alert('Inventario actualizado');
+            this.mostrarMensaje('Inventario actualizado con éxito', 'exito');
           },
           error => {
             console.error('Error al actualizar inventario', error);
-            alert('Error al actualizar inventario');
+            this.mostrarMensaje('Error al actualizar inventario', 'error');
           }
         );
       } else {
         console.error('ID del inventario no disponible para actualización');
+        this.mostrarMensaje('Error: ID no disponible', 'error');
       }
     } else {
       this.inventarioService.registrarInventario(this.nuevoInventario).subscribe(
         data => {
           this.obtenerInventarios(); // Refresh the inventory list
           this.cerrarModal(); // Close modal after adding the new inventory
-          alert('Inventario agregado');
+          this.mostrarMensaje('Inventario agregado con éxito', 'exito');
         },
         error => {
           console.error('Error al agregar inventario', error);
-          alert('Error al agregar inventario');
+          this.mostrarMensaje('Error al agregar inventario', 'error');
         }
       );
     }
@@ -116,30 +132,28 @@ export class InventariosComponent implements OnInit {
     this.inventarioService.eliminarInventario(id).subscribe(
       data => {
         this.obtenerInventarios(); // Refresh the inventory list
-        alert('Inventario eliminado');
+        this.mostrarMensaje('Inventario eliminado con éxito', 'exito');
       },
       error => {
         console.error('Error al eliminar inventario', error);
-        alert('Error al eliminar inventario');
+        this.mostrarMensaje('Error al eliminar inventario', 'error');
       }
     );
   }
-  
 
   // Actualizar stockExhibe
   actualizarStockExhibe(id: string, stockExhibe: number): void {
     this.inventarioService.updateStockExhibe(id, stockExhibe).subscribe(
       data => {
         this.obtenerInventarios(); // Refresh the inventory list
-        alert('Stock Exhibición actualizado');
+        this.mostrarMensaje('Stock Exhibición actualizado', 'exito');
       },
       error => {
         console.error('Error al actualizar stockExhibe', error);
-        alert('Error al actualizar stockExhibe');
+        this.mostrarMensaje('Error al actualizar stockExhibe', 'error');
       }
     );
   }
-  
 
   // Abrir el modal
   abrirModal(): void {
@@ -165,10 +179,10 @@ export class InventariosComponent implements OnInit {
     this.modalConfirmacion = false;
   }
 
- confirmarEliminacion(inventario: any): void {
-  this.inventarioSeleccionado = inventario;
-  this.modalConfirmacion = true;
-}
+  confirmarEliminacion(inventario: any): void {
+    this.inventarioSeleccionado = inventario;
+    this.modalConfirmacion = true;
+  }
 
   // Cerrar modal de confirmación
   cerrarModalConfirmacion(): void {

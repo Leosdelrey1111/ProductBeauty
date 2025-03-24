@@ -8,7 +8,7 @@
 /* Estilos generales */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #fce4ec; /* Fondo suave rosa */
+    background-color: #f9f9f9; /* Fondo más neutro y profesional */
     color: #333;
     padding: 20px;
     line-height: 1.6;
@@ -19,65 +19,85 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #ff66b2;
+    background-color: #fff; /* Fondo blanco para un look más limpio */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra más suave */
     margin-bottom: 20px;
 }
 
-/* Contenedor de los botones "Regresar" y "Categorías" */
-.navbar-content {
+/* Logo y título en la barra de navegación */
+.logo-container {
     display: flex;
     align-items: center;
-    gap: 15px;  /* Espacio entre el botón "Regresar" y las categorías */
 }
 
-/* Estilo para el botón "Regresar" */
-.btn-back {
-    padding: 12px 20px;
+.logo {
+    width: 50px; /* Ajusta el tamaño del logo */
+    height: 50px;
+    margin-right: 10px;
+}
+
+.title {
+    color: #ff3385; /* Color rosa para el título */
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.dropbtn, .btn-back, .search-bar button, .session-btn {
     background-color: #ff3385;
     color: white;
     border: none;
+    padding: 12px 20px; /* Ajuste de padding para un tamaño más equilibrado */
+    border-radius: 25px; /* Bordes más redondeados */
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem; /* Tamaño de fuente ligeramente reducido */
+    transition: all 0.3s ease;
+    margin-left: 10px; /* Espacio entre botones */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.dropbtn:hover, .search-bar button:hover, .session-btn:hover {
+    background-color: #ff1a6f;
+    transform: translateY(-2px); /* Efecto de elevación al pasar el mouse */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada al pasar el mouse */
+}
+
+
+/* Estilo específico para el botón de inicio de sesión */
+.session-btn {
+    background-color: #333; /* Color más oscuro para el botón de inicio de sesión */
+    color: white;
+}
+
+.session-btn:hover {
+    background-color: #555; /* Color más claro al pasar el mouse */
+}
+/* Estilo para el ícono dentro de los botones */
+.dropbtn i, .search-bar button i, .session-btn i {
+    margin-right: 8px; /* Espacio entre el ícono y el texto */
+}
+.search-bar input {
+    padding: 15px;
+    margin-right: 15px;
+    border-radius: 50px;
+    border: 1px solid #ddd; /* Borde más suave */
+
     font-size: 1rem;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.btn-back:hover {
-    background-color: #c2557a;
-}
-
-/* Estilo para el menú de categorías */
-.dropdown {
-    position: relative;
-}
-
-.dropbtn {
-    padding: 12px 20px;
-    background-color: #ff3385;
-    color: white;
-    border: none;
-    font-size: 1.2rem;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.dropbtn:hover {
-    background-color: #c2557a;
-}
-
-/* Contenido del dropdown */
+/* Estilo para las opciones del dropdown */
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: #fff; /* Fondo blanco */
     min-width: 160px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra más suave */
 }
 
 .dropdown:hover .dropdown-content {
@@ -85,47 +105,20 @@ nav {
 }
 
 .dropdown-content button {
-    padding: 10px;
-    font-size: 1rem;
-    color: #333;
-    background: none;
+    padding: 15px;
+    background-color: #fff; /* Fondo blanco */
+    color: #333; /* Texto más oscuro */
     border: none;
-    text-align: left;
     width: 100%;
-    cursor: pointer;
+    text-align: left;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .dropdown-content button:hover {
-    background-color: #ddd;
-}
-
-/* Estilo para la barra de búsqueda */
-.search-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;  /* Espacio entre el campo de búsqueda y el botón */
-}
-
-.search-bar input {
-    padding: 8px 12px;
-    font-size: 1rem;
-    border-radius: 20px;
-    border: 1px solid #ccc;
-}
-
-.search-bar button {
-    padding: 8px 12px;
-    background-color: #ff3385;
-    color: white;
-    border: none;
-    font-size: 1rem;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.search-bar button:hover {
-    background-color: #c2557a;
+    background-color: #f9f9f9; /* Fondo más claro al pasar el mouse */
+    transform: scale(1.05);
 }
 
 /* Estilo para los productos */
@@ -138,10 +131,10 @@ nav {
 /* Estilo para las tarjetas de producto */
 .product-card {
     background-color: #fff;
-    border: 2px solid #ff66b2;
+    border: 1px solid #ddd; /* Borde más suave */
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra más suave */
     cursor: pointer;
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
@@ -149,8 +142,8 @@ nav {
 
 .product-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-    background-color: #ffe6f2;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1); /* Sombra más suave */
+    background-color: #f9f9f9; /* Fondo más claro al pasar el mouse */
 }
 
 /* Estilo para las imágenes */
@@ -167,7 +160,7 @@ nav {
 /* Estilo de los títulos y descripciones */
 .product-card h3 {
     margin-top: 15px;
-    color: #ff3385;
+    color: #ff3385; /* Color rosa para el título */
     font-size: 1.3rem;
     font-weight: bold;
     text-align: center;
@@ -183,7 +176,7 @@ nav {
 .product-card p:last-child {
     font-size: 1.1rem;
     font-weight: bold;
-    color: #ff3385;
+    color: #ff3385; /* Color rosa para el precio */
     margin-top: 15px;
     text-align: center;
 }
@@ -199,7 +192,7 @@ nav {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    border: 2px solid #ff3385;
+    border: 2px solid #ff3385; /* Borde rosa */
     cursor: pointer;
     transition: transform 0.3s;
 }
@@ -214,14 +207,14 @@ nav {
 
 /* Estilo para el mensaje de "No se encontraron productos" */
 .no-products-message {
-    background-color: #ff66b2;
+    background-color: #ff3385; /* Fondo rosa */
     color: white;
     font-size: 1.5rem;
     font-weight: bold;
     text-align: center;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra más suave */
     margin-top: 30px;
     animation: fadeIn 1s ease-out;
 }
@@ -253,38 +246,4 @@ nav {
 
 .low-stock {
     background-color: #ff9900a0;
-}
-
-/* Estilos generales para botones */
-button {
-    padding: 12px 20px;
-    background-color: #ff3385;
-    color: white;
-    border: none;
-    font-size: 1.2rem;
-    border-radius: 30px; /* Aumenté el valor para hacerlo más redondo */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #c2557a;
-}
-
-/* Estilo para los botones dentro del dropdown */
-.dropdown-content button {
-    padding: 15px;
-    background-color: #ff3385;
-    color: white;
-    border: none;
-    width: 100%;
-    text-align: left;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.dropdown-content button:hover {
-    background-color: #ff1a6f;
-    transform: scale(1.05);
 }
