@@ -11,15 +11,15 @@ import { Location } from '@angular/common';
 export class HistorialComponent implements OnInit {
   historial: any[] = [];
 
-  constructor(private historialService: HistorialService,private location: Location) {}
+  constructor(private historialService: HistorialService, private location: Location) {}
 
   ngOnInit(): void {
     this.historialService.getHistorial().subscribe((data) => {
       this.historial = data;
     });
   }
+
   regresar(): void {
     this.location.back();  // Regresar a la página anterior
   }
-
 }

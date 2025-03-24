@@ -3,7 +3,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f7f7f7; /* Fondo más suave */
+  background-color: #f7f7f7;
 }
 
 /* Contenedor principal del login */
@@ -13,7 +13,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 40px;
-  background-color: rgba(255, 255, 255, 0.95); /* Fondo con opacidad */
+  background-color: rgba(255, 255, 255, 0.95);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   width: 380px;
@@ -22,14 +22,13 @@ body {
   background-image: url('https://static.vecteezy.com/system/resources/previews/010/256/694/non_2x/vp-initial-wedding-monogram-logo-vector.jpg');
   background-size: cover;
   background-position: center;
-  background-blur: 10px; /* Desenfoque de fondo para mejor legibilidad */
-  color: #252323; /* Texto blanco para el contraste */
+  color: #252323;
 }
 
 /* Título */
 .login-container h2 {
   font-size: 28px;
-  color: #880adb;
+  color: #d14d8d;
   margin-bottom: 20px;
   font-weight: 600;
   text-transform: uppercase;
@@ -63,7 +62,7 @@ body {
 
 /* Efecto focus en los campos de entrada */
 .form-group input:focus {
-  border-color: #D14D8D;
+  border-color: #d14d8d;
   box-shadow: 0 0 10px rgba(209, 77, 141, 0.3);
   outline: none;
 }
@@ -80,7 +79,7 @@ body {
 button {
   width: 100%;
   padding: 14px;
-  background-color: #D14D8D;
+  background-color: #d14d8d;
   color: white;
   border: none;
   border-radius: 10px;
@@ -91,8 +90,8 @@ button {
 }
 
 button:hover {
-  background-color: #B34275;
-  transform: translateY(-3px); /* Efecto hover con ligera elevación */
+  background-color: #b34275;
+  transform: translateY(-3px);
 }
 
 /* Animación de transiciones */

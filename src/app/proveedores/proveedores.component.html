@@ -1,71 +1,74 @@
-    <div class="container">
-        <h2>Lista de Proveedores</h2>
-        
-        <!-- Botón de Regresar -->
-        <button class="btn-back" (click)="regresar()">Regresar</button>
-
-        <!-- Botón para agregar proveedor -->
-        <button class="btn-add" (click)="abrirModal()">Agregar Proveedor</button>
-
-        <div *ngIf="proveedores.length > 0; else noProveedores">
-        <div *ngFor="let proveedor of proveedores" class="proveedor-card">
-            <p><strong>Folio:</strong> {{ proveedor.folioProveedor }}</p>
-            <p><strong>Nombre:</strong> {{ proveedor.nombre }}</p>
-            <p><strong>Teléfono:</strong> {{ proveedor.telefono }}</p>
-            <p><strong>Correo:</strong> {{ proveedor.correo }}</p>
-
-            <p><strong>Dirección:</strong>
-            {{ proveedor.direccion.calle }}, {{ proveedor.direccion.numeroExterior }},
-            {{ proveedor.direccion.colonia }}, {{ proveedor.direccion.codigoPostal }},
-            {{ proveedor.direccion.ciudad.nombreCiudad }}
-            </p>
-
-            <button class="btn-edit" (click)="editarProveedor(proveedor)">Editar</button>
-            <button class="btn-delete" (click)="confirmarEliminacion(proveedor)">Eliminar</button>
-        </div>
-        </div>
-
-        <ng-template #noProveedores>
-        <p>No se encontraron proveedores.</p>
-        </ng-template>
-
-        <!-- Modal para Agregar/Editar Proveedor -->
-        <div *ngIf="modalAbierto" class="modal">
-        <div class="modal-content">
-            <span (click)="cerrarModal()" class="close">&times;</span>
-            <h2>{{ editMode ? 'Editar Proveedor' : 'Agregar Proveedor' }}</h2>
-            <form (ngSubmit)="guardarProveedor()">
-            <label for="folioProveedor">Folio Proveedor:</label>
-            <input type="text" id="folioProveedor" [(ngModel)]="proveedorSeleccionado.folioProveedor" name="folioProveedor" required>
-
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" [(ngModel)]="proveedorSeleccionado.nombre" name="nombre" required>
-
-            <label for="telefono">Teléfono:</label>
-            <input type="text" id="telefono" [(ngModel)]="proveedorSeleccionado.telefono" name="telefono">
-
-            <label for="correo">Correo:</label>
-            <input type="email" id="correo" [(ngModel)]="proveedorSeleccionado.correo" name="correo">
-
-            <label for="direccion">Dirección:</label>
-            <input type="text" id="calle" [(ngModel)]="proveedorSeleccionado.direccion.calle" name="calle" placeholder="Calle" required>
-            <input type="text" id="numeroExterior" [(ngModel)]="proveedorSeleccionado.direccion.numeroExterior" name="numeroExterior" placeholder="Número Exterior" required>
-            <input type="text" id="colonia" [(ngModel)]="proveedorSeleccionado.direccion.colonia" name="colonia" placeholder="Colonia" required>
-            <input type="text" id="codigoPostal" [(ngModel)]="proveedorSeleccionado.direccion.codigoPostal" name="codigoPostal" placeholder="Código Postal" required>
-            <input type="text" id="ciudad" [(ngModel)]="proveedorSeleccionado.direccion.ciudad.nombreCiudad" name="ciudad" placeholder="Ciudad" required>
-
-            <button type="submit">{{ editMode ? 'Actualizar Proveedor' : 'Agregar Proveedor' }}</button>
-            </form>
-        </div>
-        </div>
-
-        <!-- Modal de confirmación de eliminación -->
-        <div *ngIf="modalConfirmacion" class="modal">
-        <div class="modal-content">
-            <span (click)="cerrarModalConfirmacion()" class="close">&times;</span>
-            <h2>¿Estás seguro de que deseas eliminar este proveedor?</h2>
-            <button (click)="eliminarProveedor(proveedorSeleccionado._id)" class="confirm">Sí, Eliminar</button>
-            <button (click)="cerrarModalConfirmacion()" class="cancel">Cancelar</button>
-        </div>
-        </div>
+<!-- Barra de navegación -->
+<div class="navbar">
+    <h1>Proveedores</h1>
+    <div class="navbar-buttons">
+      <button (click)="regresar()">Regresar</button>
+      <button (click)="abrirModal()">Agregar Proveedor</button>
     </div>
+  </div>
+  
+  <!-- Contenedor principal -->
+  <div class="container">
+    <h2>Lista de Proveedores</h2>
+  
+    <div *ngIf="proveedores.length > 0; else noProveedores">
+      <div *ngFor="let proveedor of proveedores" class="proveedor-card">
+        <p><strong>Folio:</strong> {{ proveedor.folioProveedor }}</p>
+        <p><strong>Nombre:</strong> {{ proveedor.nombre }}</p>
+        <p><strong>Teléfono:</strong> {{ proveedor.telefono }}</p>
+        <p><strong>Correo:</strong> {{ proveedor.correo }}</p>
+        <p><strong>Dirección:</strong>
+          {{ proveedor.direccion.calle }}, {{ proveedor.direccion.numeroExterior }},
+          {{ proveedor.direccion.colonia }}, {{ proveedor.direccion.codigoPostal }},
+          {{ proveedor.direccion.ciudad.nombreCiudad }}
+        </p>
+        <button (click)="editarProveedor(proveedor)">Editar</button>
+        <button (click)="confirmarEliminacion(proveedor)">Eliminar</button>
+      </div>
+    </div>
+  
+    <ng-template #noProveedores>
+      <p class="no-proveedores">No se encontraron proveedores.</p>
+    </ng-template>
+  
+    <!-- Modal para Agregar/Editar Proveedor -->
+<div *ngIf="modalAbierto" class="modal" (click)="cerrarModal()"> <!-- Cierra al hacer clic fuera -->
+    <div class="modal-content" (click)="$event.stopPropagation()"> <!-- Evita que se cierre al hacer clic dentro -->
+      <span (click)="cerrarModal()" class="close">&times;</span> <!-- Botón para cerrar -->
+      <h2>{{ editMode ? 'Editar Proveedor' : 'Agregar Proveedor' }}</h2>
+      <form (ngSubmit)="guardarProveedor()">
+        <label for="folioProveedor">Folio Proveedor:</label>
+        <input type="text" id="folioProveedor" [(ngModel)]="proveedorSeleccionado.folioProveedor" name="folioProveedor" required>
+  
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" [(ngModel)]="proveedorSeleccionado.nombre" name="nombre" required>
+  
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" [(ngModel)]="proveedorSeleccionado.telefono" name="telefono">
+  
+        <label for="correo">Correo:</label>
+        <input type="email" id="correo" [(ngModel)]="proveedorSeleccionado.correo" name="correo">
+  
+        <label for="direccion">Dirección:</label>
+        <input type="text" id="calle" [(ngModel)]="proveedorSeleccionado.direccion.calle" name="calle" placeholder="Calle" required>
+        <input type="text" id="numeroExterior" [(ngModel)]="proveedorSeleccionado.direccion.numeroExterior" name="numeroExterior" placeholder="Número Exterior" required>
+        <input type="text" id="colonia" [(ngModel)]="proveedorSeleccionado.direccion.colonia" name="colonia" placeholder="Colonia" required>
+        <input type="text" id="codigoPostal" [(ngModel)]="proveedorSeleccionado.direccion.codigoPostal" name="codigoPostal" placeholder="Código Postal" required>
+        <input type="text" id="ciudad" [(ngModel)]="proveedorSeleccionado.direccion.ciudad.nombreCiudad" name="ciudad" placeholder="Ciudad" required>
+  
+        <button type="submit">{{ editMode ? 'Actualizar Proveedor' : 'Agregar Proveedor' }}</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Modal de confirmación de eliminación -->
+  <div *ngIf="modalConfirmacion" class="modal-confirmacion" (click)="cerrarModalConfirmacion()"> <!-- Cierra al hacer clic fuera -->
+    <div class="modal-content" (click)="$event.stopPropagation()"> <!-- Evita que se cierre al hacer clic dentro -->
+      <span (click)="cerrarModalConfirmacion()" class="close">&times;</span> <!-- Botón para cerrar -->
+      <h2>¿Estás seguro de que deseas eliminar este proveedor?</h2>
+      <button (click)="eliminarProveedor(proveedorSeleccionado._id)">Sí, Eliminar</button>
+      <button (click)="cerrarModalConfirmacion()">Cancelar</button>
+    </div>
+  </div>
+  
+ 

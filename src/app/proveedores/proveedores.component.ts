@@ -65,6 +65,11 @@ export class ProveedoresComponent implements OnInit {
   cerrarModal(): void {
     this.modalAbierto = false;
   }
+  
+  cerrarModalConfirmacion(): void {
+    this.modalConfirmacion = false;
+    this.proveedorSeleccionado = null;
+  }
 
   guardarProveedor(): void {
     // Validación de campos obligatorios antes de enviar
@@ -115,8 +120,5 @@ export class ProveedoresComponent implements OnInit {
     this.modalConfirmacion = true;
   }
 
-  cerrarModalConfirmacion(): void {
-    this.modalConfirmacion = false;
-    this.proveedorSeleccionado = null;
-  }
+
 }

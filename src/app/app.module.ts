@@ -41,6 +41,7 @@ import { InventariosComponent } from './inventarios/inventarios.component';
 import { HistorialComponent } from './historial/historial.component';
 import { RegisterComponent } from './register/register.component';
 import { ClienteEmpleadoComponent } from './cliente-empleado/cliente-empleado.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,11 @@ import { ClienteEmpleadoComponent } from './cliente-empleado/cliente-empleado.co
         MatButtonModule, 
         MatDatepickerModule,
         MatDatepickerModule,
+        ToastrModule.forRoot({
+          timeOut: 3000,
+          positionClass: 'toast-top-right',
+          preventDuplicates: true,
+        }),
   ],
   providers: [
     provideAnimationsAsync()

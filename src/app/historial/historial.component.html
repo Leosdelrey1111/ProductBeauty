@@ -1,29 +1,28 @@
 <!-- src/app/components/historial/historial.component.html -->
 <div class="historial-container">
-    <button class="btn-back" (click)="regresar()">Regresar</button>
+  <button class="btn-back" (click)="regresar()">Regresar</button>
 
-    <h2>Historial de Productos</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Nombre Producto</th>
-          <th>Precio Anterior Caja</th>
-          <th>Precio Nuevo Caja</th>
-          <th>Precio Anterior Pieza</th>
-          <th>Precio Nuevo Pieza</th>
-          <th>Fecha de Registro</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of historial">
-          <td>{{ item.nombreProducto }}</td>
-          <td>{{ item.precioAnteriorCaja | currency }}</td>
-          <td>{{ item.precioNuevoCaja | currency }}</td>
-          <td>{{ item.precioAnteriorPieza | currency }}</td>
-          <td>{{ item.precioNuevoPieza | currency }}</td>
-          <td>{{ item.fechaRegistro | date:'dd/MM/yyyy' }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+  <h2>Historial de Productos</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre Producto</th>
+        <th>Precio Anterior Caja</th>
+        <th>Precio Nuevo Caja</th>
+        <th>Precio Anterior Pieza</th>
+        <th>Precio Nuevo Pieza</th>
+        <th>Fecha de Registro</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of historial">
+        <td>{{ item.nombreProducto }}</td>
+        <td>{{ item.precioAnteriorCaja | currency }}</td>
+        <td>{{ item.precioNuevoCaja | currency }}</td>
+        <td>{{ item.precioAnteriorPieza | currency }}</td>
+        <td>{{ item.precioNuevoPieza | currency }}</td>
+        <td>{{ item.fechaRegistro | date:'dd/MM/yyyy' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

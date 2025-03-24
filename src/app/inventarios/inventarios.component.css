@@ -1,78 +1,134 @@
-/* Estilo general del contenedor */
+/* Reseteo de márgenes y paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos generales */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f7f6; /* Fondo claro y neutral */
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Contenedor principal */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 30px;
-  background-color: #ffe6f2;
+  background-color: #ffffff;
   border-radius: 20px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  font-family: 'Arial', sans-serif;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Estilo para los títulos */
 h1, h2, h3 {
-  color: #ff3385; /* Rosa fuerte para títulos */
-  font-weight: bold;
-  text-align: center; /* Centrado del título */
-  font-size: 2.5rem; /* Aumento de tamaño para mayor visibilidad */
-  position: relative; /* Necesario para el subrayado */
-  margin-bottom: 20px; /* Separación de la parte inferior */
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave para resaltar el título */
+  color: #2c3e50;
+  font-weight: 600;
+  text-align: center;
+  font-size: 2.5rem;
+  position: relative;
+  margin-bottom: 20px;
 }
 
 h1::after {
   content: "";
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 5px; /* Altura del subrayado */
-  background-color: #ff3385; /* Rosa brillante como subrayado */
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background-color: #d14d8d;
+  border-radius: 2px;
 }
 
-/* Estilo para el formulario */
-form input {
+/* Botón de regresar */
+.btn-back {
+  background-color: #d14d8d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-bottom: 20px;
+}
+
+.btn-back:hover {
+  background-color: #b34275;
+  transform: translateY(-2px);
+}
+
+/* Botón para abrir el modal de crear inventario */
+.btn-crear-inventario {
+  background-color: #d14d8d;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: block;
+  margin: 20px auto;
+}
+
+.btn-crear-inventario:hover {
+  background-color: #b34275;
+  transform: translateY(-2px);
+}
+
+/* Estilo para el formulario dentro del modal */
+.modal-form input {
   width: 100%;
   padding: 12px;
   margin: 10px 0;
   border-radius: 8px;
-  border: 2px solid #ff3385;
-  background-color: #fff;
-  font-size: 1.1rem;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
+  border: 2px solid #e0e0e0;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-form input:focus {
-  border-color: #d36489; /* Color rosa más suave al enfocar */
-  background-color: #ffebf0; /* Fondo suave al enfocarse */
+.modal-form input:focus {
+  border-color: #d14d8d;
+  box-shadow: 0 0 8px rgba(209, 77, 141, 0.2);
   outline: none;
 }
 
-/* Botón de "Crear" con rosa destacado */
-form button {
-  background-color: #ff3385; /* Rosa brillante */
+/* Botón de "Crear" dentro del modal */
+.modal-form button {
+  background-color: #d14d8d;
   color: white;
-  padding: 15px 25px;
+  padding: 12px 24px;
   border: none;
   border-radius: 10px;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-top: 30px; 
-  width: 100%; 
+  margin-top: 20px;
+  width: 100%;
 }
 
-form button:hover {
-  background-color: #ff1a6f; /* Rosa más brillante en hover */
-  transform: scale(1.1); /* Aumento de tamaño para destacarse */
+.modal-form button:hover {
+  background-color: #b34275;
+  transform: translateY(-2px);
 }
 
+/* Lista de inventarios */
 .inventario-list {
   margin: 20px 0;
 }
 
+/* Tarjetas de inventario */
 .inventario-card {
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 20px;
   margin-bottom: 10px;
   border-radius: 15px;
@@ -85,46 +141,28 @@ form button:hover {
   transform: translateY(-5px);
 }
 
+.inventario-card p {
+  color: #555555;
+  margin: 8px 0;
+}
+
 .inventario-card button {
-  background-color: #ff3385;
+  background-color: #d14d8d;
   color: white;
-  padding: 12px 18px;
+  padding: 10px 16px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-right: 15px;
+  margin-right: 10px;
   margin-top: 10px;
 }
 
 .inventario-card button:hover {
-  background-color: #ff1a6f;
+  background-color: #b34275;
 }
 
-/* Añadir la clase que hace desaparecer las tarjetas */
-.inventario-list.hidden {
-  display: none;
-}
-
-/* Botón para mostrar/ocultar la lista */
-.toggle-inventario-btn {
-  background-color: #ff3385;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1.1rem;
-  transition: background-color 0.3s ease;
-  display: block;
-  margin: 30px auto 20px auto; 
-}
-
-.toggle-inventario-btn:hover {
-  background-color: #ff1a6f;
-}
-
-/* Modal de confirmación de eliminación */
+/* Modal de crear/editar inventario */
 .modal {
   position: fixed;
   top: 0;
@@ -136,27 +174,37 @@ form button:hover {
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  transition: opacity 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  backdrop-filter: blur(8px); /* Efecto de desenfoque */
+}
+
+.modal.show {
+  opacity: 1;
+  visibility: visible;
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 30px;
   border-radius: 20px;
-  width: 450px;
-  max-width: 100%;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  transform: translateY(-50px);
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transform: translateY(-20px);
   transition: transform 0.3s ease;
+  position: relative;
 }
 
 .modal.show .modal-content {
-  transform: translateY(0); /* Animación al mostrar */
+  transform: translateY(0);
 }
 
+/* Botón de cerrar */
 .close {
-  font-size: 30px;
-  color: #ff3385; /* Rosa fuerte para el icono de cerrar */
+  font-size: 24px;
+  color: #d14d8d;
   position: absolute;
   top: 15px;
   right: 15px;
@@ -165,42 +213,66 @@ form button:hover {
 }
 
 .close:hover {
-  color: #ff1a6f; /* Rosa brillante al pasar el ratón */
+  color: #b34275;
 }
 
-/* Estilo para los botones */
-button {
-  background-color: #ff3385; 
+/* Modal de confirmación de eliminación */
+.modal-confirmacion {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px); /* Efecto de desenfoque */
+}
+
+.modal-confirmacion .modal-content {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.modal-confirmacion h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.modal-confirmacion button {
+  background-color: #d14d8d;
   color: white;
-  padding: 12px 20px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 1.1rem;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-top: 15px; /* Separación entre los botones */
+  margin: 0 10px;
+  transition: background-color 0.3s ease;
 }
 
-button:hover {
-  background-color: #ff1a6f; /* Rosa más brillante en hover */
-  transform: scale(1.1); /* Aumento de tamaño para interacción */
+.modal-confirmacion button:hover {
+  background-color: #b34275;
 }
 
-/* Estilo general para contenedores de texto */
-.text-container {
-  padding: 20px;
-  background-color: #ffebf0; /* Fondo suave y armonioso */
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 30px;
+/* Estilos para mensajes de error */
+.error-message {
+  color: #ff4d4d;
+  font-size: 0.9rem;
+  margin-top: 5px;
 }
 
-/* Mejorar la visibilidad y accesibilidad de los textos */
-h1, h2, h3 {
-  color: #ff3385; /* Rosa fuerte para títulos */
-  font-weight: bold;
+/* Snackbar personalizado */
+.snackbar-exito {
+  background-color: #4caf50; /* Verde para éxito */
 }
 
-p, span {
-  color: #333; /* Color oscuro para mejor legibilidad */
+.snackbar-error {
+  background-color: #ff4d4d; /* Rojo para error */
 }

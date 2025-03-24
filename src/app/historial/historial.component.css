@@ -19,8 +19,8 @@ body {
   margin: 0 auto;
   padding: 20px;
   background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -31,10 +31,10 @@ body {
   justify-content: space-between;
   align-items: center;
   background-color: #ff66b2;
-  padding: 10px 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px 25px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 1200px;
   margin-left: auto;
@@ -43,7 +43,8 @@ body {
 
 .navbar h1 {
   color: white;
-  font-size: 1.8rem;
+  font-size: 2rem;
+  font-weight: bold;
   margin: 0;
 }
 
@@ -51,7 +52,7 @@ body {
   background-color: white;
   color: #ff3385;
   border: none;
-  padding: 8px 18px;
+  padding: 10px 20px;
   font-size: 1rem;
   border-radius: 8px;
   cursor: pointer;
@@ -70,30 +71,43 @@ body {
   padding: 20px;
   max-width: 90%;
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .historial-container h2 {
   text-align: center;
   color: #ff3385;
-  font-size: 24px;
+  font-size: 28px;
   margin-bottom: 20px;
+  position: relative;
+}
+
+.historial-container h2::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background-color: #ff3385;
+  border-radius: 2px;
 }
 
 /* Tabla */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 20px;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 th, td {
-  padding: 12px;
+  padding: 15px;
   text-align: center;
   font-size: 16px;
   border-bottom: 1px solid #ddd;
@@ -116,6 +130,7 @@ tr:nth-child(even) td {
 
 tr:hover {
   background-color: #f1b5cc;
+  transition: background-color 0.3s ease;
 }
 
 /* Botón de regreso */
@@ -126,16 +141,33 @@ tr:hover {
   font-size: 16px;
   font-weight: bold;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .btn-back:hover {
   background-color: #ff1a6f;
   transform: scale(1.05);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.historial-container {
+  animation: fadeIn 0.5s ease-out;
 }
