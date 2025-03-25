@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProveedorService } from '../../services/Proveedor.service';
-import { Location } from '@angular/common';  // Importar Location para navegación
+import { Location } from '@angular/common';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-proveedores',
@@ -8,35 +9,84 @@ import { Location } from '@angular/common';  // Importar Location para navegaci�
   styleUrls: ['./proveedores.component.css']
 })
 export class ProveedoresComponent implements OnInit {
+  @ViewChild('proveedorForm') proveedorForm!: NgForm;
+
   proveedores: any[] = [];
+  filteredProveedores: any[] = [];
+  proveedorSeleccionado: any = {
+    folioProveedor: '',
+    nombre: '',
+    telefono: '',
+    correo: '',
+    direccion: {
+      calle: '',
+      numeroExterior: '',
+      colonia: '',
+      codigoPostal: '',
+      ciudad: {
+        nombreCiudad: ''
+      }
+    }
+  };
+  editMode = false;
   modalAbierto = false;
   modalConfirmacion = false;
-  proveedorSeleccionado: any = null;
-  editMode = false; // Para saber si estamos en modo edición o creación
+  searchTerm = '';
+  notificationMessage = '';
 
-  constructor(private proveedorService: ProveedorService, private location: Location ) {}
+  constructor(
+    private proveedorService: ProveedorService,
+    private location: Location
+  ) {}
 
   ngOnInit(): void {
-    this.obtenerProveedores(); // Cargar los proveedores al iniciar el componente
+    this.obtenerProveedores();
   }
-    // Función para regresar a la página anterior
-    regresar(): void {
-      this.location.back();  // Regresar a la página anterior en el historial
-    }
 
   obtenerProveedores(): void {
     this.proveedorService.getProveedores().subscribe(
-      (data) => {
-        this.proveedores = data;
+      (data: any) => {
+        this.proveedores = data.map((proveedor: any) => ({
+          ...proveedor,
+          direccion: {
+            calle: proveedor.direccion?.calle || '',
+            numeroExterior: proveedor.direccion?.numeroExterior || proveedor.direccion?.numeroInterior || '',
+            colonia: proveedor.direccion?.colonia || '',
+            codigoPostal: proveedor.direccion?.codigoPostal || '',
+            ciudad: {
+              nombreCiudad: proveedor.direccion?.ciudad?.nombreCiudad || ''
+            }
+          }
+        }));
+        this.filteredProveedores = [...this.proveedores];
       },
-      (error) => {
-        console.error('Error al obtener proveedores', error);
+      error => {
+        this.mostrarNotificacion('Error al obtener proveedores');
       }
     );
   }
 
+  applyFilter(): void {
+    if (!this.searchTerm) {
+      this.filteredProveedores = [...this.proveedores];
+      return;
+    }
+
+    const term = this.searchTerm.toLowerCase();
+    this.filteredProveedores = this.proveedores.filter(p => 
+      p.nombre.toLowerCase().includes(term) || 
+      p.folioProveedor.toLowerCase().includes(term) ||
+      (p.telefono && p.telefono.toLowerCase().includes(term)) ||
+      (p.correo && p.correo.toLowerCase().includes(term)) ||
+      (p.direccion.ciudad.nombreCiudad && p.direccion.ciudad.nombreCiudad.toLowerCase().includes(term))
+    );
+  }
+
+  regresar(): void {
+    this.location.back();
+  }
+
   abrirModal(): void {
-    // Limpiamos el formulario para agregar un nuevo proveedor
     this.proveedorSeleccionado = {
       folioProveedor: '',
       nombre: '',
@@ -53,66 +103,72 @@ export class ProveedoresComponent implements OnInit {
       }
     };
     this.modalAbierto = true;
-    this.editMode = false; // Modo creación
+    this.editMode = false;
   }
 
   editarProveedor(proveedor: any): void {
-    this.proveedorSeleccionado = { ...proveedor };  // Copiar los datos del proveedor para editar
+    this.proveedorSeleccionado = {
+      _id: proveedor._id,
+      folioProveedor: proveedor.folioProveedor,
+      nombre: proveedor.nombre,
+      telefono: proveedor.telefono || '',
+      correo: proveedor.correo || '',
+      direccion: {
+        calle: proveedor.direccion?.calle || '',
+        numeroExterior: proveedor.direccion?.numeroExterior || proveedor.direccion?.numeroInterior || '',
+        colonia: proveedor.direccion?.colonia || '',
+        codigoPostal: proveedor.direccion?.codigoPostal || '',
+        ciudad: {
+          nombreCiudad: proveedor.direccion?.ciudad?.nombreCiudad || ''
+        }
+      }
+    };
     this.modalAbierto = true;
-    this.editMode = true; // Modo edición
+    this.editMode = true;
   }
 
   cerrarModal(): void {
     this.modalAbierto = false;
   }
-  
+
   cerrarModalConfirmacion(): void {
     this.modalConfirmacion = false;
-    this.proveedorSeleccionado = null;
   }
 
   guardarProveedor(): void {
-    // Validación de campos obligatorios antes de enviar
-    if (!this.proveedorSeleccionado.folioProveedor || !this.proveedorSeleccionado.nombre || !this.proveedorSeleccionado.direccion || !this.proveedorSeleccionado.direccion.calle || !this.proveedorSeleccionado.direccion.numeroExterior || !this.proveedorSeleccionado.direccion.colonia || !this.proveedorSeleccionado.direccion.codigoPostal || !this.proveedorSeleccionado.direccion.ciudad.nombreCiudad) {
-        alert('Por favor, complete todos los campos obligatorios.');
-        return;
+    if (this.proveedorForm.invalid) {
+      this.mostrarNotificacion('Por favor complete todos los campos requeridos');
+      return;
     }
 
     if (this.editMode) {
-      this.proveedorService.actualizarProveedor(this.proveedorSeleccionado._id, this.proveedorSeleccionado).subscribe(
-        (data) => {
+      this.proveedorService.actualizarProveedor(
+        this.proveedorSeleccionado._id, 
+        this.proveedorSeleccionado
+      ).subscribe(
+        () => {
           this.obtenerProveedores();
           this.cerrarModal();
-          alert('Proveedor actualizado');
+          this.mostrarNotificacion('Proveedor actualizado con éxito');
         },
-        (error) => {
-          console.error('Error al actualizar proveedor', error);
+        error => {
+          this.mostrarNotificacion('Error al actualizar proveedor');
         }
       );
     } else {
-      this.proveedorService.registrarProveedor(this.proveedorSeleccionado).subscribe(
-        (data) => {
+      this.proveedorService.registrarProveedor(
+        this.proveedorSeleccionado
+      ).subscribe(
+        () => {
           this.obtenerProveedores();
           this.cerrarModal();
-          alert('Proveedor agregado');
+          this.mostrarNotificacion('Proveedor creado con éxito');
         },
-        (error) => {
-          console.error('Error al agregar proveedor', error);
+        error => {
+          this.mostrarNotificacion('Error al crear proveedor');
         }
       );
     }
-  }
-
-  eliminarProveedor(id: string): void {
-    this.proveedorService.eliminarProveedor(id).subscribe(
-      (data) => {
-        this.obtenerProveedores();
-        alert('Proveedor eliminado');
-      },
-      (error) => {
-        console.error('Error al eliminar proveedor', error);
-      }
-    );
   }
 
   confirmarEliminacion(proveedor: any): void {
@@ -120,5 +176,23 @@ export class ProveedoresComponent implements OnInit {
     this.modalConfirmacion = true;
   }
 
+  eliminarProveedor(id: string): void {
+    this.proveedorService.eliminarProveedor(id).subscribe(
+      () => {
+        this.obtenerProveedores();
+        this.cerrarModalConfirmacion();
+        this.mostrarNotificacion('Proveedor eliminado con éxito');
+      },
+      error => {
+        this.mostrarNotificacion('Error al eliminar proveedor');
+      }
+    );
+  }
 
+  mostrarNotificacion(mensaje: string): void {
+    this.notificationMessage = mensaje;
+    setTimeout(() => {
+      this.notificationMessage = '';
+    }, 3000);
+  }
 }

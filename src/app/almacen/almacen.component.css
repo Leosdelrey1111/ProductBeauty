@@ -4,6 +4,18 @@
     padding: 0;
     box-sizing: border-box;
 }
+/* Logo y título en la barra de navegación */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre el logo y el título */
+  }
+  
+  .logo {
+    width: 50px; /* Ajusta el tamaño del logo */
+    height: 50px;
+    border-radius: 50%; /* Logo redondeado */
+  }
 
 /* Estilos generales */
 body, html {

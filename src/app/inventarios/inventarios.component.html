@@ -1,25 +1,65 @@
 <div class="container">
-  <button class="btn-back" (click)="regresar()">Regresar</button>
-  <h2>Inventarios</h2>
+  <!-- Barra superior mejorada -->
+  <div class="navbar">
+    <div class="logo-container">
+      <img class="logo" src="https://i.pinimg.com/originals/9c/ab/b9/9cabb9f45ee1b8f00a4a1ca82d6aaab2.jpg" alt="Logo" />
+      <h1 class="title">Inventarios</h1>
+    </div>
+    <div class="navbar-buttons">
+      <button class="btn-secondary" (click)="regresar()">
+        <i class="fas fa-arrow-left"></i> Regresar
+      </button>
+      <button class="btn-secondary" (click)="abrirModal()">
+        <i class="fas fa-arrow-left"></i> Nuevo Inventario
+      </button>
+    </div>
+  </div>
 
   <!-- Lista de Inventarios -->
-  <div class="inventario-list" [ngClass]="{'hidden': listaOculta}">
-    <h3>Lista de Inventarios</h3>
-    <ul>
-      <li *ngFor="let inventario of inventarios">
-        <div class="inventario-card">
-          <p><strong>Producto:</strong> {{ inventario.nombreProducto }}</p>
-          <p><strong>Proveedor:</strong> {{ inventario.nombreProveedor }}</p>
-          <p><strong>Cantidad Cajas Lote:</strong> {{ inventario.cantidadCajasLote }}</p>
-          <p><strong>Stock Exhibición:</strong> {{ inventario.stockExhibe }}</p>
-          <p><strong>Stock Almacén:</strong> {{ inventario.stockAlmacen }}</p>
-          <p><strong>Fecha de Caducidad:</strong> {{ inventario.fechaCaducidadLote | date }}</p>
+  <div class="inventario-list">
+  
 
-          <button (click)="editarInventario(inventario)">Editar</button>
-          <button (click)="confirmarEliminacion(inventario)">Eliminar</button>
+    <div class="inventario-grid">
+      <div *ngFor="let inventario of filteredInventarios" class="inventario-card">
+        <div class="card-header">
+          <h3>{{ inventario.nombreProducto }}</h3>
+          <span class="badge" [class.warning]="isNearExpiration(inventario.fechaCaducidadLote)" 
+                [class.danger]="isExpired(inventario.fechaCaducidadLote)">
+            {{ inventario.fechaCaducidadLote | date:'dd/MM/yyyy' }}
+          </span>
         </div>
-      </li>
-    </ul>
+        <div class="card-body">
+          <div class="info-row">
+            <span class="info-label">Proveedor:</span>
+            <span class="info-value">{{ inventario.nombreProveedor }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Cajas en Lote:</span>
+            <span class="info-value">{{ inventario.cantidadCajasLote }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Stock Exhibición:</span>
+            <span class="info-value" [class.low-stock]="inventario.stockExhibe < inventario.stockExhibeMin">
+              {{ inventario.stockExhibe }} / {{ inventario.stockExhibeMin }}
+            </span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Stock Almacén:</span>
+            <span class="info-value" [class.low-stock]="inventario.stockAlmacen < inventario.stockAlmacenMin">
+              {{ inventario.stockAlmacen }} / {{ inventario.stockAlmacenMin }}
+            </span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-primary" (click)="editarInventario(inventario)">
+            <i class="fas fa-edit"></i> Editar
+          </button>
+          <button class="btn-danger" (click)="confirmarEliminacion(inventario)">
+            <i class="fas fa-trash"></i> Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Modal de crear/editar inventario -->
@@ -28,72 +68,134 @@
       <span (click)="cerrarModal()" class="close">&times;</span>
       <h3>{{ editMode ? 'Editar Inventario' : 'Crear Inventario' }}</h3>
       <form class="modal-form" (ngSubmit)="guardarInventario()" #inventarioForm="ngForm">
-        <!-- Campo Lote Caja -->
-        <input [(ngModel)]="nuevoInventario.loteCaja" name="loteCaja" placeholder="Lote Caja" required minlength="3" />
-        <div *ngIf="inventarioForm.controls['loteCaja']?.invalid && inventarioForm.controls['loteCaja']?.touched" class="error-message">
-          El lote de caja es requerido y debe tener al menos 3 caracteres.
+        <!-- Campos del formulario -->
+        <div class="form-group">
+          <label for="loteCaja">Lote Caja</label>
+          <input type="text" id="loteCaja" [(ngModel)]="nuevoInventario.loteCaja" name="loteCaja" 
+                 required minlength="3" #loteCaja="ngModel">
+          <div *ngIf="(loteCaja.invalid && (loteCaja.dirty || loteCaja.touched)) || formSubmitted" class="error-message">
+            <span *ngIf="loteCaja.errors?.['required']">El lote de caja es requerido</span>
+            <span *ngIf="loteCaja.errors?.['minlength']">Debe tener al menos 3 caracteres</span>
+          </div>
         </div>
 
-        <!-- Campo Nombre Proveedor -->
-        <input [(ngModel)]="nuevoInventario.nombreProveedor" name="nombreProveedor" placeholder="Nombre Proveedor" required />
-        <div *ngIf="inventarioForm.controls['nombreProveedor']?.invalid && inventarioForm.controls['nombreProveedor']?.touched" class="error-message">
-          El nombre del proveedor es requerido.
+        <div class="form-group">
+          <label for="nombreProducto">Nombre Producto</label>
+          <input type="text" id="nombreProducto" [(ngModel)]="nuevoInventario.nombreProducto" name="nombreProducto" required>
         </div>
 
-        <!-- Campo Nombre Producto -->
-        <input [(ngModel)]="nuevoInventario.nombreProducto" name="nombreProducto" placeholder="Nombre Producto" required />
-        <div *ngIf="inventarioForm.controls['nombreProducto']?.invalid && inventarioForm.controls['nombreProducto']?.touched" class="error-message">
-          El nombre del producto es requerido.
+        <div class="form-group">
+          <label for="nombreProveedor">Nombre Proveedor</label>
+          <input type="text" id="nombreProveedor" [(ngModel)]="nuevoInventario.nombreProveedor" name="nombreProveedor" required>
         </div>
 
-        <!-- Campo Cantidad Cajas Lote -->
-        <input [(ngModel)]="nuevoInventario.cantidadCajasLote" name="cantidadCajasLote" type="number" placeholder="Cantidad Cajas Lote" required min="1" />
-        <div *ngIf="inventarioForm.controls['cantidadCajasLote']?.invalid && inventarioForm.controls['cantidadCajasLote']?.touched" class="error-message">
-          La cantidad de cajas por lote debe ser mayor a 0.
+        <div class="form-group">
+          <label for="cantidadCajasLote">Cantidad Cajas en Lote</label>
+          <input type="number" id="cantidadCajasLote" [(ngModel)]="nuevoInventario.cantidadCajasLote" name="cantidadCajasLote" required min="0">
         </div>
 
-        <!-- Campo Stock Exhibición -->
-        <input [(ngModel)]="nuevoInventario.stockExhibe" name="stockExhibe" type="number" placeholder="Stock Exhibición" required min="0" />
-        <div *ngIf="inventarioForm.controls['stockExhibe']?.invalid && inventarioForm.controls['stockExhibe']?.touched" class="error-message">
-          El stock de exhibición no puede ser negativo.
+        <div class="form-group">
+          <label for="stockExhibe">Stock Exhibición</label>
+          <input type="number" id="stockExhibe" [(ngModel)]="nuevoInventario.stockExhibe" name="stockExhibe" required min="0">
         </div>
 
-        <!-- Campo Stock Exhibición Mínimo -->
-        <input [(ngModel)]="nuevoInventario.stockExhibeMin" name="stockExhibeMin" type="number" placeholder="Stock Exhibición Mínimo" required min="0" />
-        <div *ngIf="inventarioForm.controls['stockExhibeMin']?.invalid && inventarioForm.controls['stockExhibeMin']?.touched" class="error-message">
-          El stock mínimo de exhibición no puede ser negativo.
+        <div class="form-group">
+          <label for="stockExhibeMin">Stock Mínimo Exhibición</label>
+          <input type="number" id="stockExhibeMin" [(ngModel)]="nuevoInventario.stockExhibeMin" name="stockExhibeMin" required min="0">
         </div>
 
-        <!-- Campo Stock Almacén -->
-        <input [(ngModel)]="nuevoInventario.stockAlmacen" name="stockAlmacen" type="number" placeholder="Stock Almacén" required min="0" />
-        <div *ngIf="inventarioForm.controls['stockAlmacen']?.invalid && inventarioForm.controls['stockAlmacen']?.touched" class="error-message">
-          El stock de almacén no puede ser negativo.
+        <div class="form-group">
+          <label for="stockAlmacen">Stock Almacén</label>
+          <input type="number" id="stockAlmacen" [(ngModel)]="nuevoInventario.stockAlmacen" name="stockAlmacen" required min="0">
         </div>
 
-        <!-- Campo Stock Almacén Mínimo -->
-        <input [(ngModel)]="nuevoInventario.stockAlmacenMin" name="stockAlmacenMin" type="number" placeholder="Stock Almacén Mínimo" required min="0" />
-        <div *ngIf="inventarioForm.controls['stockAlmacenMin']?.invalid && inventarioForm.controls['stockAlmacenMin']?.touched" class="error-message">
-          El stock mínimo de almacén no puede ser negativo.
+        <div class="form-group">
+          <label for="stockAlmacenMin">Stock Mínimo Almacén</label>
+          <input type="number" id="stockAlmacenMin" [(ngModel)]="nuevoInventario.stockAlmacenMin" name="stockAlmacenMin" required min="0">
         </div>
 
-        <!-- Campo Fecha de Caducidad -->
-        <input [(ngModel)]="nuevoInventario.fechaCaducidadLote" name="fechaCaducidadLote" type="date" placeholder="Fecha Caducidad Lote" required />
-        <div *ngIf="inventarioForm.controls['fechaCaducidadLote']?.invalid && inventarioForm.controls['fechaCaducidadLote']?.touched" class="error-message">
-          La fecha de caducidad es requerida.
+        <div class="form-group">
+          <label for="fechaCaducidadLote">Fecha de Caducidad</label>
+          <input type="date" id="fechaCaducidadLote" [(ngModel)]="nuevoInventario.fechaCaducidadLote" 
+                 name="fechaCaducidadLote" required #fechaCaducidad="ngModel">
+          <div *ngIf="(fechaCaducidad.invalid && (fechaCaducidad.dirty || fechaCaducidad.touched)) || formSubmitted" 
+               class="error-message">
+            <span *ngIf="fechaCaducidad.errors?.['required']">La fecha de caducidad es requerida</span>
+            <span *ngIf="!validarFechaFutura(nuevoInventario.fechaCaducidadLote) && nuevoInventario.fechaCaducidadLote" 
+                  class="error-message">La fecha debe ser futura</span>
+          </div>
         </div>
 
-        <!-- Botón de enviar -->
-        <button type="submit" [disabled]="inventarioForm.invalid">{{ editMode ? 'Actualizar' : 'Crear' }}</button>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="cerrarModal()">Cancelar</button>
+          <button type="submit" class="btn-primary" [disabled]="inventarioForm.invalid || !validarFechaFutura(nuevoInventario.fechaCaducidadLote)">
+            {{ editMode ? 'Actualizar' : 'Crear' }}
+          </button>
+        </div>
       </form>
     </div>
   </div>
 
-  <!-- Modal de confirmación de eliminación -->
-  <div *ngIf="modalConfirmacion" class="modal-confirmacion">
-    <div class="modal-content">
-      <h2>¿Estás seguro de que deseas eliminar este inventario?</h2>
-      <button (click)="eliminarInventario(inventarioSeleccionado._id)">Sí, Eliminar</button>
-      <button (click)="cerrarModalConfirmacion()">Cancelar</button>
+<!-- Modal de confirmación de eliminación -->
+<div *ngIf="modalConfirmacion" class="modal show" (click)="cerrarModalConfirmacion()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span (click)="cerrarModalConfirmacion()" class="close">&times;</span>
+    <h3>Confirmar Eliminación</h3>
+    
+    <div class="modal-form">
+      <div class="form-group">
+        <p>¿Estás seguro de que deseas eliminar permanentemente el siguiente inventario?</p>
+        <div class="confirmation-details">
+          <div class="detail-row">
+            <span class="detail-label">Producto:</span>
+            <span class="detail-value">{{inventarioSeleccionado?.nombreProducto}}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Proveedor:</span>
+            <span class="detail-value">{{inventarioSeleccionado?.nombreProveedor}}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Lote:</span>
+            <span class="detail-value">{{inventarioSeleccionado?.loteCaja}}</span>
+          </div>
+        </div>
+
+        <!-- Validación de stock -->
+        <div *ngIf="inventarioSeleccionado?.stockExhibe > 0 || inventarioSeleccionado?.stockAlmacen > 0" 
+             class="stock-warning">
+          <div class="warning-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <div class="warning-content">
+            <p>¡Advertencia! Este producto todavía tiene existencias:</p>
+            <ul>
+              <li *ngIf="inventarioSeleccionado?.stockExhibe > 0">
+                Exhibición: {{inventarioSeleccionado?.stockExhibe}} unidades
+              </li>
+              <li *ngIf="inventarioSeleccionado?.stockAlmacen > 0">
+                Almacén: {{inventarioSeleccionado?.stockAlmacen}} unidades
+              </li>
+            </ul>
+            <div class="confirmation-check">
+              <label>
+                <input type="checkbox" [(ngModel)]="confirmOverride" name="confirmOverride">
+                Confirmo que deseo eliminar este producto a pesar de tener existencias
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="cerrarModalConfirmacion()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+        <button type="button" class="btn-danger" 
+                (click)="eliminarInventario(inventarioSeleccionado._id)"
+                [disabled]="(inventarioSeleccionado?.stockExhibe > 0 || inventarioSeleccionado?.stockAlmacen > 0) && !confirmOverride">
+          <i class="fas fa-trash"></i> Eliminar
+        </button>
+      </div>
     </div>
   </div>
 </div>
