@@ -7,26 +7,46 @@ import { environment } from '../environments/environment';
   providedIn: 'root',
 })
 export class ProveedorService {
-  private apiUrl = environment.apiUrl;  // Usar la URL definida en el archivo de entorno
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
-  // Obtener todos los proveedores
   getProveedores(): Observable<any> {
     return this.http.get(`${this.apiUrl}/proveedores`);
   }
 
-  // Registrar un proveedor
   registrarProveedor(proveedorData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/proveedores`, proveedorData);
+    const data = {
+      ...proveedorData,
+      direccion: {
+        calle: proveedorData.direccion.calle,
+        numeroExterior: proveedorData.direccion.numeroExterior,
+        colonia: proveedorData.direccion.colonia,
+        codigoPostal: proveedorData.direccion.codigoPostal,
+        ciudad: {
+          nombreCiudad: proveedorData.direccion.ciudad.nombreCiudad
+        }
+      }
+    };
+    return this.http.post(`${this.apiUrl}/proveedores`, data);
   }
 
-  // Actualizar un proveedor
   actualizarProveedor(id: string, proveedorData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/proveedores/${id}`, proveedorData);
+    const data = {
+      ...proveedorData,
+      direccion: {
+        calle: proveedorData.direccion.calle,
+        numeroExterior: proveedorData.direccion.numeroExterior,
+        colonia: proveedorData.direccion.colonia,
+        codigoPostal: proveedorData.direccion.codigoPostal,
+        ciudad: {
+          nombreCiudad: proveedorData.direccion.ciudad.nombreCiudad
+        }
+      }
+    };
+    return this.http.put(`${this.apiUrl}/proveedores/${id}`, data);
   }
 
-  // Eliminar un proveedor
   eliminarProveedor(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/proveedores/${id}`);
   }

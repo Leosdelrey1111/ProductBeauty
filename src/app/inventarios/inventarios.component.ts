@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { InventarioService } from '../../services/Inventario.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgForm } from '@angular/forms';
+import { formatDate } from '@angular/common';
 import { Location } from '@angular/common';
-import { MatSnackBar } from '@angular/material/snack-bar'; // Importar Snackbar
-
 @Component({
   selector: 'app-inventarios',
   templateUrl: './inventarios.component.html',
   styleUrls: ['./inventarios.component.css']
 })
 export class InventariosComponent implements OnInit {
+  @ViewChild('inventarioForm') inventarioForm!: NgForm;
 
   inventarios: any[] = [];
-  nuevoInventario = {
-    _id: '', // Agregar _id opcional para edición
+  filteredInventarios: any[] = [];
+  nuevoInventario: any = {
     loteCaja: '',
     nombreProveedor: '',
     nombreProducto: '',
@@ -23,144 +25,187 @@ export class InventariosComponent implements OnInit {
     stockAlmacenMin: 0,
     fechaCaducidadLote: ''
   };
+  
   inventarioSeleccionado: any = null;
   editMode = false;
   modalAbierto = false;
   modalConfirmacion = false;
+  formSubmitted = false;
+  searchTerm = '';
+  filterField = 'nombreProducto';
+  showShake = false;
+  confirmOverride = false;
 
   constructor(
     private inventarioService: InventarioService,
+    private snackBar: MatSnackBar,
     private location: Location,
-    private snackBar: MatSnackBar // Inyectar Snackbar
   ) {}
 
   ngOnInit(): void {
-    this.obtenerInventarios();
+    this.cargarInventario();
   }
 
-  regresar(): void {
-    this.location.back();  // Regresar a la página anterior
-  }
-
-  listaOculta: boolean = true; // Inicialmente, la lista está oculta
-
-  // Define el método toggleInventario
-  toggleInventario() {
-    this.listaOculta = !this.listaOculta; // Cambia el valor de listaVisible
-  }
-
-  obtenerInventarios(): void {
-    this.inventarioService.getInventario().subscribe(
-      data => {
-        this.inventarios = data;
-        // Verificar que la fecha es válida y formatearla correctamente
-        this.inventarios.forEach(inventario => {
-          if (inventario.fechaCaducidadLote) {
-            inventario.fechaCaducidadLote = this.formatDate(inventario.fechaCaducidadLote);
-          }
-        });
+  cargarInventario(): void {
+    this.inventarioService.getInventario().subscribe({
+      next: (response: any) => {
+        if (response.success) {
+          this.inventarios = response.data.map((item: any) => ({
+            ...item,
+            fechaCaducidadLote: item.fechaCaducidadLote || ''
+          }));
+          this.filtrarInventarios();
+        } else {
+          this.mostrarMensaje(response.message || 'Error al cargar el inventario', 'error');
+        }
       },
-      error => {
-        console.error('Error al obtener inventarios', error);
-        this.mostrarMensaje('Error al obtener inventarios', 'error');
+      error: (err) => {
+        console.error('Error al cargar inventario:', err);
+        this.mostrarMensaje('Error al cargar el inventario', 'error');
       }
-    );
-  }
-
-  formatDate(date: string): string {
-    const d = new Date(date);
-    if (isNaN(d.getTime())) {
-      return ''; // Retornar una cadena vacía si la fecha es inválida
-    }
-    const year = d.getFullYear();
-    const month = ('0' + (d.getMonth() + 1)).slice(-2);
-    const day = ('0' + d.getDate()).slice(-2);
-    return `${year}-${month}-${day}`;
-  }
-
-  // Mostrar mensaje de éxito o error
-  mostrarMensaje(mensaje: string, tipo: 'exito' | 'error'): void {
-    this.snackBar.open(mensaje, 'Cerrar', {
-      duration: 3000, // Duración de 3 segundos
-      panelClass: tipo === 'exito' ? 'snackbar-exito' : 'snackbar-error', // Estilos personalizados
     });
   }
 
-  // Crear o actualizar inventario
-  guardarInventario(): void {
-    if (this.editMode) {
-      if (this.nuevoInventario._id) {
-        this.inventarioService.actualizarInventario(this.nuevoInventario._id, this.nuevoInventario).subscribe(
-          data => {
-            this.obtenerInventarios(); // Refresh the inventory list
-            this.cerrarModal(); // Close modal after successful update
-            this.mostrarMensaje('Inventario actualizado con éxito', 'exito');
-          },
-          error => {
-            console.error('Error al actualizar inventario', error);
-            this.mostrarMensaje('Error al actualizar inventario', 'error');
-          }
-        );
-      } else {
-        console.error('ID del inventario no disponible para actualización');
-        this.mostrarMensaje('Error: ID no disponible', 'error');
-      }
-    } else {
-      this.inventarioService.registrarInventario(this.nuevoInventario).subscribe(
-        data => {
-          this.obtenerInventarios(); // Refresh the inventory list
-          this.cerrarModal(); // Close modal after adding the new inventory
-          this.mostrarMensaje('Inventario agregado con éxito', 'exito');
-        },
-        error => {
-          console.error('Error al agregar inventario', error);
-          this.mostrarMensaje('Error al agregar inventario', 'error');
-        }
-      );
+  filtrarInventarios(): void {
+    if (!this.searchTerm) {
+      this.filteredInventarios = [...this.inventarios];
+      return;
     }
+
+    this.filteredInventarios = this.inventarios.filter(inv => 
+      inv[this.filterField]?.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 
-  // Editar inventario
+  validarFechaFutura(fecha: string): boolean {
+    if (!fecha) return false;
+    const hoy = new Date();
+    const fechaCaducidad = new Date(fecha);
+    return fechaCaducidad > hoy;
+  }
+
+  isNearExpiration(fecha: string): boolean {
+    if (!fecha) return false;
+    const hoy = new Date();
+    const fechaCad = new Date(fecha);
+    const diffTime = fechaCad.getTime() - hoy.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays > 0 && diffDays <= 30;
+  }
+
+  isExpired(fecha: string): boolean {
+    if (!fecha) return false;
+    const hoy = new Date();
+    const fechaCad = new Date(fecha);
+    return fechaCad < hoy;
+  }
+
+  guardarInventario(): void {
+    this.formSubmitted = true;
+    
+    if (this.inventarioForm.invalid) {
+      this.mostrarMensaje('Por favor complete todos los campos requeridos', 'error');
+      return;
+    }
+
+    if (!this.validarFechaFutura(this.nuevoInventario.fechaCaducidadLote)) {
+      this.mostrarMensaje('La fecha de caducidad debe ser futura', 'error');
+      return;
+    }
+
+    const datosParaEnviar = { 
+      ...this.nuevoInventario,
+      fechaCaducidadLote: this.nuevoInventario.fechaCaducidadLote
+    };
+
+    const operacion = this.editMode 
+      ? this.inventarioService.actualizarInventario(this.nuevoInventario._id, datosParaEnviar)
+      : this.inventarioService.registrarInventario(datosParaEnviar);
+
+    operacion.subscribe({
+      next: (response: any) => {
+        if (response.success) {
+          this.cargarInventario();
+          this.cerrarModal();
+          this.mostrarMensaje(
+            this.editMode ? 'Inventario actualizado con éxito' : 'Inventario creado con éxito', 
+            'success'
+          );
+        } else {
+          this.mostrarMensaje(response.message || 'Operación fallida', 'error');
+        }
+      },
+      error: (err) => {
+        console.error('Error en la operación:', err);
+        this.mostrarMensaje(
+          `Error al ${this.editMode ? 'actualizar' : 'crear'} el inventario: ${err.error?.message || err.message}`,
+          'error'
+        );
+      }
+    });
+  }
+
   editarInventario(inventario: any): void {
-    this.nuevoInventario = { ...inventario };
+    this.nuevoInventario = { 
+      ...inventario,
+      fechaCaducidadLote: inventario.fechaCaducidadLote || ''
+    };
     this.editMode = true;
     this.modalAbierto = true;
   }
 
-  // Eliminar inventario
+  confirmarEliminacion(inventario: any): void {
+    this.inventarioSeleccionado = inventario;
+    this.modalConfirmacion = true;
+  }
+
   eliminarInventario(id: string): void {
-    this.inventarioService.eliminarInventario(id).subscribe(
-      data => {
-        this.obtenerInventarios(); // Refresh the inventory list
-        this.mostrarMensaje('Inventario eliminado con éxito', 'exito');
+    if ((this.inventarioSeleccionado?.stockExhibe > 0 || 
+         this.inventarioSeleccionado?.stockAlmacen > 0) && 
+        !this.confirmOverride) {
+      this.showShake = true;
+      setTimeout(() => this.showShake = false, 600);
+      return;
+    }
+
+    this.inventarioService.eliminarInventario(id).subscribe({
+      next: (response: any) => {
+        if (response.success) {
+          this.cargarInventario();
+          this.cerrarModalConfirmacion();
+          this.mostrarMensaje('Inventario eliminado con éxito', 'success');
+        } else {
+          this.mostrarMensaje(response.message || 'Error al eliminar', 'error');
+        }
       },
-      error => {
-        console.error('Error al eliminar inventario', error);
-        this.mostrarMensaje('Error al eliminar inventario', 'error');
+      error: (err) => {
+        console.error('Error al eliminar:', err);
+        this.mostrarMensaje(`Error al eliminar el inventario: ${err.error?.message || err.message}`, 'error');
       }
-    );
+    });
   }
 
-  // Actualizar stockExhibe
-  actualizarStockExhibe(id: string, stockExhibe: number): void {
-    this.inventarioService.updateStockExhibe(id, stockExhibe).subscribe(
-      data => {
-        this.obtenerInventarios(); // Refresh the inventory list
-        this.mostrarMensaje('Stock Exhibición actualizado', 'exito');
-      },
-      error => {
-        console.error('Error al actualizar stockExhibe', error);
-        this.mostrarMensaje('Error al actualizar stockExhibe', 'error');
-      }
-    );
-  }
-
-  // Abrir el modal
   abrirModal(): void {
     this.modalAbierto = true;
     this.editMode = false;
+    this.formSubmitted = false;
+    this.resetFormulario();
+  }
+
+  cerrarModal(): void {
+    this.modalAbierto = false;
+    this.resetFormulario();
+  }
+
+  cerrarModalConfirmacion(): void {
+    this.modalConfirmacion = false;
+    this.inventarioSeleccionado = null;
+    this.confirmOverride = false;
+    this.showShake = false;
+  }
+
+  resetFormulario(): void {
     this.nuevoInventario = {
-      _id: '', // Asegúrate de resetear el _id al abrir el modal para agregar nuevo inventario
       loteCaja: '',
       nombreProveedor: '',
       nombreProducto: '',
@@ -171,21 +216,23 @@ export class InventariosComponent implements OnInit {
       stockAlmacenMin: 0,
       fechaCaducidadLote: ''
     };
+    this.editMode = false;
+    this.formSubmitted = false;
+    if (this.inventarioForm) {
+      this.inventarioForm.resetForm();
+    }
   }
 
-  // Cerrar el modal
-  cerrarModal(): void {
-    this.modalAbierto = false;
-    this.modalConfirmacion = false;
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error'): void {
+    this.snackBar.open(mensaje, 'Cerrar', {
+      duration: 5000,
+      panelClass: [`snackbar-${tipo}`],
+      horizontalPosition: 'right',
+      verticalPosition: 'top'
+    });
   }
-
-  confirmarEliminacion(inventario: any): void {
-    this.inventarioSeleccionado = inventario;
-    this.modalConfirmacion = true;
-  }
-
-  // Cerrar modal de confirmación
-  cerrarModalConfirmacion(): void {
-    this.modalConfirmacion = false;
+  
+  regresar(): void {
+    this.location.back();
   }
 }

@@ -1,113 +1,214 @@
-<button class="btn-back" (click)="regresar()">Regresar</button>
-
-<div class="register-container">
-  <h2>Registro de Usuario</h2>
-  <form (ngSubmit)="onRegister()" #registerForm="ngForm">
-    <div class="form-group">
-      <label for="email">Correo electrónico</label>
-      <input
-        type="email"
-        id="email"
-        [(ngModel)]="email"
-        name="email"
-        placeholder="Ingresa tu correo electrónico"
-        required
-        email
-      />
-      <div *ngIf="registerForm.controls['email']?.invalid && registerForm.controls['email']?.touched" class="error-message">
-        El correo electrónico es inválido.
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="password">Contraseña</label>
-      <input
-        type="password"
-        id="password"
-        [(ngModel)]="password"
-        name="password"
-        placeholder="Ingresa tu contraseña"
-        required
-        minlength="6"
-      />
-      <div *ngIf="registerForm.controls['password']?.invalid && registerForm.controls['password']?.touched" class="error-message">
-        La contraseña debe tener al menos 6 caracteres.
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="role">Rol</label>
-      <select id="role" [(ngModel)]="role" name="role" required>
-        <option value="empleado">Empleado</option>
-        <option value="almacenista">Almacenista</option>
-      </select>
-    </div>
-
-    <button type="submit" [disabled]="registerForm.invalid">Registrar</button>
-  </form>
-</div>
-
-<!-- Botón para abrir el modal de usuarios -->
-<button class="btn-view-users" (click)="abrirModalUsuarios()">Ver Usuarios</button>
-
-<!-- Modal de usuarios -->
-<div *ngIf="modalUsuariosAbierto" class="modal">
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <span (click)="cerrarModalUsuarios()" class="close">&times;</span>
-    <h2>Usuarios Registrados</h2>
-    <table class="user-table">
-      <thead>
-        <tr>
-          <th>Correo Electrónico</th>
-          <th>Rol</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of usuarios">
-          <td>{{ user.email }}</td>
-          <td>{{ user.role }}</td>
-          <td>
-            <button class="action-button edit" (click)="abrirModalEditar(user)">Editar</button>
-            <button class="action-button delete" (click)="confirmarEliminacion(user._id)">Eliminar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div class="navbar">
+  <div class="logo-container">
+    <img class="logo" src="https://i.pinimg.com/originals/9c/ab/b9/9cabb9f45ee1b8f00a4a1ca82d6aaab2.jpg" alt="Logo" />
+    <h1 class="title">Gestión de Usuarios</h1>
+  </div>
+  <div class="navbar-buttons">
+    <button class="btn btn-secondary" (click)="regresar()">
+      <i class="fas fa-arrow-left"></i> Regresar
+    </button>
+    <button class="btn btn-primary" (click)="abrirModalUsuarios()">
+      <i class="fas fa-users"></i> Ver Usuarios
+    </button>
   </div>
 </div>
 
-<!-- Modal de edición -->
-<div *ngIf="modalEditarAbierto" class="modal">
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <span (click)="cerrarModalEditar()" class="close">&times;</span>
-    <h2>Editar Usuario</h2>
-    <form (ngSubmit)="onEditarUsuario()" #editarForm="ngForm">
+<div class="main-container">
+  <div class="card form-container">
+    <h2 class="form-title">Registrar Nuevo Usuario</h2>
+    
+    <form (ngSubmit)="onRegister()" #registerForm="ngForm">
       <div class="form-group">
-        <label for="edit-email">Correo electrónico</label>
+        <label for="email" class="form-label">Correo electrónico</label>
         <input
           type="email"
-          id="edit-email"
-          [(ngModel)]="usuarioEditado.email"
+          id="email"
+          class="form-control"
+          [(ngModel)]="email"
           name="email"
-          placeholder="Ingresa el correo electrónico"
+          placeholder="ejemplo@dominio.com"
           required
           email
         />
-        <div *ngIf="editarForm.controls['email']?.invalid && editarForm.controls['email']?.touched" class="error-message">
-          El correo electrónico es inválido.
+        <div *ngIf="registerForm.controls['email']?.invalid && registerForm.controls['email']?.touched" 
+             class="error-message">
+          Por favor ingrese un correo electrónico válido
         </div>
       </div>
 
       <div class="form-group">
-        <label for="edit-role">Rol</label>
-        <select id="edit-role" [(ngModel)]="usuarioEditado.role" name="role" required>
+        <label for="password" class="form-label">Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Mínimo 6 caracteres"
+          required
+          minlength="6"
+          (input)="checkPasswordStrength()"
+        />
+        <div class="password-strength">
+          <div class="strength-bar" [ngClass]="passwordStrength"></div>
+        </div>
+        <div *ngIf="registerForm.controls['password']?.invalid && registerForm.controls['password']?.touched" 
+             class="error-message">
+          La contraseña debe tener al menos 6 caracteres
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="role" class="form-label">Rol del usuario</label>
+        <select id="role" class="form-control" [(ngModel)]="role" name="role" required>
           <option value="empleado">Empleado</option>
           <option value="almacenista">Almacenista</option>
         </select>
       </div>
 
-      <button type="submit" [disabled]="editarForm.invalid">Guardar Cambios</button>
+      <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">
+        <i class="fas fa-user-plus"></i> Registrar Usuario
+      </button>
     </form>
   </div>
+</div>
+
+<!-- Users Modal -->
+<div *ngIf="modalUsuariosAbierto" class="modal-overlay" (click)="cerrarModalUsuarios()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3 class="modal-title">Usuarios Registrados</h3>
+      <button class="modal-close" (click)="cerrarModalUsuarios()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Correo Electrónico</th>
+              <th>Rol</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of usuarios">
+              <td>{{ user.email }}</td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'badge-primary': user.role === 'almacenista',
+                  'badge-secondary': user.role === 'empleado'
+                }">
+                  {{ user.role | titlecase }}
+                </span>
+              </td>
+              <td>
+                <button class="btn btn-success btn-sm" (click)="abrirModalEditar(user)">
+                  <i class="fas fa-edit"></i> Editar
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="confirmarEliminacion(user._id)">
+                  <i class="fas fa-trash-alt"></i> Eliminar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit User Modal -->
+<div *ngIf="modalEditarAbierto" class="modal-overlay" (click)="cerrarModalEditar()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3 class="modal-title">Editar Usuario: {{usuarioEditado.email}}</h3>
+      <button class="modal-close" (click)="cerrarModalEditar()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="onEditarUsuario()" #editarForm="ngForm">
+        <div class="form-group">
+          <label for="edit-email" class="form-label">Correo electrónico</label>
+          <input
+            type="email"
+            id="edit-email"
+            class="form-control"
+            [(ngModel)]="usuarioEditado.email"
+            name="email"
+            required
+            email
+            [disabled]="loading"
+          />
+          <div *ngIf="editarForm.controls['email']?.invalid && editarForm.controls['email']?.touched" 
+               class="error-message">
+            Por favor ingrese un correo electrónico válido
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="edit-password" class="form-label">Nueva Contraseña</label>
+          <input
+            type="password"
+            id="edit-password"
+            class="form-control"
+            [(ngModel)]="usuarioEditado.newPassword"
+            name="newPassword"
+            placeholder="Dejar vacío para mantener la actual"
+            minlength="6"
+            [disabled]="loading"
+          />
+          <small class="form-text text-muted">
+            Mínimo 6 caracteres. Solo completa si deseas cambiar la contraseña.
+          </small>
+          <div *ngIf="editarForm.controls['newPassword']?.invalid && editarForm.controls['newPassword']?.touched" 
+               class="error-message">
+            La contraseña debe tener al menos 6 caracteres
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="edit-role" class="form-label">Rol</label>
+          <select 
+            id="edit-role" 
+            class="form-control" 
+            [(ngModel)]="usuarioEditado.role" 
+            name="role" 
+            required
+            [disabled]="loading"
+          >
+            <option value="empleado">Empleado</option>
+            <option value="almacenista">Almacenista</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button 
+            type="button" 
+            class="btn btn-secondary" 
+            (click)="cerrarModalEditar()"
+            [disabled]="loading"
+          >
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+          <button 
+            type="submit" 
+            class="btn btn-primary" 
+            [disabled]="editarForm.invalid || loading"
+          >
+            <span *ngIf="!loading">
+              <i class="fas fa-save"></i> Guardar Cambios
+            </span>
+            <span *ngIf="loading">
+              <i class="fas fa-spinner fa-spin"></i> Guardando...
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Loading Indicator -->
+<div *ngIf="loading" class="modal-overlay" style="background-color: rgba(0,0,0,0.7);">
+  <div class="spinner"></div>
+  <p style="color: white; text-align: center; margin-top: 1rem;">Procesando...</p>
 </div>

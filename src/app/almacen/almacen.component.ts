@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductosService } from '../../services/Productos.service';
 import { ProveedorService } from '../../services/Proveedor.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-almacen',
@@ -9,6 +10,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./almacen.component.css']
 })
 export class AlmacenComponent implements OnInit {
+  @ViewChild('productoForm') productoForm!: NgForm;
+  
   productos: any[] = [];
   proveedores: any[] = [];
   nuevoProducto = {
@@ -19,16 +22,16 @@ export class AlmacenComponent implements OnInit {
     subcategoria: '',
     marca: '',
     nombreProveedor: '',
-    precioCaja: '',
-    precioPieza: '',
-    cantidadPorCaja: '',
-    cantidadPiezas: '',
-    stockExhibe: '',
-    stockExhibeMin: '',
-    stockAlmacen: '',
-    stockAlmacenMin: '',
+    precioCaja: 0,
+    precioPieza: 0,
+    cantidadPorCaja: 0,
+    cantidadPiezas: 0,
+    stockExhibe: 0,
+    stockExhibeMin: 0,
+    stockAlmacen: 0,
+    stockAlmacenMin: 0,
     imagen: '',
-    cantidadCajasLote: '',
+    cantidadCajasLote: 0,
     fechaCaducidadLote: '',
     activo: true
   };
@@ -39,6 +42,7 @@ export class AlmacenComponent implements OnInit {
   modalBajaAbierto = false;
   productoSeleccionado: any = null;
   notificationMessage: string = '';
+  formSubmitted = false;
 
   constructor(
     private productosService: ProductosService,
@@ -81,7 +85,6 @@ export class AlmacenComponent implements OnInit {
     this.router.navigate(['/inventarios']);
   }
   
-
   abrirHistorial(): void {
     this.router.navigate(['/historial']);
   }
@@ -101,31 +104,13 @@ export class AlmacenComponent implements OnInit {
     this.modalAbierto = true;
     this.editMode = false;
     this.viewMode = false;
-    this.nuevoProducto = {
-      codigoBarras: '',
-      nombreProducto: '',
-      tamano: '',
-      categoriaMaquillaje: '',
-      subcategoria: '',
-      marca: '',
-      nombreProveedor: '',
-      precioCaja: '',
-      precioPieza: '',
-      cantidadPorCaja: '',
-      cantidadPiezas: '',
-      stockExhibe: '',
-      stockExhibeMin: '',
-      stockAlmacen: '',
-      stockAlmacenMin: '',
-      imagen: '',
-      cantidadCajasLote: '',
-      fechaCaducidadLote: '',
-      activo: true
-    };
+    this.formSubmitted = false;
+    this.resetFormulario();
   }
 
   cerrarModal(): void {
     this.modalAbierto = false;
+    this.formSubmitted = false;
     this.resetFormulario();
   }
 
@@ -133,11 +118,19 @@ export class AlmacenComponent implements OnInit {
     this.modalAbierto = true;
     this.editMode = true;
     this.viewMode = false;
+    this.formSubmitted = false;
     this.selectedProducto = producto;
     this.nuevoProducto = { ...producto };
   }
 
   agregarProducto(): void {
+    this.formSubmitted = true;
+    
+    if (this.productoForm.invalid) {
+      this.mostrarNotificacion('Por favor complete todos los campos requeridos correctamente');
+      return;
+    }
+
     if (this.editMode) {
       this.productosService.actualizarProducto(this.selectedProducto._id, this.nuevoProducto).subscribe(
         (data) => {
@@ -146,7 +139,7 @@ export class AlmacenComponent implements OnInit {
           this.mostrarNotificacion('Producto actualizado correctamente');
         },
         (error) => {
-          this.mostrarNotificacion('Error al actualizar producto');
+          this.mostrarNotificacion('Error al actualizar producto: ' + error.message);
         }
       );
     } else {
@@ -157,7 +150,7 @@ export class AlmacenComponent implements OnInit {
           this.mostrarNotificacion('Producto agregado correctamente');
         },
         (error) => {
-          this.mostrarNotificacion('Error al agregar producto');
+          this.mostrarNotificacion('Error al agregar producto: ' + error.message);
         }
       );
     }
@@ -220,21 +213,24 @@ export class AlmacenComponent implements OnInit {
       subcategoria: '',
       marca: '',
       nombreProveedor: '',
-      precioCaja: '',
-      precioPieza: '',
-      cantidadPorCaja: '',
-      cantidadPiezas: '',
-      stockExhibe: '',
-      stockExhibeMin: '',
-      stockAlmacen: '',
-      stockAlmacenMin: '',
+      precioCaja: 0,
+      precioPieza: 0,
+      cantidadPorCaja: 0,
+      cantidadPiezas: 0,
+      stockExhibe: 0,
+      stockExhibeMin: 0,
+      stockAlmacen: 0,
+      stockAlmacenMin: 0,
       imagen: '',
-      cantidadCajasLote: '',
+      cantidadCajasLote: 0,
       fechaCaducidadLote: '',
       activo: true
     };
     this.editMode = false;
     this.selectedProducto = null;
+    if (this.productoForm) {
+      this.productoForm.resetForm();
+    }
   }
 
   cerrarSesion(): void {
@@ -246,5 +242,13 @@ export class AlmacenComponent implements OnInit {
     setTimeout(() => {
       this.notificationMessage = '';
     }, 3000);
+  }
+
+  // Validación personalizada para fechas futuras
+  validarFechaFutura(fecha: string): boolean {
+    if (!fecha) return false;
+    const hoy = new Date();
+    const fechaCaducidad = new Date(fecha);
+    return fechaCaducidad > hoy;
   }
 }

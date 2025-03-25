@@ -1,16 +1,9 @@
-/* Reseteo de márgenes y paddings */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 /* Estilos generales */
-body {
-  font-family: 'Poppins', sans-serif; /* Fuente moderna */
-  background-color: #f4f7f6; /* Fondo claro y neutral */
-  color: #333;
-  line-height: 1.6;
+.container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f9f9f9;
 }
 
 /* Barra de navegación */
@@ -18,121 +11,128 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #ff6b6b, #ff4757); /* Gradiente moderno */
-  padding: 15px 30px;
+  background-color: #fff;
+  padding: 15px 25px;
+  border-radius: 12px;
+  margin-bottom: 30px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
 }
 
-.navbar h1 {
-  color: white;
-  font-size: 1.8rem;
-  font-weight: 600; /* Más delgado */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.title {
+  color: #ff3385;
+  font-size: 2rem;
+  font-weight: bold;
   margin: 0;
 }
 
-.navbar-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.navbar button {
-  background-color: rgba(255, 255, 255, 0.2); /* Botones semi-transparentes */
+.navbar-buttons button {
+  background-color: #ff3385;
   color: white;
   border: none;
   padding: 10px 20px;
   font-size: 1rem;
-  border-radius: 25px; /* Bordes más redondeados */
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s;
+  margin-left: 15px;
 }
 
-.navbar button:hover {
-  background-color: rgba(255, 255, 255, 0.3); /* Más visible al pasar el mouse */
+.navbar-buttons button:hover {
+  background-color: #ff1a6f;
   transform: translateY(-2px);
 }
 
-/* Contenedor principal */
-.container {
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 20px;
+/* Notificación */
+.notification {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Catálogo de proveedores */
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.catalog-card {
   background-color: #fff;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-/* Título de la lista de proveedores */
-h2 {
-  text-align: center;
-  color: #ff6b6b; /* Color del gradiente */
-  font-size: 2rem;
-  margin-bottom: 20px;
-  position: relative;
-}
-
-h2::after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 4px;
-  background-color: #ff6b6b; /* Color del gradiente */
-  border-radius: 2px;
-}
-
-/* Tarjeta de proveedor */
-.proveedor-card {
-  background-color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  margin-bottom: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.proveedor-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+.catalog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
 }
 
-.proveedor-card p {
-  color: #666;
+.catalog-card h3 {
+  color: #ff3385;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+}
+
+.catalog-card p {
   font-size: 1rem;
-  margin: 10px 0;
+  color: #666;
+  margin: 8px 0;
 }
 
-.proveedor-card p strong {
-  color: #ff6b6b; /* Color del gradiente */
+.catalog-card p strong {
+  color: #333;
 }
 
-/* Botones de acción en la tarjeta */
-.proveedor-card button {
-  background-color: #ff6b6b; /* Color del gradiente */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.actions button {
+  background-color: #ff3385;
   color: white;
   border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 25px; /* Bordes más redondeados */
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-right: 10px;
+  transition: background-color 0.3s ease;
 }
 
-.proveedor-card button:hover {
-  background-color: #ff4757; /* Color más intenso */
-  transform: translateY(-2px);
-}
-
-/* Mensaje cuando no hay proveedores */
-.no-proveedores {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #ff6b6b; /* Color del gradiente */
+.actions button:hover {
+  background-color: #ff1a6f;
 }
 
 /* Modal */
@@ -142,152 +142,143 @@ h2::after {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
-  backdrop-filter: blur(8px); /* Efecto de desenfoque */
+  backdrop-filter: blur(8px);
 }
 
 .modal-content {
   background-color: #fff;
-  padding: 40px;
+  padding: 30px;
   border-radius: 15px;
-  width: 60%;
-  max-width: 700px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  max-height: 80%;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
   overflow-y: auto;
-  animation: slideIn 0.5s ease-out;
+  position: relative;
 }
 
 .modal h2 {
-  color: #ff6b6b; /* Color del gradiente */
+  color: #ff3385;
   text-align: center;
-  font-size: 2rem;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
 }
 
-.modal .close {
+.close {
   position: absolute;
   top: 15px;
   right: 15px;
-  font-size: 35px;
-  color: #ff6b6b; /* Color del gradiente */
+  font-size: 28px;
+  color: #ff3385;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: color 0.3s;
 }
 
-.modal .close:hover {
-  color: #ff4757; /* Color más intenso */
+.close:hover {
+  color: #ff1a6f;
 }
 
-/* Formulario dentro del modal */
+/* Formulario */
 form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-form label {
-  font-size: 1.1rem;
-  color: #333;
-  font-weight: bold;
+.form-group {
+  margin-bottom: 15px;
 }
 
-form input[type="text"],
-form input[type="number"],
-form input[type="email"],
-form select {
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"] {
   width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  border-radius: 8px;
+  padding: 10px;
   border: 1px solid #ddd;
+  border-radius: 6px;
   font-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-form input[type="text"]:focus,
-form input[type="number"]:focus,
-form input[type="email"]:focus,
-form select:focus {
-  border-color: #ff6b6b; /* Color del gradiente */
-  box-shadow: 0 0 8px rgba(255, 107, 107, 0.2);
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus {
+  border-color: #ff3385;
   outline: none;
+  box-shadow: 0 0 5px rgba(255, 51, 133, 0.3);
 }
 
-form button[type="submit"] {
-  width: 100%;
-  padding: 12px;
-  background-color: #ff6b6b; /* Color del gradiente */
+.section-title {
+  color: #ff3385;
+  margin: 20px 0 10px;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+}
+
+.submit-btn {
+  background-color: #ff3385;
   color: white;
   border: none;
-  font-size: 1.1rem;
-  border-radius: 25px; /* Bordes más redondeados */
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 15px;
+  transition: background-color 0.3s;
 }
 
-form button[type="submit"]:hover {
-  background-color: #ff4757; /* Color más intenso */
-  transform: translateY(-2px);
+.submit-btn:hover {
+  background-color: #ff1a6f;
 }
 
-/* Modal de confirmación de eliminación */
-.modal-confirmacion {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+/* Modal de confirmación */
+.confirmation-buttons {
   display: flex;
   justify-content: center;
-  align-items: center;
-  z-index: 999;
-  backdrop-filter: blur(8px); /* Efecto de desenfoque */
+  gap: 15px;
+  margin-top: 25px;
 }
 
-.modal-confirmacion .modal-content {
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 15px;
-  width: 400px;
-  max-width: 90%;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
-.modal-confirmacion h2 {
-  color: #ff6b6b; /* Color del gradiente */
-  margin-bottom: 20px;
-}
-
-.modal-confirmacion button {
-  background-color: #ff6b6b; /* Color del gradiente */
+.confirm-btn {
+  background-color: #ff3385;
   color: white;
-  padding: 10px 20px;
   border: none;
-  border-radius: 25px; /* Bordes más redondeados */
+  padding: 10px 20px;
+  border-radius: 6px;
   cursor: pointer;
-  margin: 0 10px;
-  transition: background-color 0.3s ease;
 }
 
-.modal-confirmacion button:hover {
-  background-color: #ff4757; /* Color más intenso */
+.confirm-btn:hover {
+  background-color: #ff1a6f;
 }
 
-/* Animaciones */
-@keyframes slideIn {
-  from {
-      opacity: 0;
-      transform: translateY(-50px);
-  }
-  to {
-      opacity: 1;
-      transform: translateY(0);
-  }
+.cancel-btn {
+  background-color: #666;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  background-color: #555;
+}
+
+/* Mensajes de error */
+.error-message {
+  color: #ff3385;
+  font-size: 0.85rem;
+  margin-top: 5px;
 }

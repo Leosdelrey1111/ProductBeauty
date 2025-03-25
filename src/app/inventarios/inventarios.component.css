@@ -1,168 +1,395 @@
-/* Reseteo de márgenes y paddings */
+/* Variables de diseño */
+/* Variables de diseño actualizadas para botones */
+:root {
+  --primary-color: #2c5aa0; /* Azul más oscuro para mejor contraste */
+  --primary-hover: #1e4b8f;
+  --secondary-color: #0c0b0b; /* Fondo más claro para botones secundarios */
+  --secondary-hover: #000000;
+  --danger-color: #c82333; /* Rojo más oscuro */
+  --danger-hover: #b21f2d;
+  --text-on-light: #333; /* Texto oscuro para fondos claros */
+  --border-radius: 6px;
+  --button-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  --button-shadow-hover: 0 4px 8px rgba(0,0,0,0.15);
+  --text-color: #000000;
+}
+
+/* Estilos base */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Estilos generales */
 body {
-  font-family: 'Poppins', sans-serif;
-  background-color: #f4f7f6; /* Fondo claro y neutral */
-  color: #333;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background-color: var(--light-gray);
+  color: var(--text-color);
   line-height: 1.6;
 }
 
 /* Contenedor principal */
 .container {
-  max-width: 1200px;
+  max-width: 12000px;
   margin: 0 auto;
-  padding: 30px;
-  background-color: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
   min-height: 100vh;
-  overflow-x: hidden;
+  height: 100%; /* Asegura que el contenedor ocupe toda la altura disponible */
+  display: flex;
+  flex-direction: column;
 }
 
-/* Estilo para los títulos */
-h1, h2, h3 {
-  color: #2c3e50;
+/* Barra de navegación */
+/* Barra de navegación */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 15px 25px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--medium-gray);
+  transition: var(--transition);
+}
+
+.logo:hover {
+  transform: rotate(15deg);
+}
+
+.title {
+  font-size: 1.8rem;
+  color: var(--primary-color);
   font-weight: 600;
-  text-align: center;
-  font-size: 2.5rem;
   position: relative;
-  margin-bottom: 20px;
 }
 
-h1::after {
-  content: "";
+.title::after {
+  content: '';
   position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background-color: #d14d8d;
-  border-radius: 2px;
+  bottom: -8px;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background-color: var(--accent-color);
+  border-radius: 3px;
 }
 
-/* Botón de regresar */
-.btn-back {
-  background-color: #d14d8d;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
+.navbar-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Botones base */
+/* Estilo base para todos los botones */
+button {
+  padding: 0.7rem 1.3rem;
+  border-radius: var(--border-radius);
+  font-size: 0.95rem;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-bottom: 20px;
-}
-
-.btn-back:hover {
-  background-color: #b34275;
-  transform: translateY(-2px);
-}
-
-/* Botón para abrir el modal de crear inventario */
-.btn-crear-inventario {
-  background-color: #d14d8d;
-  color: white;
-  padding: 12px 24px;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 1.1rem;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  display: block;
-  margin: 20px auto;
+  box-shadow: var(--button-shadow);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 }
 
-.btn-crear-inventario:hover {
-  background-color: #b34275;
+
+/* Mejora la visibilidad de los botones */
+.btn-primary {
+  background-color:rgb(223, 180, 197);
+  color: rgb(0, 0, 0);
+  
+  border-radius: 12cm;
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para mejor contraste */
+}
+
+.btn-primary:hover {
+  background-color: #3a5a8f;
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al hover */
 }
 
-/* Estilo para el formulario dentro del modal */
-.modal-form input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: 2px solid #e0e0e0;
-  background-color: #f9f9f9;
-  font-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+.btn-secondary {
+  background-color: rgb(236, 159, 180); /* Cambiado a blanco para mejor contraste */
+  color: var(--text-color);
+  border: 1px solid var(--medium-gray);
+  border-radius: 12cm;
+  
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para mejor contraste */
 }
 
-.modal-form input:focus {
-  border-color: #d14d8d;
-  box-shadow: 0 0 8px rgba(209, 77, 141, 0.2);
-  outline: none;
+.btn-secondary:hover {
+  background-color: var(--light-gray);
+  border-color: var(--dark-gray);
 }
 
-/* Botón de "Crear" dentro del modal */
-.modal-form button {
-  background-color: #d14d8d;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-top: 20px;
-  width: 100%;
+.btn-danger {
+  background-color:#f6cbcb;
+  color: rgb(7, 7, 7);
+  border: 1px solid var(--danger-color);
+  border-radius: 12cm;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para mejor contraste */
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); /* Sombra de texto para mejor legibilidad */
 }
 
-.modal-form button:hover {
-  background-color: #b34275;
-  transform: translateY(-2px);
+.btn-danger:hover {
+  background-color: #c82333;
+  box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+}
+
+/* Añade esto para los iconos dentro de los botones */
+button i {
+  margin-right: 5px;
+  
+}
+
+/* Mejora el contraste del modal de confirmación */
+.modal-confirmacion .modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  max-width: 500px;
+  text-align: center;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 /* Lista de inventarios */
 .inventario-list {
-  margin: 20px 0;
+  margin-top: 2rem;
+  flex-grow: 1; /* Permite que ocupe el resto del espacio disponible */
 }
 
-/* Tarjetas de inventario */
+.search-filter {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+/* Estilos para el modal de confirmación */
+.confirmation-details {
+  background-color: var(--light-gray);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin: 1rem 0;
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.detail-label {
+  font-weight: 500;
+  color: var(--dark-gray);
+  min-width: 100px;
+}
+
+.detail-value {
+  font-weight: 600;
+}
+
+.stock-warning {
+  display: flex;
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  margin: 1rem 0;
+}
+
+.warning-icon {
+  color: #ffc107;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+}
+
+.warning-content {
+  flex: 1;
+}
+
+.warning-content p {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.warning-content ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.confirmation-check {
+  margin-top: 1rem;
+}
+
+.confirmation-check label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.confirmation-check input[type="checkbox"] {
+  cursor: pointer;
+}
+
+/* Animación para cuando se intenta eliminar sin confirmar */
+@keyframes headshake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+
+.headshake {
+  animation: headshake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.search-filter input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--medium-gray);
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.search-filter input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+}
+
+.filter-options {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background-color: white;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-top: 0.5rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Grid de inventarios */
+.inventario-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
 .inventario-card {
-  background-color: #ffffff;
-  padding: 20px;
-  margin-bottom: 10px;
-  border-radius: 15px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para mejor contraste */
+  overflow: hidden;
+  transition: var(--transition);
+  border: 1px #791354;
+  
 }
 
 .inventario-card:hover {
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
-.inventario-card p {
-  color: #555555;
-  margin: 8px 0;
+.card-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--medium-gray);
+  background-color: var(--light-gray);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
 }
 
-.inventario-card button {
-  background-color: #d14d8d;
+.card-header h3 {
+  font-size: 1.4rem;
+  color:#8f154e;
+}
+
+.badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
   color: white;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-right: 10px;
-  margin-top: 10px;
 }
 
-.inventario-card button:hover {
-  background-color: #b34275;
+.badge.warning {
+  background-color: var(--warning-color);
 }
 
-/* Modal de crear/editar inventario */
+.badge.danger {
+  background-color: var(--danger-color);
+}
+
+.card-body {
+  padding: 1rem;
+  
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.info-label {
+  font-weight: 500;
+  color: var(--dark-gray);
+}
+
+.info-value {
+  font-weight: 600;
+}
+
+.low-stock {
+  color: var(--danger-color);
+}
+
+.card-actions {
+  padding: 1rem;
+  border-top: 1px solid var(--medium-gray);
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Modal */
 .modal {
   position: fixed;
   top: 0;
@@ -176,8 +403,8 @@ h1::after {
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  backdrop-filter: blur(8px); /* Efecto de desenfoque */
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
 }
 
 .modal.show {
@@ -186,93 +413,94 @@ h1::after {
 }
 
 .modal-content {
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 20px;
-  width: 500px;
-  max-width: 90%;
+  background-color: white;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  width: 100%;
+  max-width: 500px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   transform: translateY(-20px);
   transition: transform 0.3s ease;
   position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .modal.show .modal-content {
   transform: translateY(0);
 }
 
-/* Botón de cerrar */
+.modal h3 {
+  margin-bottom: 1.5rem;
+  text-align: left;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
 .close {
-  font-size: 24px;
-  color: #d14d8d;
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  color: var(--dark-gray);
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: var(--transition);
 }
 
 .close:hover {
-  color: #b34275;
+  color: var(--danger-color);
+  transform: rotate(90deg);
 }
 
-/* Modal de confirmación de eliminación */
-.modal-confirmacion {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  backdrop-filter: blur(8px); /* Efecto de desenfoque */
+/* Formulario */
+.modal-form {
+  display: grid;
+  gap: 1rem;
 }
 
-.modal-confirmacion .modal-content {
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 20px;
-  width: 400px;
-  max-width: 90%;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  text-align: center;
+.form-group {
+  margin-bottom: 1rem;
 }
 
-.modal-confirmacion h2 {
-  color: #2c3e50;
-  margin-bottom: 20px;
-}
-
-.modal-confirmacion button {
-  background-color: #d14d8d;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin: 0 10px;
-  transition: background-color 0.3s ease;
-}
-
-.modal-confirmacion button:hover {
-  background-color: #b34275;
-}
-
-/* Estilos para mensajes de error */
-.error-message {
-  color: #ff4d4d;
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--dark-gray);
   font-size: 0.9rem;
-  margin-top: 5px;
 }
 
-/* Snackbar personalizado */
-.snackbar-exito {
-  background-color: #4caf50; /* Verde para éxito */
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--medium-gray);
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  transition: var(--transition);
 }
 
-.snackbar-error {
-  background-color: #ff4d4d; /* Rojo para error */
+.form-group input:focus, .form-group select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+}
+
+.error-message {
+  color: var(--danger-color);
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
 }

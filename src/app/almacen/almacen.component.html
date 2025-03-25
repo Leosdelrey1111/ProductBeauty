@@ -1,7 +1,10 @@
 <div class="container">
     <!-- Barra superior -->
     <div class="navbar">
-      <h1>Almacén</h1>
+      <div class="logo-container">
+        <img class="logo" src="https://i.pinimg.com/originals/9c/ab/b9/9cabb9f45ee1b8f00a4a1ca82d6aaab2.jpg" alt="Logo" />
+        <h1 class="title">Almacén</h1>
+      </div>
       <div>
         <!-- Botón de opciones con dropdown -->
         <div class="dropdown">
@@ -82,45 +85,47 @@
     </div>
   
     <!-- Modal de agregar/editar producto -->
-    <div *ngIf="modalAbierto && !viewMode" class="modal">
-      <div class="modal-content">
-        <span (click)="cerrarModal()" class="close">&times;</span>
-        <h2>{{ editMode ? 'Editar Producto' : 'Agregar Producto' }}</h2>
-        <form (ngSubmit)="agregarProducto()" #productoForm="ngForm">
-          <!-- Código de Barras -->
-          <label for="codigoBarras">Código de Barras:</label>
-          <input type="text" id="codigoBarras" [(ngModel)]="nuevoProducto.codigoBarras" name="codigoBarras" required #codigoBarras="ngModel">
-          <div *ngIf="codigoBarras.invalid && (codigoBarras.dirty || codigoBarras.touched)" class="error-message">
-            El código de barras es requerido.
-          </div>
-  
-          <!-- Nombre del Producto -->
-          <label for="nombreProducto">Nombre Producto:</label>
-          <input type="text" id="nombreProducto" [(ngModel)]="nuevoProducto.nombreProducto" name="nombreProducto" required #nombreProducto="ngModel">
-          <div *ngIf="nombreProducto.invalid && (nombreProducto.dirty || nombreProducto.touched)" class="error-message">
-            El nombre del producto es requerido.
-          </div>
-  
-          <!-- Tamaño -->
-          <label for="tamano">Tamaño:</label>
-          <input type="text" id="tamano" [(ngModel)]="nuevoProducto.tamano" name="tamano" required #tamano="ngModel">
-          <div *ngIf="tamano.invalid && (tamano.dirty || tamano.touched)" class="error-message">
-            El tamaño es requerido.
-          </div>
-  
-        <!-- Categoría de Maquillaje -->
+<div *ngIf="modalAbierto && !viewMode" class="modal">
+  <div class="modal-content">
+    <span (click)="cerrarModal()" class="close">&times;</span>
+    <h2>{{ editMode ? 'Editar Producto' : 'Agregar Producto' }}</h2>
+    <form (ngSubmit)="agregarProducto()" #productoForm="ngForm">
+      <!-- Código de Barras -->
+      <label for="codigoBarras">Código de Barras:</label>
+      <input type="text" id="codigoBarras" [(ngModel)]="nuevoProducto.codigoBarras" name="codigoBarras" required #codigoBarras="ngModel">
+      <div *ngIf="(codigoBarras.invalid && (codigoBarras.dirty || codigoBarras.touched)) || (productoForm.submitted && codigoBarras.invalid)" class="error-message">
+        El código de barras es requerido.
+      </div>
+
+      <!-- Nombre del Producto -->
+      <label for="nombreProducto">Nombre Producto:</label>
+      <input type="text" id="nombreProducto" [(ngModel)]="nuevoProducto.nombreProducto" name="nombreProducto" required #nombreProducto="ngModel">
+      <div *ngIf="(nombreProducto.invalid && (nombreProducto.dirty || nombreProducto.touched)) || (productoForm.submitted && nombreProducto.invalid)" class="error-message">
+        El nombre del producto es requerido.
+      </div>
+
+      <!-- Tamaño -->
+      <label for="tamano">Tamaño:</label>
+      <input type="text" id="tamano" [(ngModel)]="nuevoProducto.tamano" name="tamano" required #tamano="ngModel">
+      <div *ngIf="(tamano.invalid && (tamano.dirty || tamano.touched)) || (productoForm.submitted && tamano.invalid)" class="error-message">
+        El tamaño es requerido.
+      </div>
+
+      <!-- Categoría de Maquillaje -->
       <label for="categoriaMaquillaje">Categoría Maquillaje:</label>
       <select id="categoriaMaquillaje" [(ngModel)]="nuevoProducto.categoriaMaquillaje" name="categoriaMaquillaje" required #categoriaMaquillaje="ngModel">
+        <option value="">Seleccione una categoría</option>
         <option value="Maquillaje">Maquillaje</option>
         <option value="Skin Care">Skin Care</option>
       </select>
-      <div *ngIf="categoriaMaquillaje.invalid && (categoriaMaquillaje.dirty || categoriaMaquillaje.touched)" class="error-message">
+      <div *ngIf="(categoriaMaquillaje.invalid && (categoriaMaquillaje.dirty || categoriaMaquillaje.touched)) || (productoForm.submitted && categoriaMaquillaje.invalid)" class="error-message">
         La categoría es requerida.
       </div>
 
       <!-- Subcategoría -->
       <label for="subcategoria">Subcategoría:</label>
       <select id="subcategoria" [(ngModel)]="nuevoProducto.subcategoria" name="subcategoria" required #subcategoria="ngModel">
+        <option value="">Seleccione una subcategoría</option>
         <option value="Labiales">Labiales</option>
         <option value="Bases">Bases</option>
         <option value="Sombras">Sombras</option>
@@ -128,100 +133,103 @@
         <option value="Cremas">Cremas</option>
         <option value="Serums">Serums</option>
       </select>
-      <div *ngIf="subcategoria.invalid && (subcategoria.dirty || subcategoria.touched)" class="error-message">
+      <div *ngIf="(subcategoria.invalid && (subcategoria.dirty || subcategoria.touched)) || (productoForm.submitted && subcategoria.invalid)" class="error-message">
         La subcategoría es requerida.
       </div>
       
-          <!-- Marca -->
-          <label for="marca">Marca:</label>
-          <input type="text" id="marca" [(ngModel)]="nuevoProducto.marca" name="marca">
-  
-          <!-- Nombre del Proveedor -->
-          <label for="nombreProveedor">Proveedor:</label>
-          <select id="nombreProveedor" [(ngModel)]="nuevoProducto.nombreProveedor" name="nombreProveedor" required #nombreProveedor="ngModel">
-            <option *ngFor="let proveedor of proveedores" [value]="proveedor.nombre">{{ proveedor.nombre }}</option>
-          </select>
-          <div *ngIf="nombreProveedor.invalid && (nombreProveedor.dirty || nombreProveedor.touched)" class="error-message">
-            El proveedor es requerido.
-          </div>
-  
-          <!-- Precio Caja -->
-          <label for="precioCaja">Precio Caja:</label>
-          <input type="number" id="precioCaja" [(ngModel)]="nuevoProducto.precioCaja" name="precioCaja" required #precioCaja="ngModel">
-          <div *ngIf="precioCaja.invalid && (precioCaja.dirty || precioCaja.touched)" class="error-message">
-            El precio de la caja es requerido.
-          </div>
-  
-          <!-- Precio por Pieza -->
-          <label for="precioPieza">Precio por Pieza:</label>
-          <input type="number" id="precioPieza" [(ngModel)]="nuevoProducto.precioPieza" name="precioPieza" required #precioPieza="ngModel">
-          <div *ngIf="precioPieza.invalid && (precioPieza.dirty || precioPieza.touched)" class="error-message">
-            El precio por pieza es requerido.
-          </div>
-  
-          <!-- Cantidad por Caja -->
-          <label for="cantidadPorCaja">Cantidad por Caja:</label>
-          <input type="number" id="cantidadPorCaja" [(ngModel)]="nuevoProducto.cantidadPorCaja" name="cantidadPorCaja" required #cantidadPorCaja="ngModel">
-          <div *ngIf="cantidadPorCaja.invalid && (cantidadPorCaja.dirty || cantidadPorCaja.touched)" class="error-message">
-            La cantidad por caja es requerida.
-          </div>
-  
-          <!-- Cantidad de Piezas -->
-          <label for="cantidadPiezas">Cantidad de Piezas:</label>
-          <input type="number" id="cantidadPiezas" [(ngModel)]="nuevoProducto.cantidadPiezas" name="cantidadPiezas" required #cantidadPiezas="ngModel">
-          <div *ngIf="cantidadPiezas.invalid && (cantidadPiezas.dirty || cantidadPiezas.touched)" class="error-message">
-            La cantidad de piezas es requerida.
-          </div>
-  
-          <!-- Stock Exhibición -->
-          <label for="stockExhibe">Stock Exhibición:</label>
-          <input type="number" id="stockExhibe" [(ngModel)]="nuevoProducto.stockExhibe" name="stockExhibe" required #stockExhibe="ngModel">
-          <div *ngIf="stockExhibe.invalid && (stockExhibe.dirty || stockExhibe.touched)" class="error-message">
-            El stock de exhibición es requerido.
-          </div>
-  
-          <!-- Stock Exhibición Mínimo -->
-          <label for="stockExhibeMin">Stock Exhibición Mínimo:</label>
-          <input type="number" id="stockExhibeMin" [(ngModel)]="nuevoProducto.stockExhibeMin" name="stockExhibeMin" required #stockExhibeMin="ngModel">
-          <div *ngIf="stockExhibeMin.invalid && (stockExhibeMin.dirty || stockExhibeMin.touched)" class="error-message">
-            El stock mínimo de exhibición es requerido.
-          </div>
-  
-          <!-- Stock Almacén -->
-          <label for="stockAlmacen">Stock Almacén:</label>
-          <input type="number" id="stockAlmacen" [(ngModel)]="nuevoProducto.stockAlmacen" name="stockAlmacen" required #stockAlmacen="ngModel">
-          <div *ngIf="stockAlmacen.invalid && (stockAlmacen.dirty || stockAlmacen.touched)" class="error-message">
-            El stock de almacén es requerido.
-          </div>
-  
-          <!-- Stock Almacén Mínimo -->
-          <label for="stockAlmacenMin">Stock Almacén Mínimo:</label>
-          <input type="number" id="stockAlmacenMin" [(ngModel)]="nuevoProducto.stockAlmacenMin" name="stockAlmacenMin" required #stockAlmacenMin="ngModel">
-          <div *ngIf="stockAlmacenMin.invalid && (stockAlmacenMin.dirty || stockAlmacenMin.touched)" class="error-message">
-            El stock mínimo de almacén es requerido.
-          </div>
-  
-          <!-- Imagen -->
-          <label for="imagen">Imagen URL:</label>
-          <input type="text" id="imagen" [(ngModel)]="nuevoProducto.imagen" name="imagen">
-  
-          <!-- Cantidad de Cajas en Lote -->
-          <label for="cantidadCajasLote">Cantidad de Cajas en Lote:</label>
-          <input type="number" id="cantidadCajasLote" [(ngModel)]="nuevoProducto.cantidadCajasLote" name="cantidadCajasLote" required #cantidadCajasLote="ngModel">
-          <div *ngIf="cantidadCajasLote.invalid && (cantidadCajasLote.dirty || cantidadCajasLote.touched)" class="error-message">
-            La cantidad de cajas en lote es requerida.
-          </div>
-  
-          <!-- Fecha de Caducidad del Lote -->
-          <label for="fechaCaducidadLote">Fecha de Caducidad del Lote:</label>
-          <input type="date" id="fechaCaducidadLote" [(ngModel)]="nuevoProducto.fechaCaducidadLote" name="fechaCaducidadLote" required #fechaCaducidadLote="ngModel">
-          <div *ngIf="fechaCaducidadLote.invalid && (fechaCaducidadLote.dirty || fechaCaducidadLote.touched)" class="error-message">
-            La fecha de caducidad es requerida.
-          </div>
-  
-          <!-- Botón para agregar o actualizar -->
-          <button type="submit" [disabled]="productoForm.invalid">{{ editMode ? 'Actualizar Producto' : 'Agregar Producto' }}</button>
-        </form>
+      <!-- Marca -->
+      <label for="marca">Marca:</label>
+      <input type="text" id="marca" [(ngModel)]="nuevoProducto.marca" name="marca" required #marca="ngModel">
+      <div *ngIf="(marca.invalid && (marca.dirty || marca.touched)) || (productoForm.submitted && marca.invalid)" class="error-message">
+        La marca es requerida.
       </div>
-    </div>
+
+      <!-- Nombre del Proveedor -->
+      <label for="nombreProveedor">Proveedor:</label>
+      <select id="nombreProveedor" [(ngModel)]="nuevoProducto.nombreProveedor" name="nombreProveedor" required #nombreProveedor="ngModel">
+        <option value="">Seleccione un proveedor</option>
+        <option *ngFor="let proveedor of proveedores" [value]="proveedor.nombre">{{ proveedor.nombre }}</option>
+      </select>
+      <div *ngIf="(nombreProveedor.invalid && (nombreProveedor.dirty || nombreProveedor.touched)) || (productoForm.submitted && nombreProveedor.invalid)" class="error-message">
+        El proveedor es requerido.
+      </div>
+
+      <!-- Precio Caja -->
+      <label for="precioCaja">Precio Caja:</label>
+      <input type="number" id="precioCaja" [(ngModel)]="nuevoProducto.precioCaja" name="precioCaja" required min="0" #precioCaja="ngModel">
+      <div *ngIf="(precioCaja.invalid && (precioCaja.dirty || precioCaja.touched)) || (productoForm.submitted && precioCaja.invalid)" class="error-message">
+        El precio de la caja es requerido y debe ser mayor o igual a 0.
+      </div>
+
+      <!-- Precio por Pieza -->
+      <label for="precioPieza">Precio por Pieza:</label>
+      <input type="number" id="precioPieza" [(ngModel)]="nuevoProducto.precioPieza" name="precioPieza" required min="0" #precioPieza="ngModel">
+      <div *ngIf="(precioPieza.invalid && (precioPieza.dirty || precioPieza.touched)) || (productoForm.submitted && precioPieza.invalid)" class="error-message">
+        El precio por pieza es requerido y debe ser mayor o igual a 0.
+      </div>
+
+      <!-- Cantidad por Caja -->
+      <label for="cantidadPorCaja">Cantidad por Caja:</label>
+      <input type="number" id="cantidadPorCaja" [(ngModel)]="nuevoProducto.cantidadPorCaja" name="cantidadPorCaja" required min="1" #cantidadPorCaja="ngModel">
+      <div *ngIf="(cantidadPorCaja.invalid && (cantidadPorCaja.dirty || cantidadPorCaja.touched)) || (productoForm.submitted && cantidadPorCaja.invalid)" class="error-message">
+        La cantidad por caja es requerida y debe ser al menos 1.
+      </div>
+
+      <!-- Cantidad de Piezas -->
+      <label for="cantidadPiezas">Cantidad de Piezas:</label>
+      <input type="number" id="cantidadPiezas" [(ngModel)]="nuevoProducto.cantidadPiezas" name="cantidadPiezas" required min="0" #cantidadPiezas="ngModel">
+      <div *ngIf="(cantidadPiezas.invalid && (cantidadPiezas.dirty || cantidadPiezas.touched)) || (productoForm.submitted && cantidadPiezas.invalid)" class="error-message">
+        La cantidad de piezas es requerida y debe ser mayor o igual a 0.
+      </div>
+
+      <!-- Stock Exhibición -->
+      <label for="stockExhibe">Stock Exhibición:</label>
+      <input type="number" id="stockExhibe" [(ngModel)]="nuevoProducto.stockExhibe" name="stockExhibe" required min="0" #stockExhibe="ngModel">
+      <div *ngIf="(stockExhibe.invalid && (stockExhibe.dirty || stockExhibe.touched)) || (productoForm.submitted && stockExhibe.invalid)" class="error-message">
+        El stock de exhibición es requerido y debe ser mayor o igual a 0.
+      </div>
+
+      <!-- Stock Exhibición Mínimo -->
+      <label for="stockExhibeMin">Stock Exhibición Mínimo:</label>
+      <input type="number" id="stockExhibeMin" [(ngModel)]="nuevoProducto.stockExhibeMin" name="stockExhibeMin" required min="0" #stockExhibeMin="ngModel">
+      <div *ngIf="(stockExhibeMin.invalid && (stockExhibeMin.dirty || stockExhibeMin.touched)) || (productoForm.submitted && stockExhibeMin.invalid)" class="error-message">
+        El stock mínimo de exhibición es requerido y debe ser mayor o igual a 0.
+      </div>
+
+      <!-- Stock Almacén -->
+      <label for="stockAlmacen">Stock Almacén:</label>
+      <input type="number" id="stockAlmacen" [(ngModel)]="nuevoProducto.stockAlmacen" name="stockAlmacen" required min="0" #stockAlmacen="ngModel">
+      <div *ngIf="(stockAlmacen.invalid && (stockAlmacen.dirty || stockAlmacen.touched)) || (productoForm.submitted && stockAlmacen.invalid)" class="error-message">
+        El stock de almacén es requerido y debe ser mayor o igual a 0.
+      </div>
+
+      <!-- Stock Almacén Mínimo -->
+      <label for="stockAlmacenMin">Stock Almacén Mínimo:</label>
+      <input type="number" id="stockAlmacenMin" [(ngModel)]="nuevoProducto.stockAlmacenMin" name="stockAlmacenMin" required min="0" #stockAlmacenMin="ngModel">
+      <div *ngIf="(stockAlmacenMin.invalid && (stockAlmacenMin.dirty || stockAlmacenMin.touched)) || (productoForm.submitted && stockAlmacenMin.invalid)" class="error-message">
+        El stock mínimo de almacén es requerido y debe ser mayor o igual a 0.
+      </div>
+
+      <!-- Imagen -->
+      <label for="imagen">Imagen URL:</label>
+      <input type="text" id="imagen" [(ngModel)]="nuevoProducto.imagen" name="imagen">
+
+      <!-- Cantidad de Cajas en Lote -->
+      <label for="cantidadCajasLote">Cantidad de Cajas en Lote:</label>
+      <input type="number" id="cantidadCajasLote" [(ngModel)]="nuevoProducto.cantidadCajasLote" name="cantidadCajasLote" required min="0" #cantidadCajasLote="ngModel">
+      <div *ngIf="(cantidadCajasLote.invalid && (cantidadCajasLote.dirty || cantidadCajasLote.touched)) || (productoForm.submitted && cantidadCajasLote.invalid)" class="error-message">
+        La cantidad de cajas en lote es requerida y debe ser mayor o igual a 0.
+      </div>
+
+      <!-- Fecha de Caducidad del Lote -->
+      <label for="fechaCaducidadLote">Fecha de Caducidad del Lote:</label>
+      <input type="date" id="fechaCaducidadLote" [(ngModel)]="nuevoProducto.fechaCaducidadLote" name="fechaCaducidadLote" required #fechaCaducidadLote="ngModel">
+      <div *ngIf="(fechaCaducidadLote.invalid && (fechaCaducidadLote.dirty || fechaCaducidadLote.touched)) || (productoForm.submitted && fechaCaducidadLote.invalid)" class="error-message">
+        La fecha de caducidad es requerida.
+      </div>
+
+      <!-- Botón para agregar o actualizar -->
+      <button type="submit">{{ editMode ? 'Actualizar Producto' : 'Agregar Producto' }}</button>
+    </form>
   </div>
+</div>

@@ -11,22 +11,24 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { email, password });
+    return this.http.post(`${this.apiUrl}/login`, { email, password });
   }
-  
+
   register(email: string, password: string, role: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register`, { email, password, role });
+    return this.http.post(`${this.apiUrl}/register`, { email, password, role });
   }
 
-  getUsers(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/users`);
-  }
+ // auth.service.ts
+getUsers(): Observable<any> {
+  return this.http.get(`${this.apiUrl}/users`);
+}
+ // auth.service.ts - Método updateUser
+updateUser(userId: string, userData: any): Observable<any> {
+  return this.http.put(`${this.apiUrl}/users/${userId}`, userData);
+}
 
-  deleteUser(userId: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/users/${userId}`);
-  }
-
-  updateUser(userId: string, userData: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/users/${userId}`, userData);
-  }
+  // En tu auth.service.ts
+deleteUser(id: string): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/users/${id}`);
+}
 }

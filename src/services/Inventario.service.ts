@@ -4,36 +4,30 @@ import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class InventarioService {
+  private apiUrl = `${environment.apiUrl}/inventario`;
 
-  private apiUrl = environment.apiUrl;
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getInventario(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/inventario`);
+    return this.http.get(`${this.apiUrl}`);
   }
 
   registrarInventario(inventario: any): Observable<any> {
-    return this.http.post(this.apiUrl, inventario);
+    return this.http.post(`${this.apiUrl}`, inventario);
+  }
+
+  actualizarInventario(id: string, inventario: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, inventario);
+  }
+
+  eliminarInventario(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
   updateStockExhibe(id: string, stockExhibe: number): Observable<any> {
-    return this.http.put(`http://localhost:3000/api/inventario/${id}`, { stockExhibe });
+    return this.http.patch(`${this.apiUrl}/${id}/stock`, { stockExhibe });
   }
-  
-  
-
-  actualizarInventario(id: string, inventario: any): Observable<any> {
-    return this.http.put(`http://localhost:3000/api/inventario/actualizar/${id}`, inventario);
-  }
-  
-
-  eliminarInventario(id: string): Observable<any> {
-    return this.http.delete(`http://localhost:3000/api/inventario/${id}`);
-  }
-  
-  
 }

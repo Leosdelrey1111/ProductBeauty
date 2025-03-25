@@ -1,74 +1,134 @@
-<!-- Barra de navegación -->
-<div class="navbar">
-    <h1>Proveedores</h1>
+<div class="container">
+  <!-- Barra superior -->
+  <div class="navbar">
+    <div class="logo-container">
+      <img class="logo" src="https://i.pinimg.com/originals/9c/ab/b9/9cabb9f45ee1b8f00a4a1ca82d6aaab2.jpg" alt="Logo" />
+      <h1 class="title">Proveedores</h1>
+    </div>
     <div class="navbar-buttons">
       <button (click)="regresar()">Regresar</button>
       <button (click)="abrirModal()">Agregar Proveedor</button>
     </div>
   </div>
-  
-  <!-- Contenedor principal -->
-  <div class="container">
-    <h2>Lista de Proveedores</h2>
-  
-    <div *ngIf="proveedores.length > 0; else noProveedores">
-      <div *ngFor="let proveedor of proveedores" class="proveedor-card">
-        <p><strong>Folio:</strong> {{ proveedor.folioProveedor }}</p>
-        <p><strong>Nombre:</strong> {{ proveedor.nombre }}</p>
-        <p><strong>Teléfono:</strong> {{ proveedor.telefono }}</p>
-        <p><strong>Correo:</strong> {{ proveedor.correo }}</p>
-        <p><strong>Dirección:</strong>
-          {{ proveedor.direccion.calle }}, {{ proveedor.direccion.numeroExterior }},
-          {{ proveedor.direccion.colonia }}, {{ proveedor.direccion.codigoPostal }},
-          {{ proveedor.direccion.ciudad.nombreCiudad }}
-        </p>
+
+  <!-- Notificación -->
+  <div id="notification" class="notification" *ngIf="notificationMessage">
+    <p>{{ notificationMessage }}</p>
+  </div>
+
+  <!-- Listado de proveedores -->
+  <div class="catalog-grid">
+    <div *ngFor="let proveedor of filteredProveedores" class="catalog-card">
+      <h3>{{ proveedor.nombre }}</h3>
+      <p><strong>Folio:</strong> {{ proveedor.folioProveedor }}</p>
+      <p><strong>Teléfono:</strong> {{ proveedor.telefono || 'N/A' }}</p>
+      <p><strong>Correo:</strong> {{ proveedor.correo || 'N/A' }}</p>
+      <p><strong>Dirección:</strong></p>
+      <p>{{ proveedor.direccion.calle }} #{{ proveedor.direccion.numeroExterior }}, 
+         {{ proveedor.direccion.colonia }}, C.P. {{ proveedor.direccion.codigoPostal }}, 
+         {{ proveedor.direccion.ciudad.nombreCiudad || 'Ciudad no especificada' }}</p>
+      <div class="actions">
         <button (click)="editarProveedor(proveedor)">Editar</button>
         <button (click)="confirmarEliminacion(proveedor)">Eliminar</button>
       </div>
     </div>
-  
-    <ng-template #noProveedores>
-      <p class="no-proveedores">No se encontraron proveedores.</p>
-    </ng-template>
-  
-    <!-- Modal para Agregar/Editar Proveedor -->
-<div *ngIf="modalAbierto" class="modal" (click)="cerrarModal()"> <!-- Cierra al hacer clic fuera -->
-    <div class="modal-content" (click)="$event.stopPropagation()"> <!-- Evita que se cierre al hacer clic dentro -->
-      <span (click)="cerrarModal()" class="close">&times;</span> <!-- Botón para cerrar -->
+  </div>
+
+  <!-- Modal para Agregar/Editar Proveedor -->
+  <div *ngIf="modalAbierto" class="modal" (click)="cerrarModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <span (click)="cerrarModal()" class="close">&times;</span>
       <h2>{{ editMode ? 'Editar Proveedor' : 'Agregar Proveedor' }}</h2>
-      <form (ngSubmit)="guardarProveedor()">
-        <label for="folioProveedor">Folio Proveedor:</label>
-        <input type="text" id="folioProveedor" [(ngModel)]="proveedorSeleccionado.folioProveedor" name="folioProveedor" required>
-  
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" [(ngModel)]="proveedorSeleccionado.nombre" name="nombre" required>
-  
-        <label for="telefono">Teléfono:</label>
-        <input type="text" id="telefono" [(ngModel)]="proveedorSeleccionado.telefono" name="telefono">
-  
-        <label for="correo">Correo:</label>
-        <input type="email" id="correo" [(ngModel)]="proveedorSeleccionado.correo" name="correo">
-  
-        <label for="direccion">Dirección:</label>
-        <input type="text" id="calle" [(ngModel)]="proveedorSeleccionado.direccion.calle" name="calle" placeholder="Calle" required>
-        <input type="text" id="numeroExterior" [(ngModel)]="proveedorSeleccionado.direccion.numeroExterior" name="numeroExterior" placeholder="Número Exterior" required>
-        <input type="text" id="colonia" [(ngModel)]="proveedorSeleccionado.direccion.colonia" name="colonia" placeholder="Colonia" required>
-        <input type="text" id="codigoPostal" [(ngModel)]="proveedorSeleccionado.direccion.codigoPostal" name="codigoPostal" placeholder="Código Postal" required>
-        <input type="text" id="ciudad" [(ngModel)]="proveedorSeleccionado.direccion.ciudad.nombreCiudad" name="ciudad" placeholder="Ciudad" required>
-  
-        <button type="submit">{{ editMode ? 'Actualizar Proveedor' : 'Agregar Proveedor' }}</button>
+      <form (ngSubmit)="guardarProveedor()" #proveedorForm="ngForm">
+        <div class="form-group">
+          <label for="folioProveedor">Folio Proveedor:</label>
+          <input type="text" id="folioProveedor" [(ngModel)]="proveedorSeleccionado.folioProveedor" 
+                 name="folioProveedor" required #folioProveedor="ngModel">
+          <div *ngIf="folioProveedor.invalid && (folioProveedor.dirty || folioProveedor.touched)" class="error-message">
+            El folio del proveedor es requerido.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" [(ngModel)]="proveedorSeleccionado.nombre" 
+                 name="nombre" required #nombre="ngModel">
+          <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="error-message">
+            El nombre es requerido.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="telefono">Teléfono:</label>
+          <input type="text" id="telefono" [(ngModel)]="proveedorSeleccionado.telefono" name="telefono">
+        </div>
+
+        <div class="form-group">
+          <label for="correo">Correo:</label>
+          <input type="email" id="correo" [(ngModel)]="proveedorSeleccionado.correo" name="correo">
+        </div>
+
+        <h3 class="section-title">Dirección</h3>
+        
+        <div class="form-group">
+          <label for="calle">Calle:</label>
+          <input type="text" id="calle" [(ngModel)]="proveedorSeleccionado.direccion.calle" 
+                 name="calle" required #calle="ngModel">
+          <div *ngIf="calle.invalid && (calle.dirty || calle.touched)" class="error-message">
+            La calle es requerida.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="numeroExterior">Número Exterior:</label>
+          <input type="text" id="numeroExterior" [(ngModel)]="proveedorSeleccionado.direccion.numeroExterior" 
+                 name="numeroExterior" required #numeroExterior="ngModel">
+          <div *ngIf="numeroExterior.invalid && (numeroExterior.dirty || numeroExterior.touched)" class="error-message">
+            El número exterior es requerido.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="colonia">Colonia:</label>
+          <input type="text" id="colonia" [(ngModel)]="proveedorSeleccionado.direccion.colonia" 
+                 name="colonia" required #colonia="ngModel">
+          <div *ngIf="colonia.invalid && (colonia.dirty || colonia.touched)" class="error-message">
+            La colonia es requerida.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="codigoPostal">Código Postal:</label>
+          <input type="text" id="codigoPostal" [(ngModel)]="proveedorSeleccionado.direccion.codigoPostal" 
+                 name="codigoPostal" required #codigoPostal="ngModel">
+          <div *ngIf="codigoPostal.invalid && (codigoPostal.dirty || codigoPostal.touched)" class="error-message">
+            El código postal es requerido.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="nombreCiudad">Ciudad:</label>
+          <input type="text" id="nombreCiudad" [(ngModel)]="proveedorSeleccionado.direccion.ciudad.nombreCiudad" 
+                 name="nombreCiudad" required #nombreCiudad="ngModel">
+          <div *ngIf="nombreCiudad.invalid && (nombreCiudad.dirty || nombreCiudad.touched)" class="error-message">
+            La ciudad es requerida.
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">{{ editMode ? 'Actualizar Proveedor' : 'Agregar Proveedor' }}</button>
       </form>
     </div>
   </div>
-  
+
   <!-- Modal de confirmación de eliminación -->
-  <div *ngIf="modalConfirmacion" class="modal-confirmacion" (click)="cerrarModalConfirmacion()"> <!-- Cierra al hacer clic fuera -->
-    <div class="modal-content" (click)="$event.stopPropagation()"> <!-- Evita que se cierre al hacer clic dentro -->
-      <span (click)="cerrarModalConfirmacion()" class="close">&times;</span> <!-- Botón para cerrar -->
+  <div *ngIf="modalConfirmacion" class="modal" (click)="cerrarModalConfirmacion()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <span (click)="cerrarModalConfirmacion()" class="close">&times;</span>
       <h2>¿Estás seguro de que deseas eliminar este proveedor?</h2>
-      <button (click)="eliminarProveedor(proveedorSeleccionado._id)">Sí, Eliminar</button>
-      <button (click)="cerrarModalConfirmacion()">Cancelar</button>
+      <div class="confirmation-buttons">
+        <button (click)="eliminarProveedor(proveedorSeleccionado._id)" class="confirm-btn">Sí, Eliminar</button>
+        <button (click)="cerrarModalConfirmacion()" class="cancel-btn">Cancelar</button>
+      </div>
     </div>
   </div>
-  
- 
+</div>
